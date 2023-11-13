@@ -20,9 +20,8 @@ export abstract class BaseLLM<
   ): Promise<string | undefined> {
     const promptValue = this._convertInputToPromptValue(input);
     const result = await this.generatePrompt([promptValue], options);
-    // return result.generations[0][0].text
     try {
-      return result.generations[0][0].text;
+      return result.generateText;
     } catch {
       return undefined;
     }
@@ -63,4 +62,9 @@ export abstract class BaseLLM<
     prompts: string[],
     options?: string[] | CallOptions,
   ): Promise<LLMResult>;
+
+  async _call(prompt: string, options?: string[] | CallOptions) {
+    const result = await this._generate([prompt], options);
+    return result.generateText;
+  }
 }
