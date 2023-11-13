@@ -5,8 +5,14 @@ import { BasicAigcModule } from './modules/basic-aigc/basic-aigc.module';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { ResponseInterceptor } from './commons/interceptors/response-interceptor';
 import { HttpExceptionFilter } from './commons/exception-filters/http-exception-filter';
+import { ConfigModule } from '@nestjs/config';
+
 @Module({
-  imports: [BasicAigcModule],
+  imports: [
+    BasicAigcModule,
+    // load config
+    ConfigModule.forRoot(),
+  ],
   controllers: [AppController],
   providers: [
     AppService,
