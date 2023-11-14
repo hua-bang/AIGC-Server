@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { OpenAILLM } from '../llms/open-ai-llm';
+import { OpenAILLM } from '../llms/models/open-ai/llm';
 
 @Controller('basic-aigc')
 export class BasicAigcController {
@@ -11,7 +11,7 @@ export class BasicAigcController {
     });
 
     return {
-      message: await openAILLM.invoke('你好呀'),
+      message: await openAILLM.call('你好呀'),
     };
   }
 
@@ -23,7 +23,7 @@ export class BasicAigcController {
     });
 
     return {
-      message: await openAILLM.invoke(prompt),
+      message: await openAILLM.call(prompt),
     };
   }
 }

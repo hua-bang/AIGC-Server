@@ -1,8 +1,9 @@
 import { ClientOptions, OpenAI } from 'openai';
-import { BaseLLM } from './base';
-import { LLMResult } from './base/typings/llm-result';
+import { ChatLLM } from '../../base/chat-llm';
+import { OpenAILLMPrompt, OpenAILLMResponse } from './typings';
 
-export class OpenAILLM extends BaseLLM {
+export class OpenAILLM extends ChatLLM<OpenAILLMPrompt, OpenAILLMResponse> {
+  protected modelName = 'open-ai';
   instance: OpenAI | undefined;
 
   constructor(clientOptions?: ClientOptions) {
@@ -11,7 +12,11 @@ export class OpenAILLM extends BaseLLM {
     this.instance = instance;
   }
 
-  async _generate(prompts: string[]): Promise<LLMResult> {
+  async call(prompt: string): Promise<OpenAILLMResponse> {
+    return this.generate([prompt]);
+  }
+
+  async generate(prompts: string[]): Promise<OpenAILLMResponse> {
     const completion = await this.instance?.chat.completions.create({
       messages: [
         { role: 'system', content: 'You are a helpful assistant.' },
