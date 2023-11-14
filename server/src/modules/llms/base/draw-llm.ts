@@ -1,4 +1,4 @@
-import { BaseLLM } from '..';
+import { BaseLLM } from '.';
 
 export abstract class DrawLLM<TPrompt, TResponse> extends BaseLLM<
   TPrompt,
