@@ -5,7 +5,7 @@
  */
 export abstract class BaseLLM<LLMPrompt, LLMResponse> {
   // A protected property, modelName, of type string.
-  protected modelName: string;
+  public modelName: string;
 
   /**
    * An abstract method, call. It takes a parameter of type LLMPrompt and returns a Promise that resolves to a result of type LLMResponse.

@@ -3,12 +3,17 @@ import { ChatLLM } from '../../base/chat-llm';
 import { OpenAILLMPrompt, OpenAILLMResponse } from './typings';
 
 export class OpenAILLM extends ChatLLM<OpenAILLMPrompt, OpenAILLMResponse> {
-  protected modelName = 'open-ai';
+  public modelName = 'open-ai';
   instance: OpenAI | undefined;
 
   constructor(clientOptions?: ClientOptions) {
     super();
-    const instance = new OpenAI(clientOptions);
+
+    const defaultClientOptions = {
+      apiKey: process.env.OPENAI_API_KEY,
+      baseURL: process.env.OPENAI_BASE_PATH,
+    };
+    const instance = new OpenAI(clientOptions ?? defaultClientOptions);
     this.instance = instance;
   }
 

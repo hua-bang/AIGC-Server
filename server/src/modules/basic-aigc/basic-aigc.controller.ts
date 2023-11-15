@@ -1,29 +1,23 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { OpenAILLM } from '../llms/models/open-ai/llm';
+import { BasicAigcService } from './basic-aigc.service';
+import { ChatModelName } from '../llms/typings';
 
 @Controller('basic-aigc')
 export class BasicAigcController {
+  constructor(private readonly basicAigcService: BasicAigcService) {}
+
   @Get('/hello')
   async getHello() {
-    const openAILLM = new OpenAILLM({
-      apiKey: process.env.OPENAI_API_KEY,
-      baseURL: process.env.OPENAI_BASE_PATH,
-    });
-
     return {
-      message: await openAILLM.call('你好呀'),
+      message: await this.basicAigcService.chat('你好呀'),
     };
   }
 
   @Post('/chat')
-  async chat(@Body('prompt') prompt: string) {
-    const openAILLM = new OpenAILLM({
-      apiKey: process.env.OPENAI_API_KEY,
-      baseURL: process.env.OPENAI_BASE_PATH,
-    });
-
-    return {
-      message: await openAILLM.call(prompt),
-    };
+  async chat(
+    @Body('prompt') prompt: string,
+    @Body('modelType') modelName: ChatModelName,
+  ) {
+    return this.basicAigcService.chat(prompt, modelName);
   }
 }

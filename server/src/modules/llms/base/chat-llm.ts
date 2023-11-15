@@ -6,6 +6,6 @@ import { BaseLLM } from '.';
  * ChatLLMResponse: default string;
  */
 export abstract class ChatLLM<
-  ChatLLMPrompt = string,
-  ChatLLMResponse = string,
+  ChatLLMPrompt = any,
+  ChatLLMResponse = any,
 > extends BaseLLM<ChatLLMPrompt | string, ChatLLMResponse | string> {}
