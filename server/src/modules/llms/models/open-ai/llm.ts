@@ -1,56 +1,26 @@
 import { ClientOptions, OpenAI } from 'openai';
 import { ChatLLM } from '../../base/chat-llm';
 import { OpenAILLMPrompt, OpenAILLMResponse } from './typings';
-import { ChatCompletionMessageParam } from 'openai/resources';
+import { MODEL_NAME, defaultClientOptions, defaultModel } from './config';
+import { CompletionGenerator } from './completion-generator';
 
 export class OpenAILLM extends ChatLLM<OpenAILLMPrompt, OpenAILLMResponse> {
-  public modelName = 'open-ai';
+  public modelName = MODEL_NAME;
   instance: OpenAI | undefined;
+  completionGenerator: CompletionGenerator;
 
   constructor(clientOptions?: ClientOptions) {
     super();
-
-    const defaultClientOptions = {
-      apiKey: process.env.OPENAI_API_KEY,
-      baseURL: process.env.OPENAI_BASE_PATH,
-    };
-    const instance = new OpenAI(clientOptions ?? defaultClientOptions);
-    this.instance = instance;
+    this.instance = new OpenAI(clientOptions ?? defaultClientOptions);
+    this.completionGenerator = new CompletionGenerator();
   }
 
   async call(prompt: OpenAILLMPrompt): Promise<OpenAILLMResponse> {
     return this.generate([prompt]);
   }
 
-  generateCompletion(prompts: OpenAILLMPrompt[]) {
-    const completionBody: OpenAI.Chat.Completions.ChatCompletionCreateParamsNonStreaming =
-      {
-        messages: [],
-        model: 'gpt-4-1106-preview',
-      };
-
-    if (prompts.length === 1) {
-      const [promptValue] = prompts;
-
-      const content =
-        typeof promptValue === 'string' ? promptValue : promptValue.content;
-
-      completionBody.messages = [
-        { role: 'system', content: 'You are a helpful assistant.' },
-        { role: 'user', content },
-      ];
-    } else {
-      const nextMessages = prompts.map((prompt) =>
-        typeof prompt === 'string' ? { role: 'user', content: prompt } : prompt,
-      );
-      completionBody.messages = nextMessages as ChatCompletionMessageParam[];
-    }
-
-    return completionBody;
-  }
-
   async generate(prompts: OpenAILLMPrompt[]): Promise<OpenAILLMResponse> {
-    const completionBody = this.generateCompletion(prompts);
+    const completionBody = this.completionGenerator.generateBody(prompts);
     const completion = await this.instance?.chat.completions.create(
       completionBody,
     );
