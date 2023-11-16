@@ -1,18 +1,18 @@
-import { ClientOptions, OpenAI } from 'openai';
+import { OpenAI } from 'openai';
 import { ChatLLM } from '../../base/chat-llm';
 import { OpenAILLMPrompt, OpenAILLMResponse } from './typings';
-import { MODEL_NAME, defaultClientOptions, defaultModel } from './config';
+import { MODEL_NAME, defaultClientOptions } from './config';
 import { CompletionGenerator } from './completion-generator';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class OpenAILLM extends ChatLLM<OpenAILLMPrompt, OpenAILLMResponse> {
   public modelName = MODEL_NAME;
   instance: OpenAI | undefined;
-  completionGenerator: CompletionGenerator;
 
-  constructor(clientOptions?: ClientOptions) {
+  constructor(private completionGenerator: CompletionGenerator) {
     super();
-    this.instance = new OpenAI(clientOptions ?? defaultClientOptions);
-    this.completionGenerator = new CompletionGenerator();
+    this.instance = new OpenAI(defaultClientOptions);
   }
 
   async call(prompt: OpenAILLMPrompt): Promise<OpenAILLMResponse> {
