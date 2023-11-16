@@ -8,4 +8,8 @@ import { BaseLLM } from '.';
 export abstract class ChatLLM<
   ChatLLMPrompt = any,
   ChatLLMResponse = any,
-> extends BaseLLM<ChatLLMPrompt | string, ChatLLMResponse | string> {}
+> extends BaseLLM<ChatLLMPrompt | string, ChatLLMResponse | string> {
+  abstract chat(
+    prompts: ChatLLMPrompt | Array<ChatLLMPrompt>,
+  ): Promise<ChatLLMResponse>;
+}

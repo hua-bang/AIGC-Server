@@ -15,8 +15,8 @@ export class BasicAigcController {
 
   @Post('/chat')
   async chat(
-    @Body('prompt') prompt: string,
-    @Body('modelType') modelName: ChatModelName,
+    @Body('prompt') prompt: unknown,
+    @Body('modelName') modelName: ChatModelName,
   ) {
     return this.basicAigcService.chat(prompt, modelName);
   }
