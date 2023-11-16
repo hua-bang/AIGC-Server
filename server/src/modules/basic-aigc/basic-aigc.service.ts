@@ -6,7 +6,7 @@ import { ChatModelName } from '../llms/typings';
 export class BasicAigcService {
   constructor(private llmService: LLMService) {}
 
-  async chat(message: string, type: ChatModelName = ChatModelName.OpenAI) {
-    return this.llmService.getChatModel(type).call(message);
+  async chat(prompt: unknown, type: ChatModelName = ChatModelName.OpenAI) {
+    return this.llmService.getChatModel(type).chat(prompt);
   }
 }
