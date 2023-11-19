@@ -9,6 +9,12 @@ export abstract class ChatLLM<
   ChatLLMPrompt = any,
   ChatLLMResponse = any,
 > extends BaseLLM<ChatLLMPrompt | string, ChatLLMResponse | string> {
+  chatWithVision:
+    | ((
+        prompts: ChatLLMPrompt | Array<ChatLLMPrompt>,
+      ) => Promise<ChatLLMResponse>)
+    | undefined = undefined;
+
   abstract chat(
     prompts: ChatLLMPrompt | Array<ChatLLMPrompt>,
   ): Promise<ChatLLMResponse>;

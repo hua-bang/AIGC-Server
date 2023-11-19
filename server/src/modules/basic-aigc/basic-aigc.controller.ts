@@ -20,4 +20,12 @@ export class BasicAigcController {
   ) {
     return this.basicAigcService.chat(prompt, modelName);
   }
+
+  @Get('/chatWithVision')
+  async chatWithVision(
+    @Body('prompt') prompt: unknown,
+    @Body('modelName') modelName: ChatModelName,
+  ) {
+    return this.basicAigcService.chatWithVision(prompt, modelName);
+  }
 }
