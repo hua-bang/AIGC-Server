@@ -1,7 +1,12 @@
 import { OpenAI } from 'openai';
 import { ChatLLM } from '../../base/chat-llm';
 import { OpenAILLMPrompt, OpenAILLMResponse } from './typings';
-import { MODEL_NAME, defaultClientOptions } from './config';
+import {
+  DEFAULT_MAX_TOKEN,
+  MODEL_NAME,
+  defaultClientOptions,
+  defaultVisionModel,
+} from './config';
 import { CompletionGenerator } from './completion-generator';
 import { Injectable } from '@nestjs/common';
 
@@ -25,12 +30,7 @@ export class OpenAILLM extends ChatLLM<OpenAILLMPrompt, OpenAILLMResponse> {
       completionBody,
     );
 
-    const generateText = completion.choices[0].message.content;
-
-    return {
-      generateText,
-      llmOutput: completion,
-    };
+    return this.processOpenAILLMResponse(completion);
   }
 
   async chat(
@@ -39,5 +39,36 @@ export class OpenAILLM extends ChatLLM<OpenAILLMPrompt, OpenAILLMResponse> {
     const finalPrompt = Array.isArray(prompt) ? prompt : [prompt];
 
     return this.generate(finalPrompt);
+  }
+
+  /**
+   * this function to chat with vision
+   */
+  chatWithVision = async (
+    prompts: Array<OpenAI.Chat.Completions.ChatCompletionMessageParam>,
+  ) => {
+    const completion = await this.instance.chat.completions.create({
+      model: defaultVisionModel,
+      messages: prompts,
+      max_tokens: DEFAULT_MAX_TOKEN,
+    });
+
+    return this.processOpenAILLMResponse(completion);
+  };
+
+  /**
+   * process openai response to our response
+   * @param completion the completion is the response from openai
+   * @returns { OpenAILLMResponse }
+   */
+  processOpenAILLMResponse(
+    completion: OpenAI.Chat.Completions.ChatCompletion,
+  ): OpenAILLMResponse {
+    const generateText = completion.choices[0].message.content;
+
+    return {
+      generateText,
+      llmOutput: completion,
+    };
   }
 }
