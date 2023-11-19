@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { AccessToken } from 'src/commons/access-token';
-import { ACCESS_TOKEN_INIT_PARAMS, ACCESS_TOKEN_URL } from './constants';
+import { ACCESS_TOKEN_URL } from './constants';
 
 @Injectable()
 export class WenXinAccessToken extends AccessToken {
@@ -16,10 +16,14 @@ export class WenXinAccessToken extends AccessToken {
     // 定义 API URL 和参数
     const url = ACCESS_TOKEN_URL;
 
-    // 调用文心一言的令牌获取 API
-    console.log(ACCESS_TOKEN_URL, ACCESS_TOKEN_INIT_PARAMS);
+    const params = {
+      grant_type: 'client_credentials',
+      // 请使用你的 Client ID 和 Client Secret
+      client_id: process.env.WEN_XIN_ACCESS_TOKEN_CLIENT_ID,
+      client_secret: process.env.WEN_XIN_ACCESS_TOKEN_CLIENT_SECRET,
+    };
     const response = await axios.post(url, null, {
-      params: ACCESS_TOKEN_INIT_PARAMS,
+      params,
     });
     const { data } = response;
     this.accessToken = data.access_token;
