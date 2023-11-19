@@ -9,4 +9,11 @@ export class BasicAigcService {
   async chat(prompt: unknown, type: ChatModelName = ChatModelName.OpenAI) {
     return this.llmService.getChatModel(type).chat(prompt);
   }
+
+  async chatWithVision(
+    prompt: unknown,
+    type: ChatModelName = ChatModelName.OpenAI,
+  ) {
+    return this.llmService.getChatModel(type).chatWithVision?.(prompt);
+  }
 }
