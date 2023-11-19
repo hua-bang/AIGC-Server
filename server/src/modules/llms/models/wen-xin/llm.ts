@@ -29,7 +29,7 @@ export class WenXinLLM extends ChatLLM<WenXinLLMPrompt, WenXinLLMResponse> {
     };
   }
 
-  async chat(prompts: any[]) {
+  async chat(prompts: WenXinLLMPrompt[]) {
     return this.generate(prompts);
   }
 }

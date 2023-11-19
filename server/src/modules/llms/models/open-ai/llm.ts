@@ -2,10 +2,10 @@ import { OpenAI } from 'openai';
 import { ChatLLM } from '../../base/chat-llm';
 import { OpenAILLMPrompt, OpenAILLMResponse } from './typings';
 import {
-  DEFAULT_MAX_TOKEN,
   MODEL_NAME,
-  defaultClientOptions,
+  DEFAULT_MAX_TOKEN,
   defaultVisionModel,
+  getDefaultClientOptions,
 } from './config';
 import { CompletionGenerator } from './completion-generator';
 import { Injectable } from '@nestjs/common';
@@ -17,7 +17,7 @@ export class OpenAILLM extends ChatLLM<OpenAILLMPrompt, OpenAILLMResponse> {
 
   constructor(private completionGenerator: CompletionGenerator) {
     super();
-    this.instance = new OpenAI(defaultClientOptions);
+    this.instance = new OpenAI(getDefaultClientOptions());
   }
 
   async call(prompt: OpenAILLMPrompt): Promise<OpenAILLMResponse> {
