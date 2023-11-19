@@ -18,4 +18,8 @@ export abstract class ChatLLM<
   abstract chat(
     prompts: ChatLLMPrompt | Array<ChatLLMPrompt>,
   ): Promise<ChatLLMResponse>;
+
+  call(prompt: ChatLLMPrompt) {
+    return this.generate([prompt]);
+  }
 }
