@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { BasicAigcService } from './basic-aigc.service';
 import { ChatModelName } from '../llms/typings';
+import { ChatConfig } from './typings/chat';
 
 @Controller('basic-aigc')
 export class BasicAigcController {
@@ -17,8 +18,9 @@ export class BasicAigcController {
   async chat(
     @Body('prompt') prompt: unknown,
     @Body('modelName') modelName: ChatModelName,
+    @Body('config') chatConfig?: ChatConfig,
   ) {
-    return this.basicAigcService.chat(prompt, modelName);
+    return this.basicAigcService.chat(prompt, modelName, chatConfig);
   }
 
   @Get('/chatWithVision')
