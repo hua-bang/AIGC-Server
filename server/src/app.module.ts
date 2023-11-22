@@ -6,12 +6,22 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { ResponseInterceptor } from './commons/interceptors/response-interceptor';
 import { HttpExceptionFilter } from './commons/exception-filters/http-exception-filter';
 import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { getEnvConfig } from './utils/env';
 
 @Module({
   imports: [
     BasicAigcModule,
     // load config
     ConfigModule.forRoot(),
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: getEnvConfig('HOST'),
+      port: getEnvConfig('PORT'),
+      username: getEnvConfig('USERNAME'),
+      password: getEnvConfig('PASSWORD'),
+      database: getEnvConfig('DATABASE'),
+    }),
   ],
   controllers: [AppController],
   providers: [
