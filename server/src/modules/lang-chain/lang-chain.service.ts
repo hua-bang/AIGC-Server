@@ -11,30 +11,18 @@ import { BaseLLMWrapper } from './base-llm-wrapper';
 export class LangChainService {
   constructor(private llmService: LLMService) {}
 
-  async agent() {
+  async agent(prompt: string) {
     const tools = [new Calculator()];
 
     const llm = this.llmService.getChatModel(ChatModelName.OpenAI);
 
     const model = new BaseLLMWrapper(llm, {});
 
-    const executor = await initializeAgentExecutorWithOptions(
-      tools,
-      model as any,
-      {
-        agentType: 'chat-conversational-react-description',
-        verbose: true,
-      },
-    );
+    const executor = await initializeAgentExecutorWithOptions(tools, model, {
+      agentType: 'chat-conversational-react-description',
+      verbose: true,
+    });
 
-    const input = `
-   1 + 1 对于多少。
-  `;
-
-    const result = await executor.call({ input: input });
-
-    console.log(`Got output:
-    ${result.output}
-  `);
+    return await executor.call({ input: prompt });
   }
 }

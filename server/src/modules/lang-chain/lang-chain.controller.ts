@@ -1,12 +1,12 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { LangChainService } from './lang-chain.service';
 
 @Controller('/lang-chain')
 export class LangChainController {
   constructor(private readonly langChainService: LangChainService) {}
 
-  @Get('/run')
-  runAgent() {
-    return this.langChainService.agent();
+  @Post('/runAgent')
+  runAgent(@Body('prompt') prompt: string) {
+    return this.langChainService.agent(prompt);
   }
 }
