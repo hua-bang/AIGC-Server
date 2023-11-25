@@ -3,12 +3,14 @@ import { LLMService } from '../llms/llm.service';
 import { ChatModelName } from '../llms/typings';
 import { ChatConfig } from './typings/chat';
 import { PrompterService } from '../prompter/prompter.service';
+import { LangChainService } from '../lang-chain/lang-chain.service';
 
 @Injectable()
 export class BasicAigcService {
   constructor(
     private llmService: LLMService,
     private prompterService: PrompterService,
+    private langChainService: LangChainService,
   ) {}
 
   async chat(
@@ -28,5 +30,10 @@ export class BasicAigcService {
     type: ChatModelName = ChatModelName.OpenAI,
   ) {
     return this.llmService.getChatModel(type).chatWithVision?.(prompt);
+  }
+
+  async runAgent(prompt: string, type: ChatModelName = ChatModelName.OpenAI) {
+    const llm = this.llmService.getChatModel(type);
+    return this.langChainService.agent(prompt, llm);
   }
 }
