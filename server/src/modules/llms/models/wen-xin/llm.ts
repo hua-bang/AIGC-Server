@@ -4,22 +4,31 @@ import axios from 'axios';
 import { ChatLLM } from '../../base/chat-llm';
 import { WenXinLLMPrompt, WenXinLLMResponse } from './typings';
 import { CHAT_API_URL } from './constants';
+import { PromptGenerator } from './prompt-generator';
 
 @Injectable()
 export class WenXinLLM extends ChatLLM<WenXinLLMPrompt, WenXinLLMResponse> {
   private accessToken: WenXinAccessToken;
+  private promptGenerator: PromptGenerator;
   constructor() {
     super();
     this.accessToken = new WenXinAccessToken();
+    this.promptGenerator = new PromptGenerator();
     this.modelName = 'ERNIE-Bot-turbo';
   }
 
+  /**
+   * call wenxin llm api to generate text
+   * @param prompts the prompt to generate text
+   * @returns WenXinLLMResponse, include the generate text and the llm output
+   */
   async generate(prompts: WenXinLLMPrompt[]): Promise<WenXinLLMResponse> {
     const accessToken = await this.accessToken.getToken();
 
     const url = `${CHAT_API_URL}?access_token=${accessToken}`;
+
     const response = await axios.post(url, {
-      messages: prompts,
+      messages: this.promptGenerator.generatePrompts(prompts),
     });
 
     const { result } = response.data;
