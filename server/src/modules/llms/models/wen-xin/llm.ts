@@ -23,7 +23,18 @@ export class WenXinLLM extends ChatLLM<WenXinLLMPrompt, WenXinLLMResponse> {
     });
 
     const { result } = response.data;
+
+    const generations = [
+      [
+        {
+          text: result,
+          generationInfo: response.data,
+        },
+      ],
+    ];
+
     return {
+      generations,
       generateText: result,
       llmOutput: response.data,
     };

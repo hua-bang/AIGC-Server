@@ -66,7 +66,17 @@ export class OpenAILLM extends ChatLLM<OpenAILLMPrompt, OpenAILLMResponse> {
   ): OpenAILLMResponse {
     const generateText = completion.choices[0].message.content;
 
+    const generations = [
+      [
+        {
+          text: generateText,
+          generationInfo: completion.choices[0],
+        },
+      ],
+    ];
+
     return {
+      generations,
       generateText,
       llmOutput: completion,
     };

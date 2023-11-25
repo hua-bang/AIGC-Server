@@ -16,20 +16,7 @@ export class BaseLLMWrapper extends LangChainBaseLLM {
 
   // Implement the required abstract method _generate
   async _generate(prompts: string[]): Promise<LLMResult> {
-    // Your custom implementation here
-
-    const { generateText, llmOutput } = await this.llm.generate(prompts);
-
-    return {
-      generations: [
-        [
-          {
-            text: generateText,
-          },
-        ],
-      ],
-      llmOutput,
-    };
+    return await this.llm.generate(prompts);
   }
 
   _llmType(): string {

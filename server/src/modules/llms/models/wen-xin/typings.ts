@@ -1,3 +1,5 @@
+import { ChatLLMBaseResponse } from '../../base/chat-llm';
+
 // support plain string and ChatCompletionMessageParam Form openai
 export type WenXinLLMPrompt =
   | string
@@ -132,7 +134,7 @@ export interface WenXinLLMOutput {
   usage: Usage;
 }
 
-export interface WenXinLLMResponse {
+export interface WenXinLLMResponse extends ChatLLMBaseResponse {
   /** the string response of ai */
   generateText: string;
   /** the response of llm  */
