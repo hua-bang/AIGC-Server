@@ -1,22 +1,16 @@
 import { Injectable } from '@nestjs/common';
 
-import { LLMService } from '../llms/llm.service';
-import { ChatModelName } from '../llms/typings';
-
 import { initializeAgentExecutorWithOptions } from 'langchain/agents';
 import { Calculator } from 'langchain/tools/calculator';
 import { BaseLLMWrapper } from './base-llm-wrapper';
+import { ChatLLM } from '../llms/base/chat-llm';
 
 @Injectable()
 export class LangChainService {
-  constructor(private llmService: LLMService) {}
-
-  async agent(prompt: string) {
+  async agent(prompt: string, llm: ChatLLM) {
     const tools = [new Calculator()];
 
-    const llm = this.llmService.getChatModel(ChatModelName.OpenAI);
-
-    const model = new BaseLLMWrapper(llm, {});
+    const model = new BaseLLMWrapper(llm);
 
     const executor = await initializeAgentExecutorWithOptions(tools, model, {
       agentType: 'chat-conversational-react-description',

@@ -8,12 +8,10 @@ import { HttpExceptionFilter } from './commons/exception-filters/http-exception-
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getEnvConfig } from './utils/env';
-import { LangChainModule } from './modules/lang-chain/lang-chain.module';
 
 @Module({
   imports: [
     BasicAigcModule,
-    LangChainModule,
     // load config
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({

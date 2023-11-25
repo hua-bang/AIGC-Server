@@ -1,4 +1,3 @@
-// import { BaseLLM } from '../llms/base';
 import {
   BaseLLMParams,
   BaseLLM as LangChainBaseLLM,
@@ -9,8 +8,8 @@ import { LLMResult } from 'langchain/dist/schema';
 export class BaseLLMWrapper extends LangChainBaseLLM {
   llm: BaseLLM<any, any>;
 
-  constructor(llm: BaseLLM<any, any>, params: BaseLLMParams) {
-    super(params);
+  constructor(llm: BaseLLM<any, any>, params?: BaseLLMParams) {
+    super(params || {});
     this.llm = llm;
   }
 

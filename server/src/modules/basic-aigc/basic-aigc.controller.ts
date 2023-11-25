@@ -30,4 +30,9 @@ export class BasicAigcController {
   ) {
     return this.basicAigcService.chatWithVision(prompt, modelName);
   }
+
+  @Post('/runAgent')
+  async runAgent(@Body('prompt') prompt: string) {
+    return this.basicAigcService.runAgent(prompt);
+  }
 }
