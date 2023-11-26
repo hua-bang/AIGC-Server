@@ -1,0 +1,27 @@
+.playground {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: white;
+  flex-wrap: wrap;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 16px;
+}
+
+.llmSelector {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.llmContent {
+  width: 100%;
+  box-sizing: border-box;
+  flex: 1;
+  padding: 16px 0px;
+}
+
+.llmUserInput {
+  width: 100%;
+  box-sizing: border-box;
+}

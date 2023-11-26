@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 24px;
+}
+
+.userInput {
+  width: 50%;
+}
+
+.sendBtn {
+  cursor: pointer;
+}
