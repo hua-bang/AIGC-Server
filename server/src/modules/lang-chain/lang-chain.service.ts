@@ -1,14 +1,16 @@
 import { Injectable } from '@nestjs/common';
 
 import { initializeAgentExecutorWithOptions } from 'langchain/agents';
-import { Calculator } from 'langchain/tools/calculator';
 import { BaseLLMWrapper } from './base-llm-wrapper';
 import { ChatLLM } from '../llms/base/chat-llm';
+import { LangChainToolkit } from './lang-chain-toolkit';
 
 @Injectable()
 export class LangChainService {
+  constructor(private toolkit: LangChainToolkit) {}
+
   async agent(prompt: string, llm: ChatLLM) {
-    const tools = [new Calculator()];
+    const tools = this.toolkit.getTools();
 
     const model = new BaseLLMWrapper(llm);
 
