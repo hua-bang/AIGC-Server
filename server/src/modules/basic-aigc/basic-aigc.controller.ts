@@ -32,7 +32,10 @@ export class BasicAigcController {
   }
 
   @Post('/runAgent')
-  async runAgent(@Body('prompt') prompt: string) {
-    return this.basicAigcService.runAgent(prompt);
+  async runAgent(
+    @Body('prompt') prompt: string,
+    @Body('type') type: ChatModelName,
+  ) {
+    return this.basicAigcService.runAgent(prompt, type);
   }
 }
