@@ -5,15 +5,21 @@ import React from "react";
 import styles from "./index.module.css";
 import { SendOutlined } from "@ant-design/icons";
 
-interface UserInputProps {
+export interface UserInputProps {
   className?: string;
+
+  onPromptChange?: (prompt: string) => void;
 }
 
-const UserInput: React.FC<UserInputProps> = ({ className }) => {
-  const [prompt, setPrompt] = React.useState<string>();
+const UserInput: React.FC<UserInputProps> = ({ className, onPromptChange }) => {
+  const [prompt, setPrompt] = React.useState<string>("");
 
   const handleClick = () => {
-    console.log("prompt", prompt);
+    if (!prompt) {
+      return;
+    }
+    onPromptChange?.(prompt);
+    setPrompt("");
   };
 
   return (
@@ -21,6 +27,8 @@ const UserInput: React.FC<UserInputProps> = ({ className }) => {
       <div className={styles.userInput}>
         <Input
           value={prompt}
+          onPressEnter={handleClick}
+          placeholder="Input your prompt to generate creativity content."
           onChange={(e) => setPrompt(e.target.value)}
           size="large"
           suffix={
