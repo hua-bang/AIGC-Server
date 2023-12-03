@@ -11,3 +11,4 @@ export const getDefaultClientOptions = (): ClientOptions => ({
 
 export const defaultModel = 'gpt-4-1106-preview';
 export const defaultVisionModel = 'gpt-4-vision-preview';
+export const defaultImageModel = 'dall-e-3';

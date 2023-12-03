@@ -31,6 +31,11 @@ export class BasicAigcController {
     return this.basicAigcService.chatWithVision(prompt, modelName);
   }
 
+  @Post('/generate-image')
+  async generateImg(@Body('prompt') prompt: string) {
+    return this.basicAigcService.generateImage(prompt);
+  }
+
   @Post('/runAgent')
   async runAgent(
     @Body('prompt') prompt: string,
