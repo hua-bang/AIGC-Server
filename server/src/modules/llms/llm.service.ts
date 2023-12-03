@@ -3,6 +3,7 @@ import { ChatLLM } from './base/chat-llm';
 import { OpenAILLM } from './models/open-ai/llm';
 import { ChatModelName } from './typings';
 import { WenXinLLM } from './models/wen-xin/llm';
+import { DrawLLM } from './base/draw-llm';
 
 @Injectable()
 export class LLMService {
@@ -18,5 +19,9 @@ export class LLMService {
     }
 
     return null;
+  }
+
+  getDrawModel(): DrawLLM<any, any> {
+    return this.openAILLM;
   }
 }

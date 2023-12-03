@@ -6,12 +6,16 @@ import {
   DEFAULT_MAX_TOKEN,
   defaultVisionModel,
   getDefaultClientOptions,
+  defaultImageModel,
 } from './config';
 import { CompletionGenerator } from './completion-generator';
 import { Injectable } from '@nestjs/common';
+import { DrawLLM } from '../../base/draw-llm';
 
 @Injectable()
-export class OpenAILLM implements ChatLLM<OpenAILLMPrompt, OpenAILLMResponse> {
+export class OpenAILLM
+  implements ChatLLM<OpenAILLMPrompt, OpenAILLMResponse>, DrawLLM<string, any>
+{
   public modelName = MODEL_NAME;
   instance: OpenAI | undefined;
 
@@ -79,5 +83,19 @@ export class OpenAILLM implements ChatLLM<OpenAILLMPrompt, OpenAILLMResponse> {
       generateText,
       llmOutput: completion,
     };
+  }
+
+  /**
+   * Prompt to Image
+   * @param prompt the prompt of generate image
+   * @returns {Promise<{ url: string; }>}
+   */
+  async draw(prompt: string): Promise<any> {
+    return await this.instance.images.generate({
+      model: defaultImageModel,
+      n: 1,
+      prompt,
+      size: '1024x1024',
+    });
   }
 }

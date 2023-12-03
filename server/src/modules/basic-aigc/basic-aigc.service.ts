@@ -32,6 +32,10 @@ export class BasicAigcService {
     return this.llmService.getChatModel(type).chatWithVision?.(prompt);
   }
 
+  async generateImage(prompt: string) {
+    return this.llmService.getDrawModel().draw(prompt);
+  }
+
   async runAgent(prompt: string, type: ChatModelName = ChatModelName.OpenAI) {
     const llm = this.llmService.getChatModel(type);
     return this.langChainService.agent(prompt, llm);
