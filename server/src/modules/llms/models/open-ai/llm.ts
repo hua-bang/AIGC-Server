@@ -11,12 +11,11 @@ import { CompletionGenerator } from './completion-generator';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class OpenAILLM extends ChatLLM<OpenAILLMPrompt, OpenAILLMResponse> {
+export class OpenAILLM implements ChatLLM<OpenAILLMPrompt, OpenAILLMResponse> {
   public modelName = MODEL_NAME;
   instance: OpenAI | undefined;
 
   constructor(private completionGenerator: CompletionGenerator) {
-    super();
     this.instance = new OpenAI(getDefaultClientOptions());
   }
 
