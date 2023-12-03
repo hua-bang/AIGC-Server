@@ -7,14 +7,14 @@ import { CHAT_API_URL } from './constants';
 import { PromptGenerator } from './prompt-generator';
 
 @Injectable()
-export class WenXinLLM extends ChatLLM<WenXinLLMPrompt, WenXinLLMResponse> {
+export class WenXinLLM implements ChatLLM<WenXinLLMPrompt, WenXinLLMResponse> {
   private accessToken: WenXinAccessToken;
   private promptGenerator: PromptGenerator;
+  public modelName = 'ERNIE-Bot-turbo';
+
   constructor() {
-    super();
     this.accessToken = new WenXinAccessToken();
     this.promptGenerator = new PromptGenerator();
-    this.modelName = 'ERNIE-Bot-turbo';
   }
 
   /**
@@ -51,5 +51,9 @@ export class WenXinLLM extends ChatLLM<WenXinLLMPrompt, WenXinLLMResponse> {
 
   async chat(prompts: WenXinLLMPrompt[]) {
     return this.generate(prompts);
+  }
+
+  async call(prompt: WenXinLLMPrompt): Promise<WenXinLLMResponse> {
+    return this.generate([prompt]);
   }
 }

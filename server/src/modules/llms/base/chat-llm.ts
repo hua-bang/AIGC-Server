@@ -14,21 +14,15 @@ export interface ChatLLMBaseResponse {
  * ChatLLMPrompt: default string;
  * ChatLLMResponse: default string;
  */
-export abstract class ChatLLM<
+export interface ChatLLM<
   ChatLLMPrompt = any,
   ChatLLMResponse extends ChatLLMBaseResponse = ChatLLMBaseResponse,
 > extends BaseLLM<ChatLLMPrompt | string, ChatLLMResponse | string> {
-  chatWithVision:
+  chatWithVision?:
     | ((
         prompts: ChatLLMPrompt | Array<ChatLLMPrompt>,
       ) => Promise<ChatLLMResponse>)
-    | undefined = undefined;
+    | undefined;
 
-  abstract chat(
-    prompts: ChatLLMPrompt | Array<ChatLLMPrompt>,
-  ): Promise<ChatLLMResponse>;
-
-  call(prompt: ChatLLMPrompt) {
-    return this.generate([prompt]);
-  }
+  chat(prompts: ChatLLMPrompt | Array<ChatLLMPrompt>): Promise<ChatLLMResponse>;
 }
