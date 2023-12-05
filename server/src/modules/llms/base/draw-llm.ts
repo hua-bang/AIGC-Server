@@ -9,4 +9,6 @@ export interface DrawLLM<
 > extends BaseLLM<TPrompt, TResponse> {
   // 特定于绘图的方法和属性
   draw(prompt: TPrompt): Promise<TResponse>;
+
+  drawWithChat(prompts: any): Promise<any>;
 }
