@@ -4,6 +4,7 @@ import { ChatModelName } from '../llms/typings';
 import { ChatConfig } from './typings/chat';
 import { PrompterService } from '../prompter/prompter.service';
 import { LangChainService } from '../lang-chain/lang-chain.service';
+import { Tool } from 'src/typings/tool';
 
 @Injectable()
 export class BasicAigcService {
@@ -43,5 +44,11 @@ export class BasicAigcService {
   async runAgent(prompt: string, type: ChatModelName = ChatModelName.OpenAI) {
     const llm = this.llmService.getChatModel(type);
     return this.langChainService.agent(prompt, llm);
+  }
+
+  async runFunctionCall(prompt: unknown, tools: Tool[]) {
+    return this.llmService
+      .getFunctionCallModel()
+      .functionCall(prompt as any, tools);
   }
 }
