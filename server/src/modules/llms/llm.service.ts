@@ -24,4 +24,8 @@ export class LLMService {
   getDrawModel(): DrawLLM<any, any> {
     return this.openAILLM;
   }
+
+  getFunctionCallModel() {
+    return this.openAILLM;
+  }
 }

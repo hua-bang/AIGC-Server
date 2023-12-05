@@ -44,4 +44,10 @@ export class BasicAigcService {
     const llm = this.llmService.getChatModel(type);
     return this.langChainService.agent(prompt, llm);
   }
+
+  async runFunctionCall(prompt: unknown, tools: any) {
+    return this.llmService
+      .getFunctionCallModel()
+      .functionCall(prompt as any, tools);
+  }
 }

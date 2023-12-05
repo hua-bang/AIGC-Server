@@ -7,10 +7,12 @@ import {
   defaultVisionModel,
   getDefaultClientOptions,
   defaultImageModel,
+  defaultModel,
 } from './config';
 import { CompletionGenerator } from './completion-generator';
 import { Injectable } from '@nestjs/common';
 import { DrawLLM } from '../../base/draw-llm';
+import { getCurrentWeather } from 'src/utils/get-current-weather';
 
 @Injectable()
 export class OpenAILLM
@@ -145,5 +147,44 @@ export class OpenAILLM
       generations,
       llmOutput: chatVisionRes.llmOutput,
     };
+  }
+
+  async functionCall(
+    prompts: OpenAILLMPrompt[],
+    tools: OpenAI.Chat.Completions.ChatCompletionTool[],
+  ) {
+    const completionBody = this.completionGenerator.generateBody(prompts);
+    const response = await this.instance?.chat.completions.create({
+      ...completionBody,
+      tools,
+      tool_choice: 'auto', // auto is default, but we'll be explicit
+    });
+    const responseMessage = response.choices[0].message;
+
+    const toolCalls = responseMessage.tool_calls;
+    if (!toolCalls) {
+      return this.processOpenAILLMResponse(response);
+    }
+
+    const { messages } = completionBody;
+
+    if (responseMessage.tool_calls) {
+      const availableFunctions = {
+        get_current_weather: getCurrentWeather,
+      };
+      messages.push(responseMessage);
+      for (const toolCall of toolCalls) {
+        const functionName = toolCall.function.name;
+        const functionToCall = availableFunctions[functionName];
+        const functionArgs = JSON.parse(toolCall.function.arguments);
+        const functionResponse = functionToCall(functionArgs);
+        messages.push({
+          tool_call_id: toolCall.id,
+          role: 'tool',
+          content: functionResponse,
+        });
+      }
+      return await this.generate(messages as OpenAILLMPrompt[]);
+    }
   }
 }

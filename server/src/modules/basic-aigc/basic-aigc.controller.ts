@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { BasicAigcService } from './basic-aigc.service';
 import { ChatModelName } from '../llms/typings';
 import { ChatConfig } from './typings/chat';
+import { WeatherTool } from 'src/utils/get-current-weather';
 
 @Controller('basic-aigc')
 export class BasicAigcController {
@@ -42,5 +43,10 @@ export class BasicAigcController {
     @Body('type') type: ChatModelName,
   ) {
     return this.basicAigcService.runAgent(prompt, type);
+  }
+
+  @Post('/runFunctionCall')
+  async runFunctionCall(@Body('prompt') prompt: unknown) {
+    return this.basicAigcService.runFunctionCall(prompt, [WeatherTool]);
   }
 }
