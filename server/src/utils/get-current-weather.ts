@@ -41,4 +41,5 @@ export const WeatherTool = {
       required: ['location'],
     },
   },
+  call: getCurrentWeather,
 };

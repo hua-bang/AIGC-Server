@@ -12,7 +12,8 @@ import {
 import { CompletionGenerator } from './completion-generator';
 import { Injectable } from '@nestjs/common';
 import { DrawLLM } from '../../base/draw-llm';
-import { getCurrentWeather } from 'src/utils/get-current-weather';
+import { Tool } from 'src/typings/tool';
+import { ToolsInfo, getToolsInfo } from './helper/get-tool-info';
 
 @Injectable()
 export class OpenAILLM
@@ -149,42 +150,62 @@ export class OpenAILLM
     };
   }
 
-  async functionCall(
-    prompts: OpenAILLMPrompt[],
-    tools: OpenAI.Chat.Completions.ChatCompletionTool[],
-  ) {
+  /**
+   * 使用 OpenAI 聊天模型异步调用函数以生成回应。此函数主要处理与聊天模型的交互，处理工具调用，并管理消息流程。
+   *
+   * @param {OpenAILLMPrompt[]} prompts - 发送至聊天模型的提示数组。
+   * @param {Tool[]} tools - 与聊天模型一起使用的工具数组。
+   * @returns {Promise<Object>} - 处理后的聊天模型响应，包括任何工具调用。
+   */
+  async functionCall(prompts: OpenAILLMPrompt[], tools: Tool[]) {
     const completionBody = this.completionGenerator.generateBody(prompts);
+    const { tools: toolsForLLM, functionMap } = getToolsInfo(tools);
     const response = await this.instance?.chat.completions.create({
       ...completionBody,
-      tools,
+      tools: toolsForLLM,
       tool_choice: 'auto', // auto is default, but we'll be explicit
     });
     const responseMessage = response.choices[0].message;
 
     const toolCalls = responseMessage.tool_calls;
+
     if (!toolCalls) {
       return this.processOpenAILLMResponse(response);
     }
-
     const { messages } = completionBody;
 
-    if (responseMessage.tool_calls) {
-      const availableFunctions = {
-        get_current_weather: getCurrentWeather,
-      };
-      messages.push(responseMessage);
-      for (const toolCall of toolCalls) {
-        const functionName = toolCall.function.name;
-        const functionToCall = availableFunctions[functionName];
-        const functionArgs = JSON.parse(toolCall.function.arguments);
-        const functionResponse = functionToCall(functionArgs);
-        messages.push({
-          tool_call_id: toolCall.id,
-          role: 'tool',
-          content: functionResponse,
-        });
-      }
-      return await this.generate(messages as OpenAILLMPrompt[]);
+    return await this.processToolCalls(
+      toolCalls,
+      [...messages, responseMessage],
+      functionMap,
+    );
+  }
+
+  /**
+   * 处理聊天模型响应中的工具调用。此函数遍历每个工具调用，执行相应的函数，并组装最终要返回的消息序列。
+   *
+   * @param {OpenAI.Chat.Completions.ChatCompletionMessageToolCall[]} toolCalls - 聊天模型响应中的工具调用数组。
+   * @param {OpenAI.Chat.Completions.ChatCompletionMessageParam[]} messages - 消息数组，这些消息是处理中的一部分。
+   * @param {ToolsInfo['functionMap']} functionMap - 工具名称与相应函数的映射。
+   * @returns {Promise<OpenAILLMPrompt[]>} - 最终生成的消息序列。
+   */
+  async processToolCalls(
+    toolCalls: OpenAI.Chat.Completions.ChatCompletionMessageToolCall[],
+    messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[],
+    functionMap: ToolsInfo['functionMap'],
+  ) {
+    const nextMessages = [...messages];
+    for (const toolCall of toolCalls) {
+      const functionName = toolCall.function.name;
+      const functionToCall = functionMap[functionName];
+      const functionArgs = JSON.parse(toolCall.function.arguments);
+      const functionResponse = functionToCall(functionArgs);
+      nextMessages.push({
+        tool_call_id: toolCall.id,
+        role: 'tool',
+        content: functionResponse,
+      });
     }
+    return await this.generate(nextMessages as OpenAILLMPrompt[]);
   }
 }
