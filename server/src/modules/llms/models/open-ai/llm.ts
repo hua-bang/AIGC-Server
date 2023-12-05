@@ -90,12 +90,60 @@ export class OpenAILLM
    * @param prompt the prompt of generate image
    * @returns {Promise<{ url: string; }>}
    */
-  async draw(prompt: string): Promise<any> {
+  async draw(prompt: string) {
     return await this.instance.images.generate({
       model: defaultImageModel,
       n: 1,
       prompt,
       size: '1024x1024',
     });
+  }
+
+  async drawWithChat(prompts: OpenAILLMPrompt[]): Promise<OpenAILLMResponse> {
+    const messages: OpenAILLMPrompt[] = [
+      ...(prompts || []),
+      {
+        role: 'system',
+        content:
+          '你需要基于上方的对话，总结出一句 prompt， 用于 绘画大模型（如 Dall-E-3）来进行生成',
+      },
+    ];
+
+    const chatVisionRes = await this.chatWithVision(
+      messages as unknown as Array<OpenAI.Chat.Completions.ChatCompletionMessageParam>,
+    );
+
+    const { generateText: promptForDraw } = chatVisionRes;
+
+    const res = await this.draw(promptForDraw);
+
+    const urls = res.data.map((item) => item.url);
+
+    const contents = urls.map((url) => ({
+      type: 'image_url',
+      image_url: url,
+    }));
+
+    const generations = [
+      [
+        {
+          text: promptForDraw,
+          generationInfo: {
+            index: 0,
+            message: {
+              role: 'assistant',
+              content: contents,
+            },
+            finish_reason: 'stop',
+          },
+        },
+      ],
+    ];
+
+    return {
+      generateText: promptForDraw,
+      generations,
+      llmOutput: chatVisionRes.llmOutput,
+    };
   }
 }

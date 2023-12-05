@@ -32,8 +32,8 @@ export class BasicAigcController {
   }
 
   @Post('/generate-image')
-  async generateImg(@Body('prompt') prompt: string) {
-    return this.basicAigcService.generateImage(prompt);
+  async generateImg(@Body('prompt') prompt: unknown) {
+    return this.basicAigcService.chatWithGenerateImage(prompt);
   }
 
   @Post('/runAgent')

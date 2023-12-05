@@ -32,6 +32,10 @@ export class BasicAigcService {
     return this.llmService.getChatModel(type).chatWithVision?.(prompt);
   }
 
+  async chatWithGenerateImage(prompt: unknown) {
+    return this.llmService.getDrawModel().drawWithChat(prompt);
+  }
+
   async generateImage(prompt: string) {
     return this.llmService.getDrawModel().draw(prompt);
   }
