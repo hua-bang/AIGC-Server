@@ -1,13 +1,15 @@
 "use client";
 import { useState } from "react";
 import Content from "./components/content";
-import LLMSelector from "./components/llm-selector";
 import UserInput from "./components/user-input";
 import styles from "./index.module.css";
 import { PromptItem } from "@/app/typings/prompt";
+import { useLLMSelector } from "./components/llm-selector/hook";
 
 const LLMPlayground = () => {
   const [prompts, setPrompts] = useState<PromptItem[]>([]);
+
+  const { llm, renderSelector } = useLLMSelector();
 
   const handlePromptChange = (prompt: string) => {
     const promptItem = {
@@ -19,7 +21,7 @@ const LLMPlayground = () => {
 
   return (
     <div className={styles.playground}>
-      <LLMSelector className={styles.llmSelector} />
+      {renderSelector()}
       <Content className={styles.llmContent} prompts={prompts} />
       <UserInput
         className={styles.llmUserInput}
