@@ -2,13 +2,14 @@ import { PromptItem } from "@/app/typings/prompt";
 import React from "react";
 import { Image } from "antd";
 import styles from "./index.module.css";
+import mdRenderer from "./helper/md-renderer";
 
 const PromptRender: React.FC<PromptRenderProps> = (props) => {
   const { prompt } = props;
 
   const renderPromptContent = () => {
     if (typeof prompt.content === "string") {
-      return prompt.content;
+      return mdRenderer.parse(prompt.content);
     }
 
     return "---";
@@ -27,7 +28,12 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
       </div>
       <div>
         <div className={styles.promptLabel}>ChatGPT</div>
-        <div className={styles.promptContent}>{renderPromptContent()}</div>
+        <div
+          className={styles.promptContent}
+          dangerouslySetInnerHTML={{
+            __html: renderPromptContent(),
+          }}
+        ></div>
       </div>
     </div>
   );
