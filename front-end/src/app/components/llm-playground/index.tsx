@@ -5,18 +5,19 @@ import UserInput from "./components/user-input";
 import styles from "./index.module.css";
 import { PromptItem } from "@/app/typings/prompt";
 import { useLLMSelector } from "./components/llm-selector/hook";
+import useAIChat from "@/app/hooks/use-ai-chat";
 
 const LLMPlayground = () => {
-  const [prompts, setPrompts] = useState<PromptItem[]>([]);
-
   const { llm, renderSelector } = useLLMSelector();
+
+  const { prompts, sendMessage } = useAIChat(llm);
 
   const handlePromptChange = (prompt: string) => {
     const promptItem = {
       role: "user",
       content: prompt,
     };
-    setPrompts((prompts) => [...prompts, promptItem]);
+    sendMessage(promptItem);
   };
 
   return (

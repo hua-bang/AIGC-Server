@@ -1,4 +1,4 @@
 export interface PromptItem {
-  role: string;
-  content: string;
+  role: "user" | string;
+  content: string | Record<string, any>;
 }
