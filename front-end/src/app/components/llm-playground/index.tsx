@@ -1,9 +1,7 @@
 "use client";
-import { useState } from "react";
 import Content from "./components/content";
 import UserInput from "./components/user-input";
 import styles from "./index.module.css";
-import { PromptItem } from "@/app/typings/prompt";
 import { useLLMSelector } from "./components/llm-selector/hook";
 import useAIChat from "@/app/hooks/use-ai-chat";
 

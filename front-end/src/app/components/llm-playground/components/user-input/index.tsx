@@ -32,7 +32,11 @@ const UserInput: React.FC<UserInputProps> = ({ className, onPromptChange }) => {
           onChange={(e) => setPrompt(e.target.value)}
           size="large"
           suffix={
-            <SendOutlined className={styles.sendBtn} onClick={handleClick} />
+            <SendOutlined
+              disabled
+              className={styles.sendBtn}
+              onClick={handleClick}
+            />
           }
         />
       </div>

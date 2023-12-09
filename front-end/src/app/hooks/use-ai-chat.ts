@@ -1,11 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { message } from "antd";
 import { PromptItem } from "../typings/prompt";
 import { getAIChat } from "../apis/basic-aigc";
 
 function useAIChat(llm: string) {
-  const [prompts, setPrompts] = useState<PromptItem[]>([]);
+  const [prompts, setPrompts] = useState<PromptItem[]>([
+    {
+      role: "user",
+      content: "测试一下",
+    },
+  ]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setPrompts([
+      {
+        role: "user",
+        content: "测试一下",
+      },
+    ]);
+  }, [llm]);
 
   const sendMessage = async (prompt: PromptItem) => {
     setLoading(true);
