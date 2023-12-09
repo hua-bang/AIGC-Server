@@ -1,0 +1,15 @@
+.container {
+  width: 100%;
+  display: flex;
+  gap: 12px;
+}
+
+.promptLabel {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+.promptContent {
+  font-size: 14px;
+}

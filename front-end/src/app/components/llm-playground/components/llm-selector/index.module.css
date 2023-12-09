@@ -1,0 +1,14 @@
+.llmSelector {
+  display: flex;
+  width: 100%;
+}
+
+.selectLLMText {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.selectLLMIcon {
+  font-size: 14px;
+  font-weight: bold;
+}
