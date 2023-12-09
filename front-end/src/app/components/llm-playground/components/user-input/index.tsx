@@ -9,13 +9,19 @@ export interface UserInputProps {
   className?: string;
 
   onPromptChange?: (prompt: string) => void;
+
+  loading?: boolean;
 }
 
-const UserInput: React.FC<UserInputProps> = ({ className, onPromptChange }) => {
+const UserInput: React.FC<UserInputProps> = ({
+  className,
+  onPromptChange,
+  loading,
+}) => {
   const [prompt, setPrompt] = React.useState<string>("");
 
   const handleClick = () => {
-    if (!prompt) {
+    if (!prompt || loading) {
       return;
     }
     onPromptChange?.(prompt);
@@ -33,8 +39,10 @@ const UserInput: React.FC<UserInputProps> = ({ className, onPromptChange }) => {
           size="large"
           suffix={
             <SendOutlined
-              disabled
-              className={styles.sendBtn}
+              className={classnames(
+                styles.sendBtn,
+                loading ? styles.loading : ""
+              )}
               onClick={handleClick}
             />
           }

@@ -6,9 +6,9 @@ import { useLLMSelector } from "./components/llm-selector/hook";
 import useAIChat from "@/app/hooks/use-ai-chat";
 
 const LLMPlayground = () => {
-  const { llm, renderSelector } = useLLMSelector();
+  const { llm, llmInstance, renderSelector } = useLLMSelector();
 
-  const { prompts, sendMessage } = useAIChat(llm);
+  const { loading, prompts, sendMessage } = useAIChat(llm);
 
   const handlePromptChange = (prompt: string) => {
     const promptItem = {
@@ -21,9 +21,15 @@ const LLMPlayground = () => {
   return (
     <div className={styles.playground}>
       {renderSelector()}
-      <Content className={styles.llmContent} prompts={prompts} />
+      <Content
+        className={styles.llmContent}
+        prompts={prompts}
+        loading={loading}
+        llmInstance={llmInstance}
+      />
       <UserInput
         className={styles.llmUserInput}
+        loading={loading}
         onPromptChange={handlePromptChange}
       />
     </div>

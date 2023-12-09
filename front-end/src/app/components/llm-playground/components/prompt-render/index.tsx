@@ -3,9 +3,10 @@ import React from "react";
 import { Image } from "antd";
 import styles from "./index.module.css";
 import mdRenderer from "./helper/md-renderer";
+import { LLMItem } from "@/app/typings/llm";
 
 const PromptRender: React.FC<PromptRenderProps> = (props) => {
-  const { prompt } = props;
+  const { prompt, llmInstance } = props;
 
   const renderPromptContent = () => {
     if (typeof prompt.content === "string") {
@@ -32,7 +33,7 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
       </div>
       <div>
         <div className={styles.promptLabel}>
-          {prompt.role === "user" ? "User" : "ChatGPT"}
+          {prompt.role === "user" ? "User" : llmInstance?.label}
         </div>
         <div
           className={styles.promptContent}
@@ -47,6 +48,7 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
 
 export interface PromptRenderProps {
   prompt: PromptItem;
+  llmInstance?: LLMItem;
 }
 
 export default PromptRender;

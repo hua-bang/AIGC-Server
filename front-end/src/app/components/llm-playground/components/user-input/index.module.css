@@ -12,3 +12,9 @@
 .sendBtn {
   cursor: pointer;
 }
+
+.loading {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5;
+}
