@@ -22,9 +22,9 @@ function useAIChat(llm: string) {
         modelName: llm,
       });
 
-      const { choices } = data.data.llmOutput;
+      const { message } = data.data;
 
-      setPrompts((prev) => [...prev, choices[0].message]);
+      setPrompts((prev) => [...prev, message]);
     } catch (error: any) {
       message.warning(error.msg);
     }
