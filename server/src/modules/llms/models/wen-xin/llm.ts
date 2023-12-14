@@ -44,6 +44,10 @@ export class WenXinLLM implements ChatLLM<WenXinLLMPrompt, WenXinLLMResponse> {
 
     return {
       generations,
+      message: {
+        role: 'assistant',
+        content: result,
+      },
       generateText: result,
       llmOutput: response.data,
     };

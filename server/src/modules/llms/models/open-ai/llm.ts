@@ -82,6 +82,7 @@ export class OpenAILLM
     ];
 
     return {
+      message: completion.choices[0].message,
       generations,
       generateText,
       llmOutput: completion,

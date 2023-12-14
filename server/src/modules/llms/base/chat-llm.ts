@@ -3,8 +3,17 @@ import { BaseLLM } from '.';
 interface GenerationItem {
   text: string;
 }
+
+type Content = string | Record<string, any>;
+
+interface MessageItem {
+  role: string;
+  content: Content;
+}
+
 export interface ChatLLMBaseResponse {
   generateText: string;
+  message?: MessageItem;
   llmOutput?: Record<string, any>;
   generations?: Array<Array<GenerationItem>>;
 }
