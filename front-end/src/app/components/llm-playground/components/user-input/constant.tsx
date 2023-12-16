@@ -1,5 +1,4 @@
-import { ChatType } from "./tyings";
-
+import { ChatType } from "@/app/typings/llm";
 import {
   CommentOutlined,
   FileImageOutlined,
@@ -24,7 +23,6 @@ export const ChatTypeOptions: ChatTypeItem[] = [
   {
     type: ChatType.Vision,
     label: "图片识别",
-    disabled: true,
     description: "Upload an image and get a description",
     icon: <FileImageOutlined />,
   },
