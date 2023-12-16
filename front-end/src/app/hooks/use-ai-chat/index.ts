@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { message } from "antd";
 import { PromptItem } from "../../typings/prompt";
 import { getAIChat } from "../../apis/basic-aigc";
+import { ChatType } from "@/app/typings/llm";
 
 function useAIChat(llm: string) {
   const [prompts, setPrompts] = useState<PromptItem[]>([]);
@@ -11,7 +12,7 @@ function useAIChat(llm: string) {
     setPrompts([]);
   }, [llm]);
 
-  const sendMessage = async (prompt: PromptItem) => {
+  const sendMessage = async (prompt: PromptItem, chatType: ChatType) => {
     setLoading(true);
     try {
       const nextPrompts = [...prompts, prompt];
@@ -20,6 +21,7 @@ function useAIChat(llm: string) {
       const { data } = await getAIChat({
         prompt: nextPrompts,
         modelName: llm,
+        chatType,
       });
 
       const { message } = data.data;
@@ -31,7 +33,7 @@ function useAIChat(llm: string) {
     setLoading(false);
   };
 
-  return { loading, prompts, sendMessage };
+  return { loading, prompts, setPrompts, sendMessage };
 }
 
 export default useAIChat;
