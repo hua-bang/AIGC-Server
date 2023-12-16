@@ -72,7 +72,13 @@ const UserInput: React.FC<UserInputProps> = ({
           />
         </div>
         <div className={styles.submitBtn}>
-          <Button onClick={handleClick} icon={<SendOutlined />} size="large" />
+          <Button
+            disabled={!prompt}
+            loading={loading}
+            onClick={handleClick}
+            icon={<SendOutlined />}
+            size="large"
+          />
         </div>
       </div>
     </div>
