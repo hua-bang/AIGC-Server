@@ -1,5 +1,5 @@
 import { PromptItem } from "@/app/typings/prompt";
-import React from "react";
+import React, { useMemo } from "react";
 import { Image } from "antd";
 import styles from "./index.module.css";
 import mdRenderer from "./helper/md-renderer";
@@ -8,12 +8,39 @@ import { LLMItem } from "@/app/typings/llm";
 const PromptRender: React.FC<PromptRenderProps> = (props) => {
   const { prompt, llmInstance } = props;
 
+  const imgArr = useMemo(() => {
+    const { content } = prompt;
+    if (typeof content === "string") {
+      return undefined;
+    }
+
+    console.log(content);
+
+    const res = content.reduce((acc, curr) => {
+      if (curr.type === "image_url" && curr.image_url) {
+        acc.push(curr.image_url.url);
+      }
+      return acc;
+    }, [] as string[]);
+    console.log("res", res);
+    return res;
+  }, [prompt]);
+
+  console.log("imgArr", imgArr);
+
   const renderPromptContent = () => {
     if (typeof prompt.content === "string") {
       return mdRenderer.parse(prompt.content);
     }
+    const content: string = prompt.content.reduce((acc, curr) => {
+      if (curr.type !== "text") {
+        return acc;
+      }
 
-    return "---";
+      return `${acc} \n ${curr.text}`;
+    }, "");
+
+    return content;
   };
 
   return (
@@ -35,12 +62,22 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
         <div className={styles.promptLabel}>
           {prompt.role === "user" ? "User" : llmInstance?.label}
         </div>
-        <div
-          className={styles.promptContent}
-          dangerouslySetInnerHTML={{
-            __html: renderPromptContent(),
-          }}
-        ></div>
+        <div className={styles.promptContent}>
+          <div>
+            {imgArr?.length ? (
+              <Image.PreviewGroup>
+                {imgArr.map((img) => {
+                  return <Image width={200} key={img} src={img} />;
+                })}
+              </Image.PreviewGroup>
+            ) : undefined}
+          </div>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: renderPromptContent(),
+            }}
+          ></div>
+        </div>
       </div>
     </div>
   );

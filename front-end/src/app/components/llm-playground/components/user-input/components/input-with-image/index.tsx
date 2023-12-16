@@ -44,7 +44,7 @@ const InputWithImage: React.FC<InputWithImageProps> = (props) => {
 
     if (imageUrl) {
       inputWithImageValue.push({
-        type: "image",
+        type: "image_url",
         image_url: {
           url: imageUrl,
         },
