@@ -1,8 +1,9 @@
 "use client";
-import { Input } from "antd";
+import { Button, Input, Tabs } from "antd";
 import classnames from "classnames";
-import React, { useState } from "react";
+import React from "react";
 import styles from "./index.module.css";
+import { ChatTypeOptions } from "./constant";
 import { SendOutlined } from "@ant-design/icons";
 
 export interface UserInputProps {
@@ -14,9 +15,9 @@ export interface UserInputProps {
 }
 
 const UserInput: React.FC<UserInputProps> = ({
+  loading,
   className,
   onPromptChange,
-  loading,
 }) => {
   const [prompt, setPrompt] = React.useState<string>("");
 
@@ -32,7 +33,7 @@ const UserInput: React.FC<UserInputProps> = ({
     handlePromptChange();
   };
 
-  const handlePressEnter: React.KeyboardEventHandler<HTMLInputElement> = (
+  const handlePressEnter: React.KeyboardEventHandler<HTMLTextAreaElement> = (
     e
   ) => {
     if (e.nativeEvent.isComposing) {
@@ -41,27 +42,38 @@ const UserInput: React.FC<UserInputProps> = ({
     handlePromptChange();
   };
 
+  const renderTab = () => {
+    const tabItems = ChatTypeOptions.map((chatTypeItem) => {
+      return {
+        key: chatTypeItem.type,
+        label: chatTypeItem.label,
+        icon: chatTypeItem.icon,
+        disabled: chatTypeItem.disabled,
+      };
+    });
+
+    return <Tabs defaultActiveKey="2" items={tabItems} />;
+  };
+
   return (
-    <div className={classnames(className, styles.container)}>
-      <div className={styles.userInput}>
-        <Input
-          value={prompt}
-          onPressEnter={handlePressEnter}
-          placeholder="Input your prompt to generate creativity content."
-          onChange={(e) => {
-            setPrompt(e.target.value);
-          }}
-          size="large"
-          suffix={
-            <SendOutlined
-              className={classnames(
-                styles.sendBtn,
-                loading ? styles.loading : ""
-              )}
-              onClick={handleClick}
-            />
-          }
-        />
+    <div className={classnames(className, styles.wrapper)}>
+      <div className={styles.container}>
+        <div className={styles.typeSelector}>{renderTab()}</div>
+        <div className={styles.inputMain}>
+          <Input.TextArea
+            bordered={false}
+            value={prompt}
+            onPressEnter={handlePressEnter}
+            placeholder="Input your prompt to generate creativity content."
+            onChange={(e) => {
+              setPrompt(e.target.value);
+            }}
+            size="large"
+          />
+        </div>
+        <div className={styles.submitBtn}>
+          <Button onClick={handleClick} icon={<SendOutlined />} size="large" />
+        </div>
       </div>
     </div>
   );
