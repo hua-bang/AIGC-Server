@@ -22,11 +22,8 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
       }
       return acc;
     }, [] as string[]);
-    console.log("res", res);
     return res;
   }, [prompt]);
-
-  console.log("imgArr", imgArr);
 
   const renderPromptContent = () => {
     if (typeof prompt.content === "string") {

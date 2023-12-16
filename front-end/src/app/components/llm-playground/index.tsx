@@ -10,7 +10,7 @@ import { ChatType } from "@/app/typings/llm";
 const LLMPlayground = () => {
   const { llm, llmInstance, renderSelector } = useLLMSelector();
 
-  const { loading, prompts, sendMessage } = useAIChat(llm);
+  const { loading, prompts, setPrompts, sendMessage } = useAIChat(llm);
 
   const handlePromptChange = (
     prompt: PromptItem["content"],
@@ -21,6 +21,10 @@ const LLMPlayground = () => {
       content: prompt,
     };
     sendMessage(promptItem, chatType);
+  };
+
+  const handleChangeTypeChange = () => {
+    setPrompts([]);
   };
 
   return (
@@ -36,6 +40,7 @@ const LLMPlayground = () => {
         className={styles.llmUserInput}
         loading={loading}
         onPromptChange={handlePromptChange}
+        onChatTypeChange={handleChangeTypeChange}
       />
     </div>
   );

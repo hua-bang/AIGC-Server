@@ -1,13 +1,14 @@
 "use client";
 import { Button, Input } from "antd";
 import classnames from "classnames";
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./index.module.css";
 import { SendOutlined } from "@ant-design/icons";
 import { useChatTypeSelector } from "./hooks/use-chat-type-selector";
 import { ChatVisionContent, PromptItem } from "@/app/typings/prompt";
 import InputWithImage from "./components/input-with-image";
 import { ChatType } from "@/app/typings/llm";
+import { useUpdateEffect } from "@/app/hooks/use-update-effect";
 
 export interface UserInputProps {
   className?: string;
@@ -15,12 +16,15 @@ export interface UserInputProps {
   onPromptChange?: (prompt: PromptItem["content"], type: ChatType) => void;
 
   loading?: boolean;
+
+  onChatTypeChange?: (type: ChatType) => void;
 }
 
 const UserInput: React.FC<UserInputProps> = ({
   loading,
   className,
   onPromptChange,
+  onChatTypeChange,
 }) => {
   const [prompt, setPrompt] = React.useState<PromptItem["content"]>("");
 
@@ -73,6 +77,11 @@ const UserInput: React.FC<UserInputProps> = ({
       />
     );
   };
+
+  useUpdateEffect(() => {
+    setPrompt("");
+    onChatTypeChange?.(chatType);
+  }, [chatType]);
 
   return (
     <div className={classnames(className, styles.wrapper)}>

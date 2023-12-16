@@ -33,7 +33,7 @@ function useAIChat(llm: string) {
     setLoading(false);
   };
 
-  return { loading, prompts, sendMessage };
+  return { loading, prompts, setPrompts, sendMessage };
 }
 
 export default useAIChat;
