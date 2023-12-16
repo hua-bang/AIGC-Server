@@ -1,7 +1,7 @@
 "use client";
 import { Input } from "antd";
 import classnames from "classnames";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./index.module.css";
 import { SendOutlined } from "@ant-design/icons";
 
@@ -20,7 +20,7 @@ const UserInput: React.FC<UserInputProps> = ({
 }) => {
   const [prompt, setPrompt] = React.useState<string>("");
 
-  const handleClick = () => {
+  const handlePromptChange = () => {
     if (!prompt || loading) {
       return;
     }
@@ -28,14 +28,29 @@ const UserInput: React.FC<UserInputProps> = ({
     setPrompt("");
   };
 
+  const handleClick = () => {
+    handlePromptChange();
+  };
+
+  const handlePressEnter: React.KeyboardEventHandler<HTMLInputElement> = (
+    e
+  ) => {
+    if (e.nativeEvent.isComposing) {
+      return;
+    }
+    handlePromptChange();
+  };
+
   return (
     <div className={classnames(className, styles.container)}>
       <div className={styles.userInput}>
         <Input
           value={prompt}
-          onPressEnter={handleClick}
+          onPressEnter={handlePressEnter}
           placeholder="Input your prompt to generate creativity content."
-          onChange={(e) => setPrompt(e.target.value)}
+          onChange={(e) => {
+            setPrompt(e.target.value);
+          }}
           size="large"
           suffix={
             <SendOutlined
