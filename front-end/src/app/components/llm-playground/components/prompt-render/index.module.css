@@ -13,3 +13,36 @@
 .promptContent {
   font-size: 14px;
 }
+
+.userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 35%;
+  line-height: 40px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+.markdownWrapper {
+  box-sizing: border-box;
+  max-width: 100%;
+  margin-top: 10px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.01);
+  padding: 10px;
+  font-size: 14px;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  user-select: text;
+  word-break: break-word;
+  border: var(--border-in-light);
+  position: relative;
+  transition: all ease 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.userMarkdownWrapper {
+  background-color: #e6f6fe;
+}

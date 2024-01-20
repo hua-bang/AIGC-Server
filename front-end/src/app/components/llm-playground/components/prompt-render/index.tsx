@@ -2,19 +2,18 @@ import { PromptItem } from "@/app/typings/prompt";
 import React, { useMemo } from "react";
 import { Image } from "antd";
 import styles from "./index.module.css";
-import mdRenderer from "./helper/md-renderer";
 import { LLMItem } from "@/app/typings/llm";
+import { Markdown } from "@/app/components/markdown";
+import classnames from "classnames";
 
 const PromptRender: React.FC<PromptRenderProps> = (props) => {
-  const { prompt, llmInstance } = props;
+  const { prompt, llmInstance, loading } = props;
 
   const imgArr = useMemo(() => {
     const { content } = prompt;
     if (typeof content === "string") {
       return undefined;
     }
-
-    console.log(content);
 
     const res = content.reduce((acc, curr) => {
       if (curr.type === "image_url" && curr.image_url) {
@@ -27,7 +26,7 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
 
   const renderPromptContent = () => {
     if (typeof prompt.content === "string") {
-      return mdRenderer.parse(prompt.content);
+      return prompt.content;
     }
     const content: string = prompt.content.reduce((acc, curr) => {
       if (curr.type !== "text") {
@@ -43,17 +42,19 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.containerImg}>
-        <Image
-          style={{ borderRadius: "50%" }}
-          alt="logo"
-          preview={false}
-          width={40}
-          src={
-            prompt.role === "user"
-              ? "https://files.oaiusercontent.com/file-bqXaZBRh0ULv6TCCex5kY5d0?se=2123-10-19T07%3A59%3A01Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3D4c4bd46d-e8d8-42ec-996b-87e3d2932009.png&sig=GaskdBJbUeQeVM7oNGRzqvcSzlRWYimX8aNjicdpYlE%3D"
-              : "https://files.oaiusercontent.com/file-NApY0rCxRGeqNC3z1Ha33WG0?se=2123-10-17T02%3A03%3A58Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3Da15730bf-2048-47f4-b826-e02a67e31788.png&sig=FgYSAua12finxV6tdKL9BTJaDtHChokO77KKdMbI30U%3D"
-          }
-        />
+        {prompt.role === "user" ? (
+          <div className={styles.userAvatar}>🧑‍💻</div>
+        ) : (
+          <Image
+            style={{ borderRadius: "30%" }}
+            alt="logo"
+            preview={false}
+            width={40}
+            src={
+              "https://files.oaiusercontent.com/file-NApY0rCxRGeqNC3z1Ha33WG0?se=2123-10-17T02%3A03%3A58Z&sp=r&sv=2021-08-06&sr=b&rscc=max-age%3D31536000%2C%20immutable&rscd=attachment%3B%20filename%3Da15730bf-2048-47f4-b826-e02a67e31788.png&sig=FgYSAua12finxV6tdKL9BTJaDtHChokO77KKdMbI30U%3D"
+            }
+          />
+        )}
       </div>
       <div>
         <div className={styles.promptLabel}>
@@ -69,11 +70,18 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
               </Image.PreviewGroup>
             ) : undefined}
           </div>
+
           <div
-            dangerouslySetInnerHTML={{
-              __html: renderPromptContent(),
-            }}
-          ></div>
+            className={classnames(
+              styles.markdownWrapper,
+              prompt.role === "user" ? styles.userMarkdownWrapper : undefined
+            )}
+          >
+            <Markdown
+              content={renderPromptContent() as string}
+              loading={loading}
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -83,6 +91,7 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
 export interface PromptRenderProps {
   prompt: PromptItem;
   llmInstance?: LLMItem;
+  loading?: boolean;
 }
 
 export default PromptRender;

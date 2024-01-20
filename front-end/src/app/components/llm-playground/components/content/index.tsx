@@ -36,6 +36,7 @@ const Content: React.FC<ContentProps> = ({
                 role: llmInstance?.key || "assistant",
                 content: "内容生成中....",
               }}
+              loading={true}
             />
           </div>
         )}
@@ -49,7 +50,7 @@ const Content: React.FC<ContentProps> = ({
         <div className={styles.empty}>
           <div style={{ width: "100%", textAlign: "center" }}>
             <Image
-              style={{ borderRadius: "50%" }}
+              style={{ borderRadius: "35%" }}
               alt="logo"
               preview={false}
               width={120}
