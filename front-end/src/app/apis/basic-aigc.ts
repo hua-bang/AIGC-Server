@@ -3,7 +3,7 @@ import { ChatParams } from "../apis-typings/basic-aigc";
 import { ChatType } from "../typings/llm";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: process.env.NEXT_PUBLIC_BACK_END_BASE_PATH,
 });
 
 export const getAIChat = (params: ChatParams) => {
