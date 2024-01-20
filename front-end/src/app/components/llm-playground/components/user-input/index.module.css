@@ -13,6 +13,14 @@
   padding: 0 12px 12px 20px;
 }
 
+/* 屏幕宽度至少为 700px 时的样式 */
+@media (max-width: 1325px) {
+  .container {
+    width: 90%;
+  }
+}
+
+
 .submitBtn {
   margin-top: 8px;
   text-align: right;

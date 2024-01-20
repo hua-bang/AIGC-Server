@@ -1,0 +1,13 @@
+.layoutWrapper {
+  display: flex;
+
+  .leftContent {
+    background: #eee8fa;
+    box-shadow: inset -2px 0px 2px 0px rgba(0, 0, 0, 0.05);
+    transition: width ease 0.25s;
+  }
+
+  .rightContent {
+    flex: 1;
+  }
+}
