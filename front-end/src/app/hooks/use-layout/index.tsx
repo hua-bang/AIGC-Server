@@ -11,7 +11,6 @@ const useLayout = (options: useLayoutOptions) => {
       <div className={styles.layoutWrapper}>
         <div
           className={styles.leftContent}
-          onClick={() => setCollapsed(!collapsed)}
           style={{ width: collapsed ? "225px" : "0px" }}
         >
           {leftContent}
