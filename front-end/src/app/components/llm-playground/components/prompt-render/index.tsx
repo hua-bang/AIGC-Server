@@ -4,9 +4,10 @@ import { Image } from "antd";
 import styles from "./index.module.css";
 import { LLMItem } from "@/app/typings/llm";
 import { Markdown } from "@/app/components/markdown";
+import classnames from "classnames";
 
 const PromptRender: React.FC<PromptRenderProps> = (props) => {
-  const { prompt, llmInstance } = props;
+  const { prompt, llmInstance, loading } = props;
 
   const imgArr = useMemo(() => {
     const { content } = prompt;
@@ -45,7 +46,7 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
           <div className={styles.userAvatar}>🧑‍💻</div>
         ) : (
           <Image
-            style={{ borderRadius: "50%" }}
+            style={{ borderRadius: "30%" }}
             alt="logo"
             preview={false}
             width={40}
@@ -69,10 +70,16 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
               </Image.PreviewGroup>
             ) : undefined}
           </div>
-          <div>
+
+          <div
+            className={classnames(
+              styles.markdownWrapper,
+              prompt.role === "user" ? styles.userMarkdownWrapper : undefined
+            )}
+          >
             <Markdown
               content={renderPromptContent() as string}
-              loading={false}
+              loading={loading}
             />
           </div>
         </div>
@@ -84,6 +91,7 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
 export interface PromptRenderProps {
   prompt: PromptItem;
   llmInstance?: LLMItem;
+  loading?: boolean;
 }
 
 export default PromptRender;

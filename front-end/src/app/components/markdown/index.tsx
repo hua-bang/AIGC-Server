@@ -13,6 +13,7 @@ import LoadingIcon from "@/app/asserts/icons/three-dots.svg";
 import React from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { copyToClipboard } from "@/app/utils";
+import Image from "next/image";
 
 export function Mermaid(props: { code: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -175,7 +176,11 @@ export function Markdown(
       dir="auto"
     >
       {props.loading ? (
-        <LoadingIcon />
+        <Image
+          style={{ color: "blueviolet" }}
+          src={LoadingIcon}
+          alt="loading"
+        />
       ) : (
         <MarkdownContent content={props.content} />
       )}
