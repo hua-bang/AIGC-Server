@@ -1,3 +1,13 @@
+.playgroundWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: white;
+  flex-wrap: wrap;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
 .playground {
   display: flex;
   flex-direction: column;

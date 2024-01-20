@@ -28,20 +28,22 @@ const LLMPlayground = () => {
   };
 
   return (
-    <div className={styles.playground}>
-      {renderSelector()}
-      <Content
-        className={styles.llmContent}
-        prompts={prompts}
-        loading={loading}
-        llmInstance={llmInstance}
-      />
-      <UserInput
-        className={styles.llmUserInput}
-        loading={loading}
-        onPromptChange={handlePromptChange}
-        onChatTypeChange={handleChangeTypeChange}
-      />
+    <div className={styles.playgroundWrapper}>
+      <div className={styles.playground}>
+        {renderSelector()}
+        <Content
+          className={styles.llmContent}
+          prompts={prompts}
+          loading={loading}
+          llmInstance={llmInstance}
+        />
+        <UserInput
+          className={styles.llmUserInput}
+          loading={loading}
+          onPromptChange={handlePromptChange}
+          onChatTypeChange={handleChangeTypeChange}
+        />
+      </div>
     </div>
   );
 };
