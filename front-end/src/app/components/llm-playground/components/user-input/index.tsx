@@ -9,6 +9,7 @@ import { ChatVisionContent, PromptItem } from "@/app/typings/prompt";
 import InputWithImage from "./components/input-with-image";
 import { ChatType } from "@/app/typings/llm";
 import { useUpdateEffect } from "@/app/hooks/use-update-effect";
+import { sleep } from "langchain/util/time";
 
 export interface UserInputProps {
   className?: string;
@@ -26,16 +27,18 @@ const UserInput: React.FC<UserInputProps> = ({
   onPromptChange,
   onChatTypeChange,
 }) => {
-  const [prompt, setPrompt] = React.useState<PromptItem["content"]>("");
+  const [prompt, setPrompt] = React.useState<PromptItem["content"]>();
 
   const { chatType, renderChatTypeSelector } = useChatTypeSelector();
 
-  const handlePromptChange = () => {
+  const handlePromptChange = async () => {
     if (!prompt || loading) {
       return;
     }
     onPromptChange?.(prompt, chatType);
-    setPrompt("");
+    await sleep(100);
+
+    setPrompt(undefined);
   };
 
   const handleClick = () => {
@@ -79,7 +82,7 @@ const UserInput: React.FC<UserInputProps> = ({
   };
 
   useUpdateEffect(() => {
-    setPrompt("");
+    setPrompt(undefined);
     onChatTypeChange?.(chatType);
   }, [chatType]);
 
