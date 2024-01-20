@@ -12,7 +12,7 @@ import {
 import { CompletionGenerator } from './completion-generator';
 import { Injectable } from '@nestjs/common';
 import { DrawLLM } from '../../base/draw-llm';
-import { Tool } from 'src/typings/tool';
+import { Tool } from '../../../../typings/tool';
 import { ToolsInfo, getToolsInfo } from './helper/get-tool-info';
 
 @Injectable()

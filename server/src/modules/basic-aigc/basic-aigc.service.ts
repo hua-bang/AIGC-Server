@@ -4,7 +4,7 @@ import { ChatModelName } from '../llms/typings';
 import { ChatConfig } from './typings/chat';
 import { PrompterService } from '../prompter/prompter.service';
 import { LangChainService } from '../lang-chain/lang-chain.service';
-import { Tool } from 'src/typings/tool';
+import { Tool } from '../../typings/tool';
 
 @Injectable()
 export class BasicAigcService {

@@ -4,7 +4,7 @@ import {
   ArgumentsHost,
   HttpException,
 } from '@nestjs/common';
-import { isObject } from 'src/utils/isObject';
+import { isObject } from '../../utils/isObject';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
