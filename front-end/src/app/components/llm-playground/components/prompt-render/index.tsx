@@ -2,8 +2,8 @@ import { PromptItem } from "@/app/typings/prompt";
 import React, { useMemo } from "react";
 import { Image } from "antd";
 import styles from "./index.module.css";
-import mdRenderer from "./helper/md-renderer";
 import { LLMItem } from "@/app/typings/llm";
+import { Markdown } from "@/app/components/markdown";
 
 const PromptRender: React.FC<PromptRenderProps> = (props) => {
   const { prompt, llmInstance } = props;
@@ -25,7 +25,7 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
 
   const renderPromptContent = () => {
     if (typeof prompt.content === "string") {
-      return mdRenderer.parse(prompt.content);
+      return prompt.content;
     }
     const content: string = prompt.content.reduce((acc, curr) => {
       if (curr.type !== "text") {
@@ -69,11 +69,12 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
               </Image.PreviewGroup>
             ) : undefined}
           </div>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: renderPromptContent(),
-            }}
-          ></div>
+          <div>
+            <Markdown
+              content={renderPromptContent() as string}
+              loading={false}
+            />
+          </div>
         </div>
       </div>
     </div>
