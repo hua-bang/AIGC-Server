@@ -1,3 +1,5 @@
+import { message } from "antd";
+
 /**
  * 复制到剪贴板
  * @param text 需要复制的文本
@@ -15,5 +17,18 @@ export async function copyToClipboard(text: string) {
       document.execCommand("copy");
     } catch (error) {}
     document.body.removeChild(textArea);
+  }
+}
+
+/**
+ * 复制到剪贴板并提示
+ * @param text 需要复制的文本
+ */
+export async function copyToClipboardWithMessage(text: string) {
+  try {
+    await copyToClipboard(text);
+    message.success("复制成功");
+  } catch (error) {
+    message.error("复制失败");
   }
 }

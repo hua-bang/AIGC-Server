@@ -12,7 +12,7 @@ import mermaid from "mermaid";
 import LoadingIcon from "@/app/asserts/icons/three-dots.svg";
 import React from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { copyToClipboard } from "@/app/utils";
+import { copyToClipboardWithMessage as copyToClipboard } from "@/app/utils";
 import Image from "next/image";
 
 export function Mermaid(props: { code: string }) {
