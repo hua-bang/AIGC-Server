@@ -42,18 +42,7 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
     <div className={styles.container}>
       <div className={styles.containerImg}>
         {prompt.role === "user" ? (
-          <div
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: "50%",
-              lineHeight: "40px",
-              textAlign: "center",
-              border: "1px solid #ccc",
-            }}
-          >
-            🧑‍💻
-          </div>
+          <div className={styles.userAvatar}>🧑‍💻</div>
         ) : (
           <Image
             style={{ borderRadius: "50%" }}
