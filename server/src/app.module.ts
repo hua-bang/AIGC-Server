@@ -9,11 +9,14 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getEnvConfig } from './utils/env';
 
-@Module({
-  imports: [
-    BasicAigcModule,
-    // load config
-    ConfigModule.forRoot(),
+const ImportsConfig = [
+  BasicAigcModule,
+  // load config
+  ConfigModule.forRoot(),
+];
+
+if (getEnvConfig('USERNAME')) {
+  ImportsConfig.push(
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: getEnvConfig('HOST'),
@@ -22,7 +25,11 @@ import { getEnvConfig } from './utils/env';
       password: getEnvConfig('PASSWORD'),
       database: getEnvConfig('DATABASE'),
     }),
-  ],
+  );
+}
+
+@Module({
+  imports: ImportsConfig,
   controllers: [AppController],
   providers: [
     AppService,

@@ -23,7 +23,9 @@ export class OpenAILLM
   instance: OpenAI | undefined;
 
   constructor(private completionGenerator: CompletionGenerator) {
-    this.instance = new OpenAI(getDefaultClientOptions());
+    try {
+      this.instance = new OpenAI(getDefaultClientOptions());
+    } catch {}
   }
 
   async call(prompt: OpenAILLMPrompt): Promise<OpenAILLMResponse> {
