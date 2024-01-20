@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { AccessToken } from 'src/commons/access-token';
 import { ACCESS_TOKEN_URL } from './constants';
+import { AccessToken } from '../../../../commons/access-token';
 
 @Injectable()
 export class WenXinAccessToken extends AccessToken {

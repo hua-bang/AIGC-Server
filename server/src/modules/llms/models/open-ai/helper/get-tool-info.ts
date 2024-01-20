@@ -1,5 +1,5 @@
 import OpenAI from 'openai';
-import { Tool } from 'src/typings/tool';
+import { Tool } from '../../../../../typings/tool';
 
 export interface ToolsInfo {
   tools: OpenAI.Chat.Completions.ChatCompletionTool[];

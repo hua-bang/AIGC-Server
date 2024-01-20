@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { BasicAigcService } from './basic-aigc.service';
 import { ChatModelName } from '../llms/typings';
 import { ChatConfig } from './typings/chat';
-import { WeatherTool } from 'src/utils/get-current-weather';
+import { WeatherTool } from '../../utils/get-current-weather';
 
 @Controller('basic-aigc')
 export class BasicAigcController {
