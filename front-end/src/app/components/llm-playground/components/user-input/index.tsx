@@ -9,7 +9,7 @@ import { ChatVisionContent, PromptItem } from "@/app/typings/prompt";
 import InputWithImage from "./components/input-with-image";
 import { ChatType } from "@/app/typings/llm";
 import { useUpdateEffect } from "@/app/hooks/use-update-effect";
-import { sleep } from "langchain/util/time";
+import { sleep } from "@/app/utils/sleep";
 
 export interface UserInputProps {
   className?: string;
