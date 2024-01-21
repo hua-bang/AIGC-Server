@@ -14,6 +14,7 @@
     "@types/uuid": "^9.0.7",
     "antd": "^5.11.4",
     "axios": "^1.6.2",
+    "classnames": "^2.5.1",
     "highlight.js": "^11.9.0",
     "katex": "^0.16.9",
     "marked": "^11.0.1",
