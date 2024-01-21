@@ -12,6 +12,7 @@
   border: 2px solid transparent;
   position: relative;
   content-visibility: auto;
+  overflow-x: hidden;
 
   &:hover {
     background-color: #f1f1f1;
@@ -19,5 +20,22 @@
 }
 
 .active {
-  border-color: rgb(207, 187, 187);
+  border-color: #d07df5c9;
+  background-color: #f1f1f1;
+}
+
+.chatItemTitle {
+  font-size: 14px;
+  font-weight: bolder;
+  display: block;
+  width: calc(100% - 15px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chatItemTip {
+  color: rgb(166, 166, 166);
+  font-size: 12px;
+  margin-top: 2px;
 }

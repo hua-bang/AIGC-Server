@@ -6,7 +6,7 @@ import { Chat } from "@/app/typings/chat";
 import ChatItem from "@/app/components/chat-item";
 
 export const useChatLayout = (options: UseChatLayoutOptions) => {
-  const { list = [], selectChatId } = options;
+  const { list = [], selectChatId, onSelectChat } = options;
 
   const leftContent = (
     <div className={styles.chatMenu}>
@@ -31,8 +31,11 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
       <div className={styles.chatList}>
         {list.map((chatItem) => (
           <ChatItem
-            active={chatItem.id === selectChatId}
+            onClick={() => {
+              chatItem.id && onSelectChat?.(chatItem.id);
+            }}
             key={chatItem.id}
+            active={chatItem.id === selectChatId}
             data={chatItem}
           />
         ))}
@@ -53,6 +56,7 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
 interface UseChatLayoutOptions extends useLayoutOptions {
   list?: Chat[];
   selectChatId?: string;
+  onSelectChat?: (chatId: string) => void;
 }
 
 export default useChatLayout;

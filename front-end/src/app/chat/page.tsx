@@ -29,6 +29,7 @@ const Chat: React.FC = () => {
   const { renderLayout } = useChatLayout({
     list: chatList as Chat[],
     selectChatId,
+    onSelectChat: setSelectChatId,
     rightContent: (
       <LLMPlayground
         showAddIcon={true}
