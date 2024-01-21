@@ -28,8 +28,9 @@ const LLMPlayground: React.FC<LLMPlaygroundProps> = ({
       role: "user",
       content: prompt,
     };
+    const currentChatId = chat?.id;
     const nextChat = await sendMessage(promptItem, chatType);
-    if (nextChat) {
+    if (nextChat && currentChatId === chat?.id) {
       onChatChange?.({
         ...nextChat,
         id: chat?.id,
