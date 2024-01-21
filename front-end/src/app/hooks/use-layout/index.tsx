@@ -2,7 +2,9 @@ import React, { ReactNode, useState } from "react";
 import styles from "./index.module.scss";
 
 const useLayout = (options: useLayoutOptions) => {
-  const [collapsed, setCollapsed] = useState(options?.defaultCollapsed ?? true);
+  const [collapsed, setCollapsed] = useState(
+    options?.defaultCollapsed ?? false
+  );
 
   const { leftContent, rightContent } = options;
 
@@ -11,7 +13,9 @@ const useLayout = (options: useLayoutOptions) => {
       <div className={styles.layoutWrapper}>
         <div
           className={styles.leftContent}
-          style={{ width: collapsed ? "225px" : "0px" }}
+          style={{
+            width: collapsed ? undefined : "0px",
+          }}
         >
           {leftContent}
         </div>

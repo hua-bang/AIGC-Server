@@ -3,16 +3,21 @@ import useLayout, { useLayoutOptions } from "@/app/hooks/use-layout";
 import {
   AppstoreOutlined,
   CodeOutlined,
+  GithubOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
 import styles from "./index.module.scss";
 import { Chat } from "@/app/typings/chat";
 import ChatItem from "@/app/components/chat-item";
 import { message } from "antd";
+import React, { ReactNode, useRef } from "react";
 
 export const useChatLayout = (options: UseChatLayoutOptions) => {
   const { list = [], selectChatId, onSelectChat } = options;
+
+  const renderMenuCollapsedIconRef = useRef<() => ReactNode>();
 
   const handleFeatureClick = () => {
     message.info("Coming soon");
@@ -50,6 +55,21 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
           />
         ))}
       </div>
+      <div className={styles.bottomArea}>
+        <div className={styles.leftContent}>
+          <div className={styles.bottomIcon}>
+            <SettingOutlined />
+          </div>
+          <div className={styles.bottomIcon}>
+            <GithubOutlined />
+          </div>
+        </div>
+        <div className={styles.rightContent}>
+          <div className={styles.bottomIcon}>
+            {renderMenuCollapsedIconRef.current?.()}
+          </div>
+        </div>
+      </div>
     </div>
   );
 
@@ -69,6 +89,8 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
       />
     );
   };
+
+  renderMenuCollapsedIconRef.current = renderMenuCollapsedIcon;
 
   return {
     renderLayout,
