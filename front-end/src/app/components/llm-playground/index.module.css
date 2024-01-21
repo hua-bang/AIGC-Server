@@ -19,6 +19,19 @@
   padding: 16px;
 }
 
+.selectorWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.featureBtnArea {
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+}
+
 .llmSelector {
   width: 100%;
   box-sizing: border-box;

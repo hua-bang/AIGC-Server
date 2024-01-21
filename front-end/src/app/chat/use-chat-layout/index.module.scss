@@ -41,3 +41,13 @@
   }
 }
 
+.chatList {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  max-height: 800px;
+  overflow-y: scroll;
+}
+

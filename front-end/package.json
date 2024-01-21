@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
     "@headlessui/react": "^1.7.17",
+    "@types/uuid": "^9.0.7",
     "antd": "^5.11.4",
     "axios": "^1.6.2",
     "highlight.js": "^11.9.0",
@@ -26,7 +28,8 @@
     "remark-gfm": "^4.0.0",
     "remark-math": "^6.0.0",
     "sass": "^1.70.0",
-    "use-debounce": "^10.0.0"
+    "use-debounce": "^10.0.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",

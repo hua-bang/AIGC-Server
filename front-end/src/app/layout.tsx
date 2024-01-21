@@ -8,8 +8,8 @@ import "./styles/highlight.scss";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "AIGC Server FrontEnd",
-  description: "AIGC Server FrontEnd",
+  title: "AI assistant",
+  description: "ChatBot is your AI assistant",
 };
 
 export default function RootLayout({
