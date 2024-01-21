@@ -20,6 +20,9 @@ dependencies:
   axios:
     specifier: ^1.6.2
     version: registry.npmmirror.com/axios@1.6.5
+  classnames:
+    specifier: ^2.5.1
+    version: registry.npmmirror.com/classnames@2.5.1
   highlight.js:
     specifier: ^11.9.0
     version: registry.npmmirror.com/highlight.js@11.9.0

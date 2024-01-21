@@ -4,9 +4,14 @@ import { AppstoreOutlined, CodeOutlined } from "@ant-design/icons";
 import styles from "./index.module.scss";
 import { Chat } from "@/app/typings/chat";
 import ChatItem from "@/app/components/chat-item";
+import { message } from "antd";
 
 export const useChatLayout = (options: UseChatLayoutOptions) => {
   const { list = [], selectChatId, onSelectChat } = options;
+
+  const handleFeatureClick = () => {
+    message.info("Coming soon");
+  };
 
   const leftContent = (
     <div className={styles.chatMenu}>
@@ -18,11 +23,11 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
       </div>
 
       <div className={styles.chatFeatures}>
-        <div className={styles.chatFeaturesItem}>
+        <div className={styles.chatFeaturesItem} onClick={handleFeatureClick}>
           <AppstoreOutlined />
           Topic
         </div>
-        <div className={styles.chatFeaturesItem}>
+        <div className={styles.chatFeaturesItem} onClick={handleFeatureClick}>
           <CodeOutlined />
           Plugin
         </div>

@@ -1,6 +1,6 @@
 import { Input, Upload, UploadProps, message } from "antd";
 import { TextAreaProps } from "antd/es/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { RcFile, UploadChangeParam, UploadFile } from "antd/es/upload";
 import { imgFileToBase64 } from "@/app/utils/file-2-base64";
@@ -60,6 +60,12 @@ const InputWithImage: React.FC<InputWithImageProps> = (props) => {
 
     props.onChange?.(inputWithImageValue);
   };
+
+  useEffect(() => {
+    if (!props.value) {
+      setImageUrl(undefined);
+    }
+  }, [props.value]);
 
   return (
     <div style={{ display: "flex" }}>

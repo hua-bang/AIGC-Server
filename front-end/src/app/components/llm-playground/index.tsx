@@ -10,6 +10,7 @@ import React, { useEffect } from "react";
 import { PlusCircleOutlined, ShareAltOutlined } from "@ant-design/icons";
 import { Chat } from "@/app/typings/chat";
 import { v4 as uuid } from "uuid";
+import { message } from "antd";
 
 const LLMPlayground: React.FC<LLMPlaygroundProps> = ({
   chat,
@@ -28,8 +29,9 @@ const LLMPlayground: React.FC<LLMPlaygroundProps> = ({
       role: "user",
       content: prompt,
     };
+    const currentChatId = chat?.id;
     const nextChat = await sendMessage(promptItem, chatType);
-    if (nextChat) {
+    if (nextChat && currentChatId === chat?.id) {
       onChatChange?.({
         ...nextChat,
         id: chat?.id,
@@ -62,7 +64,11 @@ const LLMPlayground: React.FC<LLMPlaygroundProps> = ({
             {showAddIcon && (
               <PlusCircleOutlined onClick={handleChangeTypeChange} />
             )}
-            <ShareAltOutlined />
+            <ShareAltOutlined
+              onClick={() => {
+                message.info("Coming soon");
+              }}
+            />
           </div>
         </div>
 
