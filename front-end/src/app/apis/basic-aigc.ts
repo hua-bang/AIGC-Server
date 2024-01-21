@@ -7,6 +7,14 @@ const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACK_END_BASE_PATH,
 });
 
+axiosInstance.interceptors.response.use((res) => {
+  if (res.data.code !== 0) {
+    throw new Error(res.data.message);
+  }
+
+  return res;
+});
+
 export const getAIChat = (params: ChatParams) => {
   const url =
     params.chatType === ChatType.Vision

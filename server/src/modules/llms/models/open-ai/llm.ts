@@ -40,16 +40,16 @@ export class OpenAILLM
     const { openai_api_key } = this.request.headers as any;
 
     if (!openai_api_key) {
-      throw new HttpException('openai_api_key is required', 401);
+      throw new HttpException('openai_api_key is required', 200);
     }
 
     try {
-      new OpenAI({
+      return new OpenAI({
         ...getDefaultClientOptions(),
         apiKey: openai_api_key,
       });
     } catch {
-      throw new HttpException('openai_api_key is error', 401);
+      throw new HttpException('openai_api_key is error', 200);
     }
   }
 
