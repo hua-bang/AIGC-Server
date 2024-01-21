@@ -10,6 +10,7 @@
   @media (max-width: 700px) {
     .leftContent {
       width: 0 !important;
+      display: none;
     }
   }  
 
@@ -17,3 +18,9 @@
     flex: 1;
   }
 }
+
+@media (max-width: 700px) {
+  .layoutWrapper {
+    display: block;
+  }
+}  
