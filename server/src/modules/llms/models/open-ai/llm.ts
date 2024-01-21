@@ -10,10 +10,11 @@ import {
   defaultModel,
 } from './config';
 import { CompletionGenerator } from './completion-generator';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { DrawLLM } from '../../base/draw-llm';
 import { Tool } from '../../../../typings/tool';
 import { ToolsInfo, getToolsInfo } from './helper/get-tool-info';
+import { REQUEST } from '@nestjs/core';
 
 @Injectable()
 export class OpenAILLM
@@ -22,10 +23,30 @@ export class OpenAILLM
   public modelName = MODEL_NAME;
   instance: OpenAI | undefined;
 
-  constructor(private completionGenerator: CompletionGenerator) {
+  constructor(
+    private completionGenerator: CompletionGenerator,
+    @Inject(REQUEST) private request: Request,
+  ) {
     try {
       this.instance = new OpenAI(getDefaultClientOptions());
     } catch {}
+  }
+
+  getInstance(): OpenAI | undefined {
+    if (this.instance) {
+      return this.instance;
+    }
+
+    const { openai_api_key } = this.request.headers as any;
+
+    if (!openai_api_key) {
+      throw new Error('openai_api_key is required');
+    }
+
+    return new OpenAI({
+      ...getDefaultClientOptions(),
+      apiKey: openai_api_key,
+    });
   }
 
   async call(prompt: OpenAILLMPrompt): Promise<OpenAILLMResponse> {
@@ -34,7 +55,7 @@ export class OpenAILLM
 
   async generate(prompts: OpenAILLMPrompt[]): Promise<OpenAILLMResponse> {
     const completionBody = this.completionGenerator.generateBody(prompts);
-    const completion = await this.instance?.chat.completions.create(
+    const completion = await this.getInstance()?.chat.completions.create(
       completionBody,
     );
 
@@ -55,7 +76,7 @@ export class OpenAILLM
   chatWithVision = async (
     prompts: Array<OpenAI.Chat.Completions.ChatCompletionMessageParam>,
   ) => {
-    const completion = await this.instance.chat.completions.create({
+    const completion = await this.getInstance()?.chat.completions.create({
       model: defaultVisionModel,
       messages: prompts,
       max_tokens: DEFAULT_MAX_TOKEN,
@@ -97,7 +118,7 @@ export class OpenAILLM
    * @returns {Promise<{ url: string; }>}
    */
   async draw(prompt: string) {
-    return await this.instance.images.generate({
+    return await this.getInstance()?.images.generate({
       model: defaultImageModel,
       n: 1,
       prompt,
@@ -163,7 +184,7 @@ export class OpenAILLM
   async functionCall(prompts: OpenAILLMPrompt[], tools: Tool[]) {
     const completionBody = this.completionGenerator.generateBody(prompts);
     const { tools: toolsForLLM, functionMap } = getToolsInfo(tools);
-    const response = await this.instance?.chat.completions.create({
+    const response = await this.getInstance()?.chat.completions.create({
       ...completionBody,
       tools: toolsForLLM,
       tool_choice: 'auto', // auto is default, but we'll be explicit

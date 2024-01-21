@@ -16,6 +16,7 @@ const LLMPlayground: React.FC<LLMPlaygroundProps> = ({
   chat,
   onChatChange,
   showAddIcon = false,
+  renderPrefixIcon,
 }) => {
   const { llm, llmInstance, renderSelector } = useLLMSelector();
 
@@ -59,6 +60,7 @@ const LLMPlayground: React.FC<LLMPlaygroundProps> = ({
     <div className={styles.playgroundWrapper}>
       <div className={styles.playground}>
         <div className={styles.selectorWrapper}>
+          {renderPrefixIcon?.()}
           {renderSelector()}
           <div className={styles.featureBtnArea}>
             {showAddIcon && (
@@ -93,6 +95,8 @@ interface LLMPlaygroundProps {
   chat?: Chat;
   showAddIcon?: boolean;
   onChatChange?: (chat: Chat) => void;
+
+  renderPrefixIcon?: () => React.ReactNode;
 }
 
 export default LLMPlayground;

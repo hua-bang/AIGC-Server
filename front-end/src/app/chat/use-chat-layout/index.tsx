@@ -1,13 +1,25 @@
 "use client";
 import useLayout, { useLayoutOptions } from "@/app/hooks/use-layout";
-import { AppstoreOutlined, CodeOutlined } from "@ant-design/icons";
+import {
+  AppstoreOutlined,
+  CodeOutlined,
+  GithubOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+} from "@ant-design/icons";
 import styles from "./index.module.scss";
 import { Chat } from "@/app/typings/chat";
 import ChatItem from "@/app/components/chat-item";
 import { message } from "antd";
+import React, { ReactNode, useRef } from "react";
+import useSetting from "@/app/hooks/use-setting";
 
 export const useChatLayout = (options: UseChatLayoutOptions) => {
   const { list = [], selectChatId, onSelectChat } = options;
+
+  const renderMenuCollapsedIconRef = useRef<() => ReactNode>();
+
+  const { renderSetting } = useSetting();
 
   const handleFeatureClick = () => {
     message.info("Coming soon");
@@ -45,16 +57,48 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
           />
         ))}
       </div>
+      <div className={styles.bottomArea}>
+        <div className={styles.leftContent}>
+          <div className={styles.bottomIcon}>{renderSetting()}</div>
+          <div className={styles.bottomIcon}>
+            <GithubOutlined
+              onClick={() => {
+                window.open("https://github.com/hua-bang/AIGC-Server");
+              }}
+            />
+          </div>
+        </div>
+        <div className={styles.rightContent}>
+          <div className={styles.bottomIcon}>
+            {renderMenuCollapsedIconRef.current?.()}
+          </div>
+        </div>
+      </div>
     </div>
   );
 
-  const { renderLayout } = useLayout({
+  const { renderLayout, collapsed, setCollapsed } = useLayout({
     ...options,
     leftContent,
   });
 
+  const renderMenuCollapsedIcon = () => {
+    const MenuIcon = collapsed ? MenuFoldOutlined : MenuUnfoldOutlined;
+
+    return (
+      <MenuIcon
+        onClick={() => {
+          setCollapsed((prev) => !prev);
+        }}
+      />
+    );
+  };
+
+  renderMenuCollapsedIconRef.current = renderMenuCollapsedIcon;
+
   return {
     renderLayout,
+    renderMenuCollapsedIcon,
   };
 };
 

@@ -1,5 +1,15 @@
 .chatMenu {
   padding: 20px;
+  position: relative;
+  box-sizing: border-box;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  > div {
+    width: 100%;
+  }
 
   .chatMenuHeader {
     font-size: 20px;
@@ -18,7 +28,6 @@
     display: flex;
 
     gap: 8px;
-    
   }
 
   .chatFeaturesItem {
@@ -34,11 +43,15 @@
     transition: all ease 0.5s;
     gap: 4px;
 
-
     &:hover {
       background: #e5e5e5;
     }
   }
+}
+
+.bottomArea {
+  display: flex;
+  justify-content: space-between;
 }
 
 .chatList {
@@ -46,8 +59,27 @@
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  flex: 1;
 
   max-height: 800px;
   overflow-y: scroll;
+  align-content: baseline;
 }
 
+.leftContent {
+  display: flex;
+  gap: 6px;
+}
+
+.bottomIcon {
+  background: white;
+  border-radius: 15%;
+  padding: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all ease 0.5s;
+
+  &:hover {
+    background: #e5e5e5;
+  }
+}

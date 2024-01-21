@@ -1,16 +1,21 @@
 .layoutWrapper {
   display: flex;
+  position: relative;
 
   .leftContent {
     background: #eee8fa;
     box-shadow: inset -2px 0px 2px 0px rgba(0, 0, 0, 0.05);
     transition: width ease 0.25s;
+    overflow: hidden;
+    width: 225px;
   }
 
   @media (max-width: 700px) {
     .leftContent {
-      width: 0 !important;
-      display: none;
+      position: absolute;
+      z-index: 10;
+      width: 100vw;
+      height: 100vh;
     }
   }  
 
