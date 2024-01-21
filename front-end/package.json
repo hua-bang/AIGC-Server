@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
     "@headlessui/react": "^1.7.17",
     "@types/uuid": "^9.0.7",
     "antd": "^5.11.4",
