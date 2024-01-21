@@ -10,7 +10,7 @@ import {
   defaultModel,
 } from './config';
 import { CompletionGenerator } from './completion-generator';
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { DrawLLM } from '../../base/draw-llm';
 import { Tool } from '../../../../typings/tool';
 import { ToolsInfo, getToolsInfo } from './helper/get-tool-info';
@@ -40,13 +40,17 @@ export class OpenAILLM
     const { openai_api_key } = this.request.headers as any;
 
     if (!openai_api_key) {
-      throw new Error('openai_api_key is required');
+      throw new HttpException('openai_api_key is required', 200);
     }
 
-    return new OpenAI({
-      ...getDefaultClientOptions(),
-      apiKey: openai_api_key,
-    });
+    try {
+      return new OpenAI({
+        ...getDefaultClientOptions(),
+        apiKey: openai_api_key,
+      });
+    } catch {
+      throw new HttpException('openai_api_key is error', 200);
+    }
   }
 
   async call(prompt: OpenAILLMPrompt): Promise<OpenAILLMResponse> {

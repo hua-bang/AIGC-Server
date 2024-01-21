@@ -39,7 +39,7 @@ function useAIChat(llm: string) {
 
       return nextChat;
     } catch (error: any) {
-      message.warning(error.msg);
+      message.warning(error.message || "服务器异常");
     } finally {
       setLoading(false);
     }
