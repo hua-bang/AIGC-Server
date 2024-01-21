@@ -1,6 +1,11 @@
 "use client";
 import useLayout, { useLayoutOptions } from "@/app/hooks/use-layout";
-import { AppstoreOutlined, CodeOutlined } from "@ant-design/icons";
+import {
+  AppstoreOutlined,
+  CodeOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+} from "@ant-design/icons";
 import styles from "./index.module.scss";
 import { Chat } from "@/app/typings/chat";
 import ChatItem from "@/app/components/chat-item";
@@ -48,13 +53,26 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
     </div>
   );
 
-  const { renderLayout } = useLayout({
+  const { renderLayout, collapsed, setCollapsed } = useLayout({
     ...options,
     leftContent,
   });
 
+  const renderMenuCollapsedIcon = () => {
+    const MenuIcon = collapsed ? MenuFoldOutlined : MenuUnfoldOutlined;
+
+    return (
+      <MenuIcon
+        onClick={() => {
+          setCollapsed((prev) => !prev);
+        }}
+      />
+    );
+  };
+
   return {
     renderLayout,
+    renderMenuCollapsedIcon,
   };
 };
 

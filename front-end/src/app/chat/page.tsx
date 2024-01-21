@@ -26,7 +26,7 @@ const Chat: React.FC = () => {
     setChatList(nextChatList);
   };
 
-  const { renderLayout } = useChatLayout({
+  const { renderLayout, renderMenuCollapsedIcon } = useChatLayout({
     list: chatList as Chat[],
     selectChatId,
     onSelectChat: setSelectChatId,
@@ -35,6 +35,9 @@ const Chat: React.FC = () => {
         showAddIcon={true}
         chat={chat}
         onChatChange={handleChatChange}
+        renderPrefixIcon={() => {
+          return renderMenuCollapsedIcon();
+        }}
       />
     ),
   });
