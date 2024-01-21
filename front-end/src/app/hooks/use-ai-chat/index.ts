@@ -3,6 +3,7 @@ import { message } from "antd";
 import { PromptItem } from "../../typings/prompt";
 import { getAIChat } from "../../apis/basic-aigc";
 import { ChatType } from "@/app/typings/llm";
+import { Chat } from "@/app/typings/chat";
 
 function useAIChat(llm: string) {
   const [prompts, setPrompts] = useState<PromptItem[]>([]);
@@ -15,7 +16,7 @@ function useAIChat(llm: string) {
   const sendMessage = async (prompt: PromptItem, chatType: ChatType) => {
     setLoading(true);
     try {
-      const nextPrompts = [...prompts, prompt];
+      let nextPrompts = [...prompts, prompt];
       setPrompts(nextPrompts);
 
       const { data } = await getAIChat({
@@ -26,11 +27,23 @@ function useAIChat(llm: string) {
 
       const { message } = data.data;
 
-      setPrompts((prev) => [...prev, message]);
+      nextPrompts = [...nextPrompts, message];
+
+      setPrompts(nextPrompts);
+
+      const nextChat: Chat = {
+        prompt: nextPrompts,
+        modelName: llm,
+        chatType,
+      };
+
+      return nextChat;
     } catch (error: any) {
       message.warning(error.msg);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
+    return null;
   };
 
   return { loading, prompts, setPrompts, sendMessage };

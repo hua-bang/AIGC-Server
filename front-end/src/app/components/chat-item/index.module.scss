@@ -1,0 +1,23 @@
+.chatItem {
+  width: 100%;
+  padding: 10px 14px;
+  background-color: var(--white);
+  border-radius: 10px;
+  box-shadow: var(--card-shadow);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  border: 2px solid transparent;
+  position: relative;
+  content-visibility: auto;
+
+  &:hover {
+    background-color: #f1f1f1;
+  }
+}
+
+.active {
+  border-color: rgb(207, 187, 187);
+}

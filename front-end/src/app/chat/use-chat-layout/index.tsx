@@ -2,8 +2,12 @@
 import useLayout, { useLayoutOptions } from "@/app/hooks/use-layout";
 import { AppstoreOutlined, CodeOutlined } from "@ant-design/icons";
 import styles from "./index.module.scss";
+import { Chat } from "@/app/typings/chat";
+import ChatItem from "@/app/components/chat-item";
 
-export const useChatLayout = (options: useLayoutOptions) => {
+export const useChatLayout = (options: UseChatLayoutOptions) => {
+  const { list = [], selectChatId } = options;
+
   const leftContent = (
     <div className={styles.chatMenu}>
       <div>
@@ -23,6 +27,16 @@ export const useChatLayout = (options: useLayoutOptions) => {
           Plugin
         </div>
       </div>
+
+      <div className={styles.chatList}>
+        {list.map((chatItem) => (
+          <ChatItem
+            active={chatItem.id === selectChatId}
+            key={chatItem.id}
+            data={chatItem}
+          />
+        ))}
+      </div>
     </div>
   );
 
@@ -35,5 +49,10 @@ export const useChatLayout = (options: useLayoutOptions) => {
     renderLayout,
   };
 };
+
+interface UseChatLayoutOptions extends useLayoutOptions {
+  list?: Chat[];
+  selectChatId?: string;
+}
 
 export default useChatLayout;
