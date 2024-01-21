@@ -6,18 +6,20 @@ import {
   GithubOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  SettingOutlined,
 } from "@ant-design/icons";
 import styles from "./index.module.scss";
 import { Chat } from "@/app/typings/chat";
 import ChatItem from "@/app/components/chat-item";
 import { message } from "antd";
 import React, { ReactNode, useRef } from "react";
+import useSetting from "@/app/hooks/use-setting";
 
 export const useChatLayout = (options: UseChatLayoutOptions) => {
   const { list = [], selectChatId, onSelectChat } = options;
 
   const renderMenuCollapsedIconRef = useRef<() => ReactNode>();
+
+  const { renderSetting } = useSetting();
 
   const handleFeatureClick = () => {
     message.info("Coming soon");
@@ -57,11 +59,13 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
       </div>
       <div className={styles.bottomArea}>
         <div className={styles.leftContent}>
+          <div className={styles.bottomIcon}>{renderSetting()}</div>
           <div className={styles.bottomIcon}>
-            <SettingOutlined />
-          </div>
-          <div className={styles.bottomIcon}>
-            <GithubOutlined />
+            <GithubOutlined
+              onClick={() => {
+                window.open("https://github.com/hua-bang/AIGC-Server");
+              }}
+            />
           </div>
         </div>
         <div className={styles.rightContent}>
