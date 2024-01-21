@@ -4,7 +4,7 @@ import useChatLayout from "./use-chat-layout";
 
 const Chat: React.FC = () => {
   const { renderLayout } = useChatLayout({
-    rightContent: <LLMPlayground />,
+    rightContent: <LLMPlayground showAddIcon={true} />,
   });
 
   return renderLayout();

@@ -6,8 +6,12 @@ import { useLLMSelector } from "./components/llm-selector/hook";
 import useAIChat from "@/app/hooks/use-ai-chat";
 import { PromptItem } from "@/app/typings/prompt";
 import { ChatType } from "@/app/typings/llm";
+import React from "react";
+import { PlusCircleOutlined, ShareAltOutlined } from "@ant-design/icons";
 
-const LLMPlayground = () => {
+const LLMPlayground: React.FC<LLMPlaygroundProps> = ({
+  showAddIcon = false,
+}) => {
   const { llm, llmInstance, renderSelector } = useLLMSelector();
 
   const { loading, prompts, setPrompts, sendMessage } = useAIChat(llm);
@@ -30,7 +34,16 @@ const LLMPlayground = () => {
   return (
     <div className={styles.playgroundWrapper}>
       <div className={styles.playground}>
-        {renderSelector()}
+        <div className={styles.selectorWrapper}>
+          {renderSelector()}
+          <div className={styles.featureBtnArea}>
+            {showAddIcon && (
+              <PlusCircleOutlined onClick={handleChangeTypeChange} />
+            )}
+            <ShareAltOutlined />
+          </div>
+        </div>
+
         <Content
           className={styles.llmContent}
           prompts={prompts}
@@ -47,5 +60,9 @@ const LLMPlayground = () => {
     </div>
   );
 };
+
+interface LLMPlaygroundProps {
+  showAddIcon?: boolean;
+}
 
 export default LLMPlayground;
