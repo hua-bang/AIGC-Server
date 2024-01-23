@@ -20,8 +20,5 @@ COPY . .
 # 构建应用
 RUN pnpm run build
 
-# 暴露 3000 端口
-EXPOSE 3000
-
 # 定义容器启动时执行的命令
 CMD ["pnpm", "run", "start:prod"]
