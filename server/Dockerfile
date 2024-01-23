@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 
 # 复制 package.json 和 pnpm-lock.yaml 文件
 RUN pwd
-COPY ./server/package*.json ./server/pnpm-lock.yaml* ./
+COPY package*.json pnpm-lock.yaml* ./
 
 # 安装 pnpm
 RUN npm install -g pnpm
@@ -15,7 +15,7 @@ RUN npm install -g pnpm
 RUN pnpm install
 
 # 复制项目文件和目录到工作目录
-COPY ./server .
+COPY . .
 
 # 构建应用
 RUN pnpm run build
