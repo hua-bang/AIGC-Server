@@ -37,16 +37,18 @@ export class OpenAILLM
       return this.instance;
     }
 
-    const { openai_api_key } = this.request.headers as any;
+    const { openai_api_key, Openai_api_key } = this.request.headers as any;
 
-    if (!openai_api_key) {
+    const key = openai_api_key || Openai_api_key;
+
+    if (!key) {
       throw new HttpException('openai_api_key is required', 200);
     }
 
     try {
       return new OpenAI({
         ...getDefaultClientOptions(),
-        apiKey: openai_api_key,
+        apiKey: key,
       });
     } catch {
       throw new HttpException('openai_api_key is error', 200);
