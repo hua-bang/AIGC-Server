@@ -37,6 +37,8 @@ export class OpenAILLM
       return this.instance;
     }
 
+    console.log('this.request.headers ', this.request.headers);
+
     const { openai_api_key, Openai_api_key } = this.request.headers as any;
 
     const key = openai_api_key || Openai_api_key;
