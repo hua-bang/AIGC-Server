@@ -8,22 +8,24 @@ let axiosInstance: AxiosInstance | undefined;
 const createAxiosInstance = () => {
   console.log("process.env", process.env);
 
-  axiosInstance = axios.create({
+  const instance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_BACK_END_BASE_PATH,
   });
 
-  axiosInstance.interceptors.response.use((res) => {
+  instance.interceptors.response.use((res) => {
     if (res.data.code !== 0) {
       throw new Error(res.data.message);
     }
 
     return res;
   });
+
+  return instance;
 };
 
 export const getAIChat = (params: ChatParams) => {
   if (!axiosInstance) {
-    createAxiosInstance();
+    axiosInstance = createAxiosInstance();
   }
 
   const url =
@@ -31,7 +33,7 @@ export const getAIChat = (params: ChatParams) => {
       ? "/basic-aigc/chatWithVision"
       : "/basic-aigc/chat";
 
-  return axiosInstance?.post(url, params, {
+  return axiosInstance.post(url, params, {
     headers: {
       "Content-Type": "application/json",
       OPENAI_API_KEY: getStoreAppSetting()?.OPENAI_API_KEY,
