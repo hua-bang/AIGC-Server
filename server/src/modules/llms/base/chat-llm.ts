@@ -35,5 +35,11 @@ export interface ChatLLM<
 
   chat(prompts: ChatLLMPrompt | Array<ChatLLMPrompt>): Promise<ChatLLMResponse>;
 
-  chatSSE?: (prompts: ChatLLMPrompt | Array<ChatLLMPrompt>) => Promise<any>;
+  chatSSE?: (
+    prompts: ChatLLMPrompt | Array<ChatLLMPrompt>,
+    options: {
+      onMessage: (data: Record<string, any>) => void;
+      onComplete: () => void;
+    },
+  ) => Promise<any>;
 }

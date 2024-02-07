@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Post, Sse } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, Sse } from '@nestjs/common';
 import { BasicAigcService } from './basic-aigc.service';
 import { ChatModelName } from '../llms/typings';
 import { ChatConfig } from './typings/chat';
 import { WeatherTool } from '../../utils/get-current-weather';
+import { Response } from 'express';
 
 @Controller('basic-aigc')
 export class BasicAigcController {
@@ -24,13 +25,36 @@ export class BasicAigcController {
     return this.basicAigcService.chat(prompt, modelName, chatConfig);
   }
 
-  @Sse('/chat/sse')
+  @Post('/chat/sse')
   async chatSSE(
+    @Res() response: Response,
     @Body('prompt') prompt: unknown,
     @Body('modelName') modelName: ChatModelName,
     @Body('config') chatConfig?: ChatConfig,
   ) {
-    return this.basicAigcService.chatSSE(prompt, modelName, chatConfig);
+    response.set({
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      Connection: 'keep-alive',
+    });
+
+    const sendMessage = (data) => {
+      response.write(`data: ${JSON.stringify(data)}\n\n`);
+    };
+
+    this.basicAigcService.chatSSE(
+      prompt,
+      modelName,
+      {
+        onMessage: (data) => {
+          sendMessage(data);
+        },
+        onComplete: () => {
+          response.end();
+        },
+      },
+      chatConfig,
+    );
   }
 
   @Post('/chatWithVision')
