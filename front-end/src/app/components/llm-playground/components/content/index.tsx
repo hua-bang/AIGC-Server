@@ -23,13 +23,13 @@ const Content: React.FC<ContentProps> = ({
       <>
         {promptList.map((prompt, index) => {
           return (
-            <div key={index} style={{ marginBottom: 16 }}>
+            <div key={index} style={{ marginBottom: 16, width: '100%', overflowX: 'scroll' }}>
               <PromptRender llmInstance={llmInstance} prompt={prompt} />
             </div>
           );
         })}
         {loading && (
-          <div key="loading" style={{ marginBottom: 16 }}>
+          <div key="loading" style={{ marginBottom: 16, width: '100%', overflowX: 'scroll' }}>
             <PromptRender
               llmInstance={llmInstance}
               prompt={{
