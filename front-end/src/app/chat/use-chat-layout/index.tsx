@@ -80,7 +80,7 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
   const { renderLayout, collapsed, setCollapsed } = useLayout({
     ...options,
     leftContent,
-    defaultCollapsed:  window.innerWidth > 700
+    defaultCollapsed:  (getWindow()?.innerWidth || 0) > 700
   });
 
   const renderMenuCollapsedIcon = () => {
