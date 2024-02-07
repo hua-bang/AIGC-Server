@@ -15,6 +15,7 @@ import { DrawLLM } from '../../base/draw-llm';
 import { Tool } from '../../../../typings/tool';
 import { ToolsInfo, getToolsInfo } from './helper/get-tool-info';
 import { REQUEST } from '@nestjs/core';
+import { processOpenAILLMResponse } from './helper/process-data';
 
 @Injectable()
 export class OpenAILLM
@@ -67,7 +68,7 @@ export class OpenAILLM
       completionBody,
     );
 
-    return this.processOpenAILLMResponse(completion);
+    return processOpenAILLMResponse(completion);
   }
 
   async chat(
@@ -90,35 +91,8 @@ export class OpenAILLM
       max_tokens: DEFAULT_MAX_TOKEN,
     });
 
-    return this.processOpenAILLMResponse(completion);
+    return processOpenAILLMResponse(completion);
   };
-
-  /**
-   * process openai response to our response
-   * @param completion the completion is the response from openai
-   * @returns { OpenAILLMResponse }
-   */
-  processOpenAILLMResponse(
-    completion: OpenAI.Chat.Completions.ChatCompletion,
-  ): OpenAILLMResponse {
-    const generateText = completion.choices[0].message.content;
-
-    const generations = [
-      [
-        {
-          text: generateText,
-          generationInfo: completion.choices[0],
-        },
-      ],
-    ];
-
-    return {
-      message: completion.choices[0].message,
-      generations,
-      generateText,
-      llmOutput: completion,
-    };
-  }
 
   /**
    * Prompt to Image
@@ -202,7 +176,7 @@ export class OpenAILLM
     const toolCalls = responseMessage.tool_calls;
 
     if (!toolCalls) {
-      return this.processOpenAILLMResponse(response);
+      return processOpenAILLMResponse(response);
     }
     const { messages } = completionBody;
 
