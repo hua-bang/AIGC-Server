@@ -56,7 +56,7 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
           />
         )}
       </div>
-      <div>
+      <div style={{ maxWidth: 'calc(100% - 52px)' }}>
         <div className={styles.promptLabel}>
           {prompt.role === "user" ? "User" : llmInstance?.label}
         </div>
