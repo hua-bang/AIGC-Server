@@ -4,6 +4,26 @@
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
+  position: relative;
+  max-height: 100%;
+  overflow-y: scroll;
+}
+
+.scrollToBottomBtn {
+  position: absolute;
+  bottom: 10px;
+  right: calc(50% - 17.5px);
+  font-size: 20px;
+  cursor: pointer;
+  border: 1px solid #d90d0d;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border-color: rgba(0, 0, 0, 0.1);
+  background-color: white;
 }
 
 .empty {
