@@ -35,6 +35,7 @@
 .llmSelector {
   width: 100%;
   box-sizing: border-box;
+  position: relative;
 }
 
 .llmContent {
@@ -42,8 +43,9 @@
   box-sizing: border-box;
   flex: 1;
   padding: 16px 8px;
-  overflow-y: scroll;
+  align-items: center;
   overflow-x: hidden;
+  position: relative;
 }
 
 .llmUserInput {
