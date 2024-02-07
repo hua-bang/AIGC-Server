@@ -1,7 +1,7 @@
 /**
  * 获取 window 变量
  */
-const getWindow = () => {
+export const getWindow = () => {
   if (typeof window === 'undefined') {
     return null;
   }
