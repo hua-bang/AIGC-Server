@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { LLMService } from '../llms/llm.service';
 import { ChatModelName } from '../llms/typings';
 import { ChatConfig } from './typings/chat';
@@ -24,6 +24,24 @@ export class BasicAigcService {
       prompt,
     );
     return this.llmService.getChatModel(type).chat(prompts);
+  }
+
+  async chatSSE(
+    prompt: unknown,
+    type: ChatModelName = ChatModelName.OpenAI,
+    config?: ChatConfig,
+  ) {
+    const prompts = this.prompterService.generatePrompt(
+      config?.promptConfig?.id,
+      prompt,
+    );
+    const res = this.llmService.getChatModel(type).chatSSE?.(prompts);
+
+    if (!res) {
+      throw new HttpException('the model is not support sse', 200);
+    }
+
+    return res;
   }
 
   async chatWithVision(

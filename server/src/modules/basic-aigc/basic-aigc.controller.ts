@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Sse } from '@nestjs/common';
 import { BasicAigcService } from './basic-aigc.service';
 import { ChatModelName } from '../llms/typings';
 import { ChatConfig } from './typings/chat';
@@ -22,6 +22,15 @@ export class BasicAigcController {
     @Body('config') chatConfig?: ChatConfig,
   ) {
     return this.basicAigcService.chat(prompt, modelName, chatConfig);
+  }
+
+  @Sse('/chat/sse')
+  async chatSSE(
+    @Body('prompt') prompt: unknown,
+    @Body('modelName') modelName: ChatModelName,
+    @Body('config') chatConfig?: ChatConfig,
+  ) {
+    return this.basicAigcService.chatSSE(prompt, modelName, chatConfig);
   }
 
   @Post('/chatWithVision')
