@@ -29,13 +29,19 @@ export class BasicAigcService {
   async chatSSE(
     prompt: unknown,
     type: ChatModelName = ChatModelName.OpenAI,
+    sseOptions: {
+      onMessage: (data: Record<string, any>) => void;
+      onComplete: () => void;
+    },
     config?: ChatConfig,
   ) {
     const prompts = this.prompterService.generatePrompt(
       config?.promptConfig?.id,
       prompt,
     );
-    const res = this.llmService.getChatModel(type).chatSSE?.(prompts);
+    const res = this.llmService
+      .getChatModel(type)
+      .chatSSE?.(prompts, sseOptions);
 
     if (!res) {
       throw new HttpException('the model is not support sse', 200);

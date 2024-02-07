@@ -74,29 +74,25 @@ export class OpenAILLM
   /**
    * 使用 OpenAI 聊天模型基于 SSE 生成回应。
    */
-  async chatSSE(prompt: OpenAILLMPrompt | Array<OpenAILLMPrompt>) {
+  async chatSSE(prompt: OpenAILLMPrompt | Array<OpenAILLMPrompt>, options) {
     const finalPrompt = Array.isArray(prompt) ? prompt : [prompt];
     const completionBody = this.completionGenerator.generateBody(finalPrompt);
 
-    return new Observable((subscriber) => {
-      (async () => {
-        const stream = await this.getInstance()?.chat.completions.create({
-          ...completionBody,
-          stream: true,
-        });
-        for await (const chunk of stream) {
-          const isFinish = chunk.choices[0]?.finish_reason === 'stop';
-
-          if (isFinish) {
-            subscriber.complete();
-            break;
-          }
-
-          const content = chunk.choices[0]?.delta?.content || '';
-          subscriber.next({ content });
-        }
-      })();
+    const stream = await this.getInstance()?.chat.completions.create({
+      ...completionBody,
+      stream: true,
     });
+    for await (const chunk of stream) {
+      const isFinish = chunk.choices[0]?.finish_reason === 'stop';
+
+      if (isFinish) {
+        options.onComplete?.();
+        break;
+      }
+
+      const content = chunk.choices[0]?.delta?.content || '';
+      options.onMessage({ content });
+    }
   }
 
   async chat(
