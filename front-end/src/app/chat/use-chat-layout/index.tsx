@@ -13,6 +13,7 @@ import ChatItem from "@/app/components/chat-item";
 import { message } from "antd";
 import React, { ReactNode, useRef } from "react";
 import useSetting from "@/app/hooks/use-setting";
+import { getWindow } from "@/app/utils/window";
 
 export const useChatLayout = (options: UseChatLayoutOptions) => {
   const { list = [], selectChatId, onSelectChat } = options;
