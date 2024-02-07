@@ -7,7 +7,6 @@ import {
   defaultVisionModel,
   getDefaultClientOptions,
   defaultImageModel,
-  defaultModel,
 } from './config';
 import { CompletionGenerator } from './completion-generator';
 import { HttpException, Inject, Injectable } from '@nestjs/common';
@@ -16,6 +15,7 @@ import { Tool } from '../../../../typings/tool';
 import { ToolsInfo, getToolsInfo } from './helper/get-tool-info';
 import { REQUEST } from '@nestjs/core';
 import { processOpenAILLMResponse } from './helper/process-data';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class OpenAILLM
@@ -69,6 +69,34 @@ export class OpenAILLM
     );
 
     return processOpenAILLMResponse(completion);
+  }
+
+  /**
+   * 使用 OpenAI 聊天模型基于 SSE 生成回应。
+   */
+  async chatSSE(prompt: OpenAILLMPrompt | Array<OpenAILLMPrompt>) {
+    const finalPrompt = Array.isArray(prompt) ? prompt : [prompt];
+    const completionBody = this.completionGenerator.generateBody(finalPrompt);
+
+    return new Observable((subscriber) => {
+      (async () => {
+        const stream = await this.getInstance()?.chat.completions.create({
+          ...completionBody,
+          stream: true,
+        });
+        for await (const chunk of stream) {
+          const isFinish = chunk.choices[0]?.finish_reason === 'stop';
+
+          if (isFinish) {
+            subscriber.complete();
+            break;
+          }
+
+          const content = chunk.choices[0]?.delta?.content || '';
+          subscriber.next({ content });
+        }
+      })();
+    });
   }
 
   async chat(
