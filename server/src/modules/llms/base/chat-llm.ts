@@ -34,4 +34,6 @@ export interface ChatLLM<
     | undefined;
 
   chat(prompts: ChatLLMPrompt | Array<ChatLLMPrompt>): Promise<ChatLLMResponse>;
+
+  chatSSE?: (prompts: ChatLLMPrompt | Array<ChatLLMPrompt>) => Promise<any>;
 }

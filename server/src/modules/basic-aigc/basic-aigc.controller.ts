@@ -24,6 +24,15 @@ export class BasicAigcController {
     return this.basicAigcService.chat(prompt, modelName, chatConfig);
   }
 
+  @Post('/chat/sse')
+  async chatSSE(
+    @Body('prompt') prompt: unknown,
+    @Body('modelName') modelName: ChatModelName,
+    @Body('config') chatConfig?: ChatConfig,
+  ) {
+    return this.basicAigcService.chatSSE(prompt, modelName, chatConfig);
+  }
+
   @Post('/chatWithVision')
   async chatWithVision(
     @Body('prompt') prompt: unknown,
