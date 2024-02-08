@@ -169,6 +169,7 @@ export function Markdown(
       className="markdown-body"
       style={{
         fontSize: `${props.fontSize ?? 14}px`,
+        textAlign: props.loading ? "center" : undefined,
       }}
       ref={mdRef}
       onContextMenu={props.onContextMenu}
