@@ -42,8 +42,10 @@ function useAIChat(llm: string) {
           }
         },
         onclose() {
+          const currentChat = getCurrentChatRef.current();
+
           const nextChat: Chat = {
-            ...getCurrentChatRef.current(),
+            ...currentChat,
             chatType: params.chatType,
           };
 
@@ -98,6 +100,14 @@ function useAIChat(llm: string) {
     }
     return null;
   };
+
+  useEffect(() => {
+    getCurrentChatRef.current = () => ({
+      prompt: prompts,
+      modelName: llm,
+      chatType: ChatType.Chat,
+    })
+  }, [prompts, llm]);
 
   return { loading, prompts, setPrompts, sendMessage };
 }
