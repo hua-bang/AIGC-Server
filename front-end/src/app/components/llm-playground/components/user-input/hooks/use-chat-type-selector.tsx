@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ChatType } from "@/app/typings/llm";
 
 export const useChatTypeSelector = () => {
-  const [chatType, setChatType] = useState<ChatType>(ChatType.Vision);
+  const [chatType, setChatType] = useState<ChatType>(ChatType.Chat);
 
   const renderChatTypeSelector = () => {
     const tabItems = ChatTypeOptions.map((chatTypeItem) => {
