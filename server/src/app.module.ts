@@ -8,9 +8,11 @@ import { HttpExceptionFilter } from './commons/exception-filters/http-exception-
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getEnvConfig } from './utils/env';
+import { SceneAigcModule } from './modules/scene-aigc/scene-aigc.module';
 
 const ImportsConfig = [
   BasicAigcModule,
+  SceneAigcModule,
   // load config
   ConfigModule.forRoot(),
 ];

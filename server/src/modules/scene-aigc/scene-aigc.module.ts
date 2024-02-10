@@ -4,6 +4,6 @@ import { SceneAigcController } from './scene-aigc.controller';
 
 @Module({
   controllers: [SceneAigcController],
-  providers: [SceneAigcService]
+  providers: [SceneAigcService],
 })
 export class SceneAigcModule {}
