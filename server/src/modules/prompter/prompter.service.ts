@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { MockScene } from './mock/scene';
 
 @Injectable()
 export class PrompterService {
@@ -19,5 +20,9 @@ export class PrompterService {
       ...presetPrompt,
       ...(Array.isArray(customerPrompts) ? customerPrompts : [customerPrompts]),
     ];
+  }
+
+  getSceneList() {
+    return MockScene;
   }
 }
