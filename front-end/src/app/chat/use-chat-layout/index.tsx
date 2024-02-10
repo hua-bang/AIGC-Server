@@ -38,7 +38,7 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
       <div className={styles.chatFeatures}>
         <div className={styles.chatFeaturesItem} onClick={handleFeatureClick}>
           <AppstoreOutlined />
-          Topic
+          Scene
         </div>
         <div className={styles.chatFeaturesItem} onClick={handleFeatureClick}>
           <CodeOutlined />
