@@ -1,6 +1,6 @@
-import { ScenePrompt } from '../typings/prompt';
+import { SceneModule } from '../typings';
 
-export const MockScene: ScenePrompt[] = [
+export const MockScene: SceneModule[] = [
   {
     id: '1',
     name: 'Scene 1',
