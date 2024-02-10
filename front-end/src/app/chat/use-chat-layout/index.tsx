@@ -14,11 +14,14 @@ import { message } from "antd";
 import React, { ReactNode, useRef } from "react";
 import useSetting from "@/app/hooks/use-setting";
 import { getWindow } from "@/app/utils/window";
+import { useRouter } from "next/navigation";
 
 export const useChatLayout = (options: UseChatLayoutOptions) => {
   const { list = [], selectChatId, onSelectChat } = options;
 
   const renderMenuCollapsedIconRef = useRef<() => ReactNode>();
+
+  const router = useRouter();
 
   const { renderSetting } = useSetting();
 
@@ -36,9 +39,11 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
       </div>
 
       <div className={styles.chatFeatures}>
-        <div className={styles.chatFeaturesItem} onClick={handleFeatureClick}>
+        <div className={styles.chatFeaturesItem} onClick={() => {
+          router.push("/chat/scene");
+        }}>
           <AppstoreOutlined />
-          Topic
+          Scene
         </div>
         <div className={styles.chatFeaturesItem} onClick={handleFeatureClick}>
           <CodeOutlined />
