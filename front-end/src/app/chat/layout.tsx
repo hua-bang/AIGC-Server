@@ -31,7 +31,7 @@ export default function ChatLayout({
     setChatList(nextChatList);
   };
 
-  const { renderLayout } = useChatLayout({
+  const { renderLayout, renderMenuCollapsedIcon } = useChatLayout({
     list: chatList as Chat[],
     selectChatId,
     onSelectChat: setSelectChatId,
@@ -42,6 +42,7 @@ export default function ChatLayout({
     <ChatConfigContext.Provider value={{
       chat,
       handleChatChange,
+      renderMenuCollapsedIcon
     }}>
       {renderLayout()}
     </ChatConfigContext.Provider>
