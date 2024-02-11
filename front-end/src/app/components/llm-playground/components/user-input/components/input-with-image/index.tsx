@@ -5,6 +5,7 @@ import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { RcFile, UploadChangeParam, UploadFile } from "antd/es/upload";
 import { imgFileToBase64 } from "@/app/utils/file-2-base64";
 import { ChatVisionContent } from "@/app/typings/prompt";
+import styles from "./index.module.css";
 
 const InputWithImage: React.FC<InputWithImageProps> = (props) => {
   const [imageUrl, setImageUrl] = useState<string>();
@@ -68,7 +69,7 @@ const InputWithImage: React.FC<InputWithImageProps> = (props) => {
   }, [props.value]);
 
   return (
-    <div style={{ display: "flex" }}>
+    <div className={styles.imgUploader}>
       <div>
         <Upload
           name="avatar"
@@ -79,6 +80,7 @@ const InputWithImage: React.FC<InputWithImageProps> = (props) => {
             return false;
           }}
           onChange={handleChange}
+          maxCount={1}
         >
           {imageUrl ? (
             <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
