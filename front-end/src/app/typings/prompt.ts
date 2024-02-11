@@ -14,9 +14,11 @@ export interface PromptItem {
 /**
  * 场景的 prompt 接口
  */
-export interface ScenePrompt {
+export interface SceneModule {
   id: string;
   name: string;
   description: string;
   prompts: string[];
+  imgSrc: string;
 }
+

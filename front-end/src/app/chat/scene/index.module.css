@@ -1,0 +1,15 @@
+.sceneWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.sceneTitle {
+  width: 100%;
+  text-align: center;
+}

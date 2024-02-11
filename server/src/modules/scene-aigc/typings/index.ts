@@ -3,4 +3,5 @@ export interface SceneModule {
   name: string;
   description: string;
   prompts: string[];
+  imgSrc: string;
 }

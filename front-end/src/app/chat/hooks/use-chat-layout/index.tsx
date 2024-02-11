@@ -55,7 +55,10 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
         {list.map((chatItem) => (
           <ChatItem
             onClick={() => {
-              chatItem.id && onSelectChat?.(chatItem.id);
+              if(!chatItem.id || !onSelectChat) {
+                return;
+              }
+              onSelectChat?.(chatItem.id);
             }}
             key={chatItem.id}
             active={chatItem.id === selectChatId}
