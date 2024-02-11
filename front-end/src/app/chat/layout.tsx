@@ -4,16 +4,16 @@ import useChatLayout from "./hooks/use-chat-layout";
 import useChatList from "./hooks/use-chat-list";
 import { Chat } from "../typings/chat";
 import { ChatConfigContext } from "./context";
+import { getQueryParams } from "../utils/query";
 
 export default function ChatLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-
   const { chatList, setChatList } = useChatList();
 
-  const [selectChatId, setSelectChatId] = useState(chatList[0]?.id);
+  const [selectChatId, setSelectChatId] = useState(() => getQueryParams('chatId') || chatList[0]?.id);
 
   const chat = chatList.find((item) => item.id === selectChatId);
 
