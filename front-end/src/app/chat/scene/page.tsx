@@ -1,7 +1,9 @@
+import styles from './index.module.css';
+
 const ScenePage = () => {
   return (
-    <div>
-      <h1>Scene</h1>
+    <div className={styles.sceneWrapper}>
+      <h2>Scene</h2>
     </div>
   );
 }

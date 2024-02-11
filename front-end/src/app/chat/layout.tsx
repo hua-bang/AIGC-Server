@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import useChatLayout from "./use-chat-layout";
-import useChatList from "./use-chat-list";
+import useChatLayout from "./hooks/use-chat-layout";
+import useChatList from "./hooks/use-chat-list";
 import { Chat } from "../typings/chat";
 import { ChatConfigContext } from "./context";
 
