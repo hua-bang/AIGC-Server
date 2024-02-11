@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useChatLayout from "./hooks/use-chat-layout";
 import useChatList from "./hooks/use-chat-list";
 import { Chat } from "../typings/chat";
@@ -13,7 +13,7 @@ export default function ChatLayout({
 }) {
   const { chatList, setChatList } = useChatList();
 
-  const [selectChatId, setSelectChatId] = useState(() => getQueryParams('chatId') || chatList[0]?.id);
+  const [selectChatId, setSelectChatId] = useState(chatList[0]?.id);
 
   const chat = chatList.find((item) => item.id === selectChatId);
 
@@ -37,6 +37,13 @@ export default function ChatLayout({
     onSelectChat: setSelectChatId,
     rightContent: children,
   });
+
+  useEffect(() => {
+    const nextChatId = getQueryParams('chatId');
+    if (nextChatId) {
+      setSelectChatId(nextChatId)
+    }
+  }, [])
 
   return (
     <ChatConfigContext.Provider value={{

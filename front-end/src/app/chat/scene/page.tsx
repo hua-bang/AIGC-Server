@@ -35,7 +35,9 @@ const ScenePage = () => {
       modelName: "open-ai"
     });
 
-    router.push(`/chat?chatId=${nextChatId}`);
+    router.push(`/chat?chatId=${nextChatId}`, {
+      
+    });
   }
 
   return (
