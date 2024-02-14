@@ -1,9 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { MockScene } from './mock/scene';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { SceneModule } from 'src/entity/scene-module';
 
 @Injectable()
 export class SceneAigcService {
+  constructor(
+    @InjectRepository(SceneModule)
+    private sceneModuleRepository: Repository<SceneModule>,
+  ) {}
+
   getSceneList() {
-    return MockScene;
+    return this.sceneModuleRepository.find();
   }
 }

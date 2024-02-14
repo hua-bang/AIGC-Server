@@ -18,7 +18,7 @@ export interface SceneModule {
   id: string;
   name: string;
   description: string;
-  prompts: string[];
+  prompt: string;
   imgSrc: string;
 }
 
