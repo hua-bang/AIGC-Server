@@ -17,12 +17,12 @@ const ScenePage = () => {
   const { handleChatChange } = useChatConfigContext() || {};
 
   const handleSceneSelect = (scene: SceneModule) => {
-    const { prompts } = scene;
+    const { prompt } = scene;
 
     const finalSystemPrompts = [
       {
         role: 'assistant',
-        content: prompts.join('\n'),
+        content: prompt,
       }
     ];
 

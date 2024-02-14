@@ -1,9 +1,9 @@
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { MongooseModule } from '@nestjs/mongoose';
 import { BasicAigcModule } from './modules/basic-aigc/basic-aigc.module';
 import { SceneAigcModule } from './modules/scene-aigc/scene-aigc.module';
 import { getEnvConfig } from './utils/env';
+
 
 export const getImportsConfig = () => {
   const ImportsConfig = [
@@ -26,10 +26,16 @@ export const getImportsConfig = () => {
     );
   }
 
-  const mongoDBConnectUrl = getEnvConfig('MONGO_DB_CONNECT_URL');
+  const postGresDBConnectUrl = getEnvConfig('POSTGRES_DB_CONNECT_URL');
 
-  if (mongoDBConnectUrl) {
-    ImportsConfig.push(MongooseModule.forRoot(mongoDBConnectUrl));
+  if (postGresDBConnectUrl) {
+    ImportsConfig.push(
+      TypeOrmModule.forRoot({
+        url: postGresDBConnectUrl,
+        type: 'postgres',
+        autoLoadEntities: true,
+      }),
+    );
   }
 
   return ImportsConfig;
