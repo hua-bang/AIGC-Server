@@ -1,7 +1,8 @@
 "use client";
-import { Button, Image } from 'antd'
+import { Image } from 'antd'
 import './globals.css'
 import { useRouter } from 'next/navigation'
+import { Button } from "@/components/ui/button"
 
 export default function Home() {
 
@@ -21,7 +22,7 @@ export default function Home() {
           }
         />
       </div>
-      <Button type="primary" shape="round" onClick={() => { router.push('/chat') }}>Get Started</Button>
+      <Button onClick={() => { router.push('/chat') }}>Get Started</Button>
     </div>
   )
 }
