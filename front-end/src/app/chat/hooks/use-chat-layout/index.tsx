@@ -13,11 +13,13 @@ import ChatItem from "@/app/components/chat-item";
 import { message } from "antd";
 import React, { ReactNode, useRef } from "react";
 import useSetting from "@/app/hooks/use-setting";
-import { getWindow } from "@/app/utils/window";
 import { useRouter } from "next/navigation";
+import { getIsMobile } from "@/app/utils/mobile";
 
 export const useChatLayout = (options: UseChatLayoutOptions) => {
   const { list = [], selectChatId, onSelectChat } = options;
+
+  const menuCollapsedInfoRef = useRef<ReturnType<typeof useLayout> | null>();
 
   const renderMenuCollapsedIconRef = useRef<() => ReactNode>();
 
@@ -40,6 +42,9 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
 
       <div className={styles.chatFeatures}>
         <div className={styles.chatFeaturesItem} onClick={() => {
+          if (getIsMobile()) {
+            menuCollapsedInfoRef.current?.setCollapsed(false);
+          }
           router.push("/chat/scene");
         }}>
           <AppstoreOutlined />
@@ -58,7 +63,12 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
               if(!chatItem.id || !onSelectChat) {
                 return;
               }
+
               onSelectChat?.(chatItem.id);
+              
+              if (getIsMobile()) {
+                menuCollapsedInfoRef.current?.setCollapsed(false);
+              }
             }}
             key={chatItem.id}
             active={chatItem.id === selectChatId}
@@ -89,8 +99,14 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
   const { renderLayout, collapsed, setCollapsed } = useLayout({
     ...options,
     leftContent,
-    defaultCollapsed:  (getWindow()?.innerWidth || 0) > 700
+    defaultCollapsed: !getIsMobile()
   });
+
+  menuCollapsedInfoRef.current = {
+    collapsed, 
+    setCollapsed,
+    renderLayout
+  }
 
   const renderMenuCollapsedIcon = () => {
     const MenuIcon = collapsed ? MenuFoldOutlined : MenuUnfoldOutlined;
