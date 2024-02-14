@@ -1,37 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { BasicAigcModule } from './modules/basic-aigc/basic-aigc.module';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { ResponseInterceptor } from './commons/interceptors/response-interceptor';
 import { HttpExceptionFilter } from './commons/exception-filters/http-exception-filter';
-import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { getEnvConfig } from './utils/env';
-import { SceneAigcModule } from './modules/scene-aigc/scene-aigc.module';
-
-const ImportsConfig = [
-  BasicAigcModule,
-  SceneAigcModule,
-  // load config
-  ConfigModule.forRoot(),
-];
-
-if (getEnvConfig('USERNAME')) {
-  ImportsConfig.push(
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: getEnvConfig('HOST'),
-      port: getEnvConfig('PORT'),
-      username: getEnvConfig('USERNAME'),
-      password: getEnvConfig('PASSWORD'),
-      database: getEnvConfig('DATABASE'),
-    }),
-  );
-}
+import { getImportsConfig } from './init';
 
 @Module({
-  imports: ImportsConfig,
+  imports: getImportsConfig(),
   controllers: [AppController],
   providers: [
     AppService,
