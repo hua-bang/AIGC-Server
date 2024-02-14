@@ -10,11 +10,11 @@ import {
 import styles from "./index.module.scss";
 import { Chat } from "@/app/typings/chat";
 import ChatItem from "@/app/components/chat-item";
-import { message } from "antd";
 import React, { ReactNode, useRef } from "react";
 import useSetting from "@/app/hooks/use-setting";
 import { useRouter } from "next/navigation";
 import { getIsMobile } from "@/app/utils/mobile";
+import { useToast } from "@/components/ui/use-toast"
 
 export const useChatLayout = (options: UseChatLayoutOptions) => {
   const { list = [], selectChatId, onSelectChat } = options;
@@ -27,9 +27,8 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
 
   const { renderSetting } = useSetting();
 
-  const handleFeatureClick = () => {
-    message.info("Coming soon");
-  };
+  const { toast } = useToast();
+
 
   const leftContent = (
     <div className={styles.chatMenu}>
@@ -50,7 +49,12 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
           <AppstoreOutlined />
           Scene
         </div>
-        <div className={styles.chatFeaturesItem} onClick={handleFeatureClick}>
+        <div className={styles.chatFeaturesItem} onClick={() => {
+          toast({
+            title: "Plugin Coming Soon",
+            description: "Plugin is not available yet. Please wait for the next update.",
+          })
+        }}>
           <CodeOutlined />
           Plugin
         </div>

@@ -4,6 +4,7 @@ import "./globals.css";
 import "./styles/globals.scss";
 import "./styles/markdown.scss";
 import "./styles/highlight.scss";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
       />
       <body style={{ margin: 0 }} className={inter.className}>
         {children}
+        <Toaster />
       </body>
     </html>
   );

@@ -1,5 +1,3 @@
-import { message } from "antd";
-
 /**
  * 复制到剪贴板
  * @param text 需要复制的文本
@@ -27,8 +25,8 @@ export async function copyToClipboard(text: string) {
 export async function copyToClipboardWithMessage(text: string) {
   try {
     await copyToClipboard(text);
-    message.success("复制成功");
+    // TODO: 添加成功提示
   } catch (error) {
-    message.error("复制失败");
+    // TODO: 添加失败提示
   }
 }
