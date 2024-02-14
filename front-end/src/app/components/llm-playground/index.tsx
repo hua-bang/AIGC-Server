@@ -10,8 +10,7 @@ import React, { useEffect } from "react";
 import { PlusCircleOutlined, ShareAltOutlined } from "@ant-design/icons";
 import { Chat } from "@/app/typings/chat";
 import { v4 as uuid } from "uuid";
-import { message } from "antd";
-
+import { useToast } from "@/components/ui/use-toast";
 const LLMPlayground: React.FC<LLMPlaygroundProps> = ({
   chat,
   onChatChange,
@@ -21,6 +20,8 @@ const LLMPlayground: React.FC<LLMPlaygroundProps> = ({
   const { llm, llmInstance, renderSelector } = useLLMSelector();
 
   const { loading, prompts, setPrompts, sendMessage } = useAIChat(llm);
+
+  const { toast } = useToast();
 
   const handlePromptChange = async (
     prompt: PromptItem["content"],
@@ -68,7 +69,9 @@ const LLMPlayground: React.FC<LLMPlaygroundProps> = ({
             )}
             <ShareAltOutlined
               onClick={() => {
-                message.info("Coming soon");
+                toast({
+                  title: "Coming Soon!",
+                });
               }}
             />
           </div>

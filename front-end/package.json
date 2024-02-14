@@ -13,6 +13,7 @@
     "@headlessui/react": "^1.7.17",
     "@microsoft/fetch-event-source": "^2.0.1",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-toast": "^1.1.5",
     "@types/uuid": "^9.0.7",
     "antd": "^5.11.4",
     "axios": "^1.6.2",
