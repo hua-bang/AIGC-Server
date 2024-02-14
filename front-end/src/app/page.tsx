@@ -10,6 +10,7 @@ export default function Home() {
   return (
     <div style={{ display: 'flex', width: '100%', height: '100vh', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: '8px', textAlign: 'center', fontWeight: 'bold' }}>
       <div style={{ width: '100%', fontSize: '18px' }}>AI Assistant</div>
+      <div className='font-normal text-xs text-gray-400'>ChatBot is your AI assistant.</div>
       <div style={{ width: '100%', textAlign: 'center' }}>
         <img
           style={{ borderRadius: "30%", margin: '0 auto' }}
