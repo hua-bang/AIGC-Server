@@ -5,7 +5,7 @@
   .leftContent {
     background: #eee8fa;
     box-shadow: inset -2px 0px 2px 0px rgba(0, 0, 0, 0.05);
-    transition: width ease 0.25s;
+    transition: width ease 0.5s;
     overflow: hidden;
     width: 300px;
   }
@@ -17,7 +17,7 @@
       width: 100vw;
       height: 100vh;
     }
-  }  
+  }
 
   .rightContent {
     flex: 1;
@@ -28,4 +28,4 @@
   .layoutWrapper {
     display: block;
   }
-}  
+}
