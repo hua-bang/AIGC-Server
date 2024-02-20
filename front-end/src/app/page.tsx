@@ -1,19 +1,33 @@
 "use client";
-import './globals.css'
-import { useRouter } from 'next/navigation'
-import { Button } from "@/components/ui/button"
+import "./globals.css";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
-
   const router = useRouter();
 
   return (
-    <div style={{ display: 'flex', width: '100%', height: '100vh', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: '8px', textAlign: 'center', fontWeight: 'bold' }}>
-      <div style={{ width: '100%', fontSize: '18px' }}>AI Assistant</div>
-      <div className='font-normal text-xs text-gray-400'>ChatBot is your AI assistant.</div>
-      <div style={{ width: '100%', textAlign: 'center' }}>
+    <div
+      style={{
+        display: "flex",
+        width: "100%",
+        height: "100vh",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        gap: "8px",
+        textAlign: "center",
+        fontWeight: "bold",
+      }}
+    >
+      <div style={{ width: "100%", fontSize: "18px" }}>AI Assistant</div>
+      <div className="font-normal text-xs text-gray-400">
+        ChatBot is your AI assistant.
+      </div>
+      <div style={{ width: "100%", textAlign: "center" }}>
         <img
-          style={{ borderRadius: "30%", margin: '0 auto' }}
+          style={{ borderRadius: "30%", margin: "0 auto" }}
           alt="logo"
           height={100}
           width={100}
@@ -22,7 +36,13 @@ export default function Home() {
           }
         />
       </div>
-      <Button onClick={() => { router.push('/chat') }}>Get Started</Button>
+      <Button
+        onClick={() => {
+          router.push("/chat");
+        }}
+      >
+        Get Started
+      </Button>
     </div>
-  )
+  );
 }
