@@ -7,9 +7,10 @@ import { useChatConfigContext } from "../context";
 import { v4 as uuid } from "uuid";
 import { ChatType } from "@/app/typings/llm";
 import { useRouter } from "next/navigation";
+import Loading from "@/app/components/loading";
 
 const ScenePage = () => {
-  const { sceneList } = useSceneList();
+  const { loading, sceneList } = useSceneList();
 
   const router = useRouter();
 
@@ -49,14 +50,18 @@ const ScenePage = () => {
           padding: 10,
         }}
       >
-        {sceneList.map((scene) => (
-          <SceneItem
-            style={{ width: "100%" }}
-            key={scene.id}
-            scene={scene}
-            onSelect={handleSceneSelect}
-          />
-        ))}
+        {loading ? (
+          <Loading />
+        ) : (
+          sceneList.map((scene) => (
+            <SceneItem
+              style={{ width: "100%" }}
+              key={scene.id}
+              scene={scene}
+              onSelect={handleSceneSelect}
+            />
+          ))
+        )}
       </div>
     </div>
   );
