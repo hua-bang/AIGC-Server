@@ -44,7 +44,7 @@ const Content: React.FC<ContentProps> = ({
             </div>
           );
         })}
-        {true && (
+        {loading && (
           <div
             key="loading"
             style={{ marginBottom: 16, width: "100%", overflowX: "scroll" }}
