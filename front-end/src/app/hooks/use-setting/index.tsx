@@ -1,4 +1,3 @@
-import { Form, Input, Modal } from "antd";
 import { useEffect, useState } from "react";
 import { SettingValue } from "./typings";
 import { getStoreAppSetting, setStoreAppSetting } from "./helper";
@@ -6,13 +5,21 @@ import { Settings } from "lucide-react";
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import styles from "./index.module.scss";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { Input } from "@/components/ui/input";
 
 const useSetting = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,12 +30,7 @@ const useSetting = () => {
     () => getStoreAppSetting()
   );
 
-  const [form] = Form.useForm<SettingValue>();
-
-  const handleOk = () => {
-    form.submit();
-    setIsModalOpen(false);
-  };
+  const form = useForm<SettingValue>();
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -37,6 +39,7 @@ const useSetting = () => {
   const handleFinish = (value: SettingValue) => {
     setSettingValue(value);
     setStoreAppSetting(value);
+    setIsModalOpen(false);
     toast({
       title: "Setting",
       description: "Setting has been saved.",
@@ -44,19 +47,53 @@ const useSetting = () => {
   };
 
   useEffect(() => {
-    settingValue && form.setFieldsValue(settingValue);
+    if (settingValue?.OPENAI_API_KEY) {
+      form.setValue("OPENAI_API_KEY", settingValue?.OPENAI_API_KEY);
+    }
   }, []);
+
+  const renderForm = () => {
+    return (
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleFinish)}>
+          <FormField
+            control={form.control}
+            name="OPENAI_API_KEY"
+            render={({ field }) => (
+              <FormItem className="flex items-center">
+                <FormLabel className="mt-[8px]">OPENAI API KEY：</FormLabel>
+                <FormControl>
+                  <Input
+                    style={{ width: 200 }}
+                    size={16}
+                    placeholder="please input your api key"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="w-full text-right pt-[12px]">
+            <Button size="sm" type="submit">
+              Save Changes
+            </Button>
+          </div>
+        </form>
+      </Form>
+    );
+  };
 
   const renderSetting = () => {
     return (
-      <div className={styles.settingsWrapper}>
+      <div>
         <Settings
           size={16}
           onClick={() => {
             setIsModalOpen(true);
           }}
         />
-        <Dialog open={isModalOpen}>
+        <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>
@@ -66,30 +103,9 @@ const useSetting = () => {
                 </div>
               </DialogTitle>
             </DialogHeader>
-            <Form<SettingValue> form={form} onFinish={handleFinish}>
-              <Form.Item label="OPENAI API KEY" name="OPENAI_API_KEY">
-                <Input value={settingValue?.OPENAI_API_KEY} />
-              </Form.Item>
-            </Form>
-            <DialogFooter>
-              <Button type="submit" onClick={handleOk}>
-                Save changes
-              </Button>
-            </DialogFooter>
+            {renderForm()}
           </DialogContent>
         </Dialog>
-        <Modal
-          title={
-            <div className="flex items-center gap-[4px]">
-              <Settings size={16} />
-              Setting
-            </div>
-          }
-          open={false}
-          onOk={handleOk}
-          onCancel={handleCancel}
-          okText="Save"
-        ></Modal>
       </div>
     );
   };
