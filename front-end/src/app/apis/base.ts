@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getStoreAppSetting } from "../hooks/use-setting/helper";
 
-export const axiosInstance = axios.create({
+const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACK_END_BASE_PATH,
 });
 
@@ -23,3 +23,5 @@ axiosInstance.interceptors.response.use((res) => {
 
   return res;
 });
+
+export { axiosInstance };

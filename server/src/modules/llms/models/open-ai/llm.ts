@@ -38,8 +38,6 @@ export class OpenAILLM
       return this.instance;
     }
 
-    console.log('this.request.headers ', this.request.headers);
-
     const { openai_api_key, Openai_api_key } = this.request.headers as any;
 
     const key = openai_api_key || Openai_api_key;
@@ -82,6 +80,7 @@ export class OpenAILLM
       ...completionBody,
       stream: true,
     });
+
     for await (const chunk of stream) {
       const isFinish = chunk.choices[0]?.finish_reason === 'stop';
 

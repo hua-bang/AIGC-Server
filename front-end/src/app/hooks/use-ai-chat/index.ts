@@ -1,14 +1,16 @@
 import { useEffect, useRef, useState } from "react";
-import { message } from "antd";
 import { PromptItem } from "../../typings/prompt";
 import { getAIChat, getAIChatSSE } from "../../apis/basic-aigc";
 import { ChatType } from "@/app/typings/llm";
 import { Chat } from "@/app/typings/chat";
 import { ChatParams } from "@/app/apis-typings/basic-aigc";
+import { useToast } from "@/components/ui/use-toast";
 
 function useAIChat(llm: string) {
   const [prompts, setPrompts] = useState<PromptItem[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const { toast } = useToast();
 
   useEffect(() => {
     setPrompts([]);
@@ -28,7 +30,17 @@ function useAIChat(llm: string) {
       getAIChatSSE(params, {
         onmessage(ev) {
           setLoading(false);
-          const message = JSON.parse(ev.data)?.content;
+
+          const { content: message, error } = JSON.parse(ev.data) || {};
+
+          if (error) {
+            toast({
+              variant: "destructive",
+              title: "Request Error",
+              description: error.message || "服务器异常",
+            });
+            return;
+          }
 
           if (message) {
             nextMessage += message;
@@ -94,7 +106,12 @@ function useAIChat(llm: string) {
       });
       return nextChat;
     } catch (error: any) {
-      message.warning(error.message || "服务器异常");
+      console.log("err", error);
+      toast({
+        variant: "destructive",
+        title: "Request Error",
+        description: error.message || "服务器异常",
+      });
     } finally {
       setLoading(false);
     }
@@ -106,7 +123,7 @@ function useAIChat(llm: string) {
       prompt: prompts,
       modelName: llm,
       chatType: ChatType.Chat,
-    })
+    });
   }, [prompts, llm]);
 
   return { loading, prompts, setPrompts, sendMessage };
