@@ -1,8 +1,8 @@
-import { SettingOutlined } from "@ant-design/icons";
 import { Form, Input, Modal, message } from "antd";
 import { useEffect, useState } from "react";
 import { SettingValue } from "./typings";
 import { getStoreAppSetting, setStoreAppSetting } from "./helper";
+import { Settings } from "lucide-react";
 
 const useSetting = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,13 +35,19 @@ const useSetting = () => {
   const renderSetting = () => {
     return (
       <>
-        <SettingOutlined
+        <Settings
+          size={16}
           onClick={() => {
             setIsModalOpen(true);
           }}
         />
         <Modal
-          title="Setting"
+          title={
+            <div className="flex items-center gap-[4px]">
+              <Settings size={16} />
+              Setting
+            </div>
+          }
           open={isModalOpen}
           onOk={handleOk}
           onCancel={handleCancel}
