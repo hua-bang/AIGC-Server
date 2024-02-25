@@ -8,6 +8,7 @@ import { v4 as uuid } from "uuid";
 import { ChatType } from "@/app/typings/llm";
 import { useRouter } from "next/navigation";
 import Loading from "@/app/components/loading";
+import { SkeletonCard } from "./skeleton-card";
 
 const ScenePage = () => {
   const { loading, sceneList } = useSceneList();
@@ -48,10 +49,11 @@ const ScenePage = () => {
           flexWrap: "wrap",
           gap: "20px",
           padding: 10,
+          width: "100%",
         }}
       >
         {loading ? (
-          <Loading />
+          <SkeletonCard />
         ) : (
           sceneList.map((scene) => (
             <SceneItem
