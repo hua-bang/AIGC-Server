@@ -42,19 +42,24 @@ export class BasicAigcController {
       response.write(`data: ${JSON.stringify(data)}\n\n`);
     };
 
-    this.basicAigcService.chatSSE(
-      prompt,
-      modelName,
-      {
-        onMessage: (data) => {
-          sendMessage(data);
+    try {
+      await this.basicAigcService.chatSSE(
+        prompt,
+        modelName,
+        {
+          onMessage: (data) => {
+            sendMessage(data);
+          },
+          onComplete: () => {
+            response.end();
+          },
         },
-        onComplete: () => {
-          response.end();
-        },
-      },
-      chatConfig,
-    );
+        chatConfig,
+      );
+    } catch (err) {
+      sendMessage({ error: err.error });
+      response.end();
+    }
   }
 
   @Post('/chatWithVision')
