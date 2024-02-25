@@ -40,7 +40,7 @@ const ScenePage = () => {
 
   return (
     <div className={styles.sceneWrapper}>
-      <h2 className={styles.sceneTitle}>Scene</h2>
+      <h2 className={styles.sceneTitle}>🎬 Scene</h2>
       <div className="mt-[20px] flex flex-wrap gap-[20px] p-[10px] w-full max-w-[1200px]">
         {loading ? (
           <SkeletonCard />
