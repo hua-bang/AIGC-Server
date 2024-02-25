@@ -1,12 +1,5 @@
 "use client";
 import useLayout, { useLayoutOptions } from "@/app/hooks/use-layout";
-import {
-  AppstoreOutlined,
-  CodeOutlined,
-  GithubOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-} from "@ant-design/icons";
 import styles from "./index.module.scss";
 import { Chat } from "@/app/typings/chat";
 import ChatItem from "@/app/components/chat-item";
@@ -14,7 +7,8 @@ import React, { ReactNode, useRef } from "react";
 import useSetting from "@/app/hooks/use-setting";
 import { useRouter } from "next/navigation";
 import { getIsMobile } from "@/app/utils/mobile";
-import { useToast } from "@/components/ui/use-toast"
+import { useToast } from "@/components/ui/use-toast";
+import { Clapperboard, Github, Menu, TerminalSquare } from "lucide-react";
 
 export const useChatLayout = (options: UseChatLayoutOptions) => {
   const { list = [], selectChatId, onSelectChat } = options;
@@ -29,7 +23,6 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
 
   const { toast } = useToast();
 
-
   const leftContent = (
     <div className={styles.chatMenu}>
       <div>
@@ -40,22 +33,29 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
       </div>
 
       <div className={styles.chatFeatures}>
-        <div className={styles.chatFeaturesItem} onClick={() => {
-          if (getIsMobile()) {
-            menuCollapsedInfoRef.current?.setCollapsed(false);
-          }
-          router.push("/chat/scene");
-        }}>
-          <AppstoreOutlined />
+        <div
+          className={styles.chatFeaturesItem}
+          onClick={() => {
+            if (getIsMobile()) {
+              menuCollapsedInfoRef.current?.setCollapsed(false);
+            }
+            router.push("/chat/scene");
+          }}
+        >
+          <Clapperboard size={14} />
           Scene
         </div>
-        <div className={styles.chatFeaturesItem} onClick={() => {
-          toast({
-            title: "Plugin Coming Soon",
-            description: "Plugin is not available yet. Please wait for the next update.",
-          })
-        }}>
-          <CodeOutlined />
+        <div
+          className={styles.chatFeaturesItem}
+          onClick={() => {
+            toast({
+              title: "Plugin Coming Soon",
+              description:
+                "Plugin is not available yet. Please wait for the next update.",
+            });
+          }}
+        >
+          <TerminalSquare size={14} />
           Plugin
         </div>
       </div>
@@ -64,12 +64,12 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
         {list.map((chatItem) => (
           <ChatItem
             onClick={() => {
-              if(!chatItem.id || !onSelectChat) {
+              if (!chatItem.id || !onSelectChat) {
                 return;
               }
 
               onSelectChat?.(chatItem.id);
-              
+
               if (getIsMobile()) {
                 menuCollapsedInfoRef.current?.setCollapsed(false);
               }
@@ -84,7 +84,9 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
         <div className={styles.leftContent}>
           <div className={styles.bottomIcon}>{renderSetting()}</div>
           <div className={styles.bottomIcon}>
-            <GithubOutlined
+            <Github
+              size={16}
+              strokeWidth={2}
               onClick={() => {
                 window.open("https://github.com/hua-bang/AIGC-Server");
               }}
@@ -103,20 +105,20 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
   const { renderLayout, collapsed, setCollapsed } = useLayout({
     ...options,
     leftContent,
-    defaultCollapsed: !getIsMobile()
+    defaultCollapsed: !getIsMobile(),
   });
 
   menuCollapsedInfoRef.current = {
-    collapsed, 
+    collapsed,
     setCollapsed,
-    renderLayout
-  }
+    renderLayout,
+  };
 
   const renderMenuCollapsedIcon = () => {
-    const MenuIcon = collapsed ? MenuFoldOutlined : MenuUnfoldOutlined;
-
     return (
-      <MenuIcon
+      <Menu
+        size={16}
+        className="cursor-pointer"
         onClick={() => {
           setCollapsed((prev) => !prev);
         }}
