@@ -7,7 +7,7 @@ import { useChatConfigContext } from "../context";
 import { v4 as uuid } from "uuid";
 import { ChatType } from "@/app/typings/llm";
 import { useRouter } from "next/navigation";
-import Loading from "@/app/components/loading";
+import { SkeletonCard } from "./skeleton-card";
 
 const ScenePage = () => {
   const { loading, sceneList } = useSceneList();
@@ -40,18 +40,10 @@ const ScenePage = () => {
 
   return (
     <div className={styles.sceneWrapper}>
-      <h2 className={styles.sceneTitle}>Scene</h2>
-      <div
-        style={{
-          marginTop: "20px",
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "20px",
-          padding: 10,
-        }}
-      >
+      <h2 className={styles.sceneTitle}>🎬 Scene</h2>
+      <div className="mt-[20px] flex flex-wrap gap-[20px] p-[10px] w-full max-w-[1200px]">
         {loading ? (
-          <Loading />
+          <SkeletonCard />
         ) : (
           sceneList.map((scene) => (
             <SceneItem

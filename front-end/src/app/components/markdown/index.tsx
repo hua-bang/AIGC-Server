@@ -178,7 +178,7 @@ export function Markdown(
     >
       {props.loading ? (
         <Image
-          style={{ color: "blueviolet" }}
+          className="text-blueviolet mx-auto"
           src={LoadingIcon}
           alt="loading"
         />
