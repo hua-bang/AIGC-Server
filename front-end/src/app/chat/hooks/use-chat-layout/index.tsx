@@ -8,13 +8,7 @@ import useSetting from "@/app/hooks/use-setting";
 import { useRouter } from "next/navigation";
 import { getIsMobile } from "@/app/utils/mobile";
 import { useToast } from "@/components/ui/use-toast";
-import {
-  ArrowLeftToLine,
-  ArrowRightToLine,
-  Clapperboard,
-  Github,
-  TerminalSquare,
-} from "lucide-react";
+import { Clapperboard, Github, Menu, TerminalSquare } from "lucide-react";
 
 export const useChatLayout = (options: UseChatLayoutOptions) => {
   const { list = [], selectChatId, onSelectChat } = options;
@@ -121,11 +115,10 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
   };
 
   const renderMenuCollapsedIcon = () => {
-    const MenuIcon = collapsed ? ArrowLeftToLine : ArrowRightToLine;
-
     return (
-      <MenuIcon
+      <Menu
         size={16}
+        className="cursor-pointer"
         onClick={() => {
           setCollapsed((prev) => !prev);
         }}
