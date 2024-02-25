@@ -20,30 +20,35 @@ const Content: React.FC<ContentProps> = ({
   llmInstance,
   loading,
 }) => {
-
   const containerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
     if (containerRef.current) {
       containerRef.current.scrollTo({
         top: containerRef.current.scrollHeight,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
-  }
+  };
 
   const renderContent = (promptList: PromptItem[]) => {
     return (
       <>
         {promptList.map((prompt, index) => {
           return (
-            <div key={index} style={{ marginBottom: 16, width: '100%', overflowX: 'scroll' }}>
+            <div
+              key={index}
+              style={{ marginBottom: 16, width: "100%", overflowX: "scroll" }}
+            >
               <PromptRender llmInstance={llmInstance} prompt={prompt} />
             </div>
           );
         })}
-        {loading && (
-          <div key="loading" style={{ marginBottom: 16, width: '100%', overflowX: 'scroll' }}>
+        {true && (
+          <div
+            key="loading"
+            style={{ marginBottom: 16, width: "100%", overflowX: "scroll" }}
+          >
             <PromptRender
               llmInstance={llmInstance}
               prompt={{
@@ -59,20 +64,23 @@ const Content: React.FC<ContentProps> = ({
   };
 
   const renderScrollToBottomBtn = () => {
-
-    if(!prompts?.length) {
+    if (!prompts?.length) {
       return null;
     }
 
     return (
       <div className={styles.scrollToBottomBtn}>
-        <ArrowDownOutlined onClick={() => { scrollToBottom() }}/>
+        <ArrowDownOutlined
+          onClick={() => {
+            scrollToBottom();
+          }}
+        />
       </div>
     );
-  }
+  };
 
   useEffect(() => {
-    if(!prompts?.length) {
+    if (!prompts?.length) {
       return;
     }
 
