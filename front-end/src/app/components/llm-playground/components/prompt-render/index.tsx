@@ -63,7 +63,15 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
           <div>
             {imgArr?.length
               ? imgArr.map((img) => {
-                  return <Image height={200} width={200} key={img} src={img} />;
+                  return (
+                    <Image
+                      alt="img"
+                      height={200}
+                      width={200}
+                      key={img}
+                      src={img}
+                    />
+                  );
                 })
               : undefined}
           </div>
