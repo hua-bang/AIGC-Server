@@ -48,7 +48,7 @@ const UserInput: React.FC<UserInputProps> = ({
   const handlePressEnter: React.KeyboardEventHandler<HTMLTextAreaElement> = (
     e
   ) => {
-    if (e.nativeEvent.isComposing) {
+    if (e.nativeEvent.isComposing || e.shiftKey) {
       return;
     }
     handlePromptChange();

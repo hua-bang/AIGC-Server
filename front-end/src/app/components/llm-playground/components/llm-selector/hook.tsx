@@ -1,10 +1,16 @@
 "use client";
-import { Dropdown, MenuProps } from "antd";
 import classnames from "classnames";
 import { DownOutlined } from "@ant-design/icons";
 import styles from "./index.module.css";
 import { useState } from "react";
 import { LLMItem } from "@/app/typings/llm";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export interface LLMSelectorOptions {
   className?: string;
@@ -20,10 +26,6 @@ const LLMOptions: Array<LLMItem> = [
 export const useLLMSelector = (llmSelectorOptions?: LLMSelectorOptions) => {
   const [llm, setLLM] = useState<string>(LLMOptions[0]?.key as string);
 
-  const handleSelectLLM: MenuProps["onClick"] = (e) => {
-    setLLM(e.key);
-  };
-
   const llmInstance = LLMOptions.find((option) => option?.key === llm);
 
   const llmLabel = llmInstance?.label;
@@ -36,11 +38,22 @@ export const useLLMSelector = (llmSelectorOptions?: LLMSelectorOptions) => {
           styles.llmSelector
         )}
       >
-        <Dropdown menu={{ items: LLMOptions, onClick: handleSelectLLM }}>
-          <div className={styles.selectLLMText}>
-            {llmLabel} <DownOutlined className={styles.selectLLMIcon} />
-          </div>
-        </Dropdown>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <div>
+              {llmLabel} <DownOutlined className={styles.selectLLMIcon} />
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-[100px]">
+            <DropdownMenuRadioGroup value={llm} onValueChange={setLLM}>
+              {LLMOptions.map((option) => (
+                <DropdownMenuRadioItem key={option.key} value={option.key}>
+                  {option.label}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     );
   };
