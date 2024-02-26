@@ -1,4 +1,5 @@
 import { Chat } from "@/app/typings/chat";
+import { ChatType } from "@/app/typings/llm";
 import { getLocalStorage, setLocalStorage } from "@/app/utils/storage";
 
 const ChatListStorageKey = "chat_list";
@@ -11,5 +12,8 @@ export const getStoreChatList = () => {
 };
 
 export const setStoreChatList = (chatList: Chat[]) => {
-  setLocalStorage(ChatListStorageKey, JSON.stringify(chatList));
+  const nextChatList = chatList.filter(
+    (chat) => chat.chatType === ChatType.Chat
+  );
+  setLocalStorage(ChatListStorageKey, JSON.stringify(nextChatList));
 };

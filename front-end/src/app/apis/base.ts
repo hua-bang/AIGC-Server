@@ -6,13 +6,8 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-
-  if (token) {
-    config.headers.OPENAI_API_KEY = getStoreAppSetting()?.OPENAI_API_KEY;
-    config.headers["Content-Type"] = "application/json";
-  }
-
+  config.headers.OPENAI_API_KEY = getStoreAppSetting()?.OPENAI_API_KEY;
+  config.headers["Content-Type"] = "application/json";
   return config;
 });
 
