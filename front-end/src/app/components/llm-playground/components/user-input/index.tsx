@@ -73,7 +73,7 @@ const UserInput: React.FC<UserInputProps> = ({
         value={(prompt ?? "") as string}
         onPressEnter={handlePressEnter}
         placeholder="Input your prompt to generate creativity content."
-        className="border-0"
+        className="border-0 focus-visible:ring-white"
         onChange={(e) => {
           setPrompt(e.target.value);
         }}
