@@ -1,7 +1,7 @@
-import { Tabs } from "antd";
 import { ChatTypeOptions } from "../constant";
 import { useState } from "react";
 import { ChatType } from "@/app/typings/llm";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const useChatTypeSelector = () => {
   const [chatType, setChatType] = useState<ChatType>(ChatType.Chat);
@@ -18,12 +18,25 @@ export const useChatTypeSelector = () => {
 
     return (
       <Tabs
-        activeKey={chatType}
-        onChange={(key) => {
-          setChatType(key as ChatType);
+        className="py-2 bg-white w-full rounded-md"
+        value={chatType}
+        onValueChange={(value) => {
+          setChatType(value as ChatType);
         }}
-        items={tabItems}
-      />
+      >
+        <TabsList className="bg-white p-0">
+          {tabItems.map((tabItem) => {
+            return (
+              <TabsTrigger key={tabItem.key} value={tabItem.key}>
+                <div className="flex">
+                  {tabItem.icon}
+                  <div className="ml-2">{tabItem.label}</div>
+                </div>
+              </TabsTrigger>
+            );
+          })}
+        </TabsList>
+      </Tabs>
     );
   };
 

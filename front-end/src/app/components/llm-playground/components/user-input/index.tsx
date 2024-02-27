@@ -1,15 +1,16 @@
 "use client";
-import { Button, Input } from "antd";
 import classnames from "classnames";
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./index.module.css";
-import { SendOutlined } from "@ant-design/icons";
 import { useChatTypeSelector } from "./hooks/use-chat-type-selector";
 import { ChatVisionContent, PromptItem } from "@/app/typings/prompt";
 import InputWithImage from "./components/input-with-image";
 import { ChatType } from "@/app/typings/llm";
 import { useUpdateEffect } from "@/app/hooks/use-update-effect";
 import { sleep } from "@/app/utils/sleep";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Loader, SendHorizontal } from "lucide-react";
 
 export interface UserInputProps {
   className?: string;
@@ -68,15 +69,14 @@ const UserInput: React.FC<UserInputProps> = ({
     }
 
     return (
-      <Input.TextArea
-        bordered={false}
-        value={prompt as string}
+      <Textarea
+        value={(prompt ?? "") as string}
         onPressEnter={handlePressEnter}
         placeholder="Input your prompt to generate creativity content."
+        className="border-0 focus-visible:ring-white"
         onChange={(e) => {
           setPrompt(e.target.value);
         }}
-        size="large"
       />
     );
   };
@@ -92,13 +92,9 @@ const UserInput: React.FC<UserInputProps> = ({
         <div className={styles.typeSelector}>{renderChatTypeSelector()}</div>
         <div className={styles.inputMain}>{renderInput()}</div>
         <div className={styles.submitBtn}>
-          <Button
-            disabled={!prompt}
-            loading={loading}
-            onClick={handleClick}
-            icon={<SendOutlined />}
-            size="large"
-          />
+          <Button disabled={!prompt} variant="outline" onClick={handleClick}>
+            {loading ? <Loader size={16} /> : <SendHorizontal size={16} />}
+          </Button>
         </div>
       </div>
     </div>
