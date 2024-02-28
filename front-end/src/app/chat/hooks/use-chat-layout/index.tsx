@@ -70,6 +70,8 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
 
               onSelectChat?.(chatItem.id);
 
+              router.push(`/chat?chatId=${chatItem.id}`);
+
               if (getIsMobile()) {
                 menuCollapsedInfoRef.current?.setCollapsed(false);
               }

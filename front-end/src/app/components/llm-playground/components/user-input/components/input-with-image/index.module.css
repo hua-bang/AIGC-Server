@@ -2,4 +2,5 @@
   display: flex;
   overflow-x: hidden;
   overflow-y: hidden;
+  gap: 8px;
 }

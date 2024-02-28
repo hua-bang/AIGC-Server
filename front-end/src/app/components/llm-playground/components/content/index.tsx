@@ -4,9 +4,9 @@ import PromptRender from "../prompt-render";
 import { LLMItem } from "@/app/typings/llm";
 import styles from "./index.module.css";
 import { useEffect, useRef } from "react";
-import { ArrowDownOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import Bot from "@/app/asserts/images/bot.png";
+import { ArrowDown } from "lucide-react";
 
 interface ContentProps {
   className?: string;
@@ -71,7 +71,8 @@ const Content: React.FC<ContentProps> = ({
 
     return (
       <div className={styles.scrollToBottomBtn}>
-        <ArrowDownOutlined
+        <ArrowDown
+          size={20}
           onClick={() => {
             scrollToBottom();
           }}
@@ -95,7 +96,7 @@ const Content: React.FC<ContentProps> = ({
           <div className={styles.empty}>
             <div style={{ width: "100%", textAlign: "center" }}>
               <Image
-                style={{ borderRadius: "35%" }}
+                className="rounded-[35%] mx-auto"
                 alt="logo"
                 width={120}
                 height={120}

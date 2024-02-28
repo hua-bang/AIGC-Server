@@ -1,6 +1,5 @@
 "use client";
 import classnames from "classnames";
-import { DownOutlined } from "@ant-design/icons";
 import styles from "./index.module.css";
 import { useState } from "react";
 import { LLMItem } from "@/app/typings/llm";
@@ -11,6 +10,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ChevronDown } from "lucide-react";
 
 export interface LLMSelectorOptions {
   className?: string;
@@ -40,8 +40,9 @@ export const useLLMSelector = (llmSelectorOptions?: LLMSelectorOptions) => {
       >
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <div>
-              {llmLabel} <DownOutlined className={styles.selectLLMIcon} />
+            <div className="flex items-center">
+              {llmLabel}{" "}
+              <ChevronDown size={16} className={styles.selectLLMIcon} />
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-[100px]">
