@@ -1,36 +1,49 @@
-import { Input, Upload, UploadProps, message } from "antd";
-import { TextAreaProps } from "antd/es/input";
 import { useEffect, useState } from "react";
-import { RcFile, UploadChangeParam, UploadFile } from "antd/es/upload";
 import { imgFileToBase64 } from "@/app/utils/file-2-base64";
 import { ChatVisionContent } from "@/app/typings/prompt";
 import styles from "./index.module.css";
 import { Loader, Plus } from "lucide-react";
+import { Textarea, TextareaProps } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
+import Upload from "@/app/components/upload";
 
 const InputWithImage: React.FC<InputWithImageProps> = (props) => {
   const [imageUrl, setImageUrl] = useState<string>();
   const [loading, setLoading] = useState(false);
 
+  const { toast } = useToast();
+
   const uploadButton = (
     <div className="flex flex-col items-center">
-      {loading ? <Loader /> : <Plus />}
-      <div style={{ marginTop: 8 }}>Upload</div>
+      {loading ? (
+        <Loader size={18} strokeWidth={2} />
+      ) : (
+        <Plus size={18} strokeWidth={2} />
+      )}
+      <div className="mt-[4px] text-[14px]">Upload</div>
     </div>
   );
 
-  const handleChange: UploadProps["onChange"] = async (
-    info: UploadChangeParam<UploadFile>
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setLoading(true);
+    const file = event.target.files?.[0];
+    if (file) {
+      setLoading(true);
 
-    try {
-      const image = await imgFileToBase64(info.file as RcFile);
-      setImageUrl(image);
-    } catch (err: any) {
-      message.warning(err.message || "Upload failed");
+      try {
+        const image = await imgFileToBase64(file);
+
+        setImageUrl(image);
+      } catch (err: any) {
+        toast({
+          variant: "destructive",
+          description: err.message || "Upload failed",
+        });
+      }
+      setLoading(false);
+      // 在这里添加处理文件的逻辑
     }
-
-    setLoading(false);
   };
 
   const inputValue =
@@ -38,7 +51,7 @@ const InputWithImage: React.FC<InputWithImageProps> = (props) => {
       ? props.value
       : props.value?.find((item) => item.type === "text")?.text;
 
-  const handleInputOnChange: TextAreaProps["onChange"] = (e) => {
+  const handleInputOnChange: TextareaProps["onChange"] = (e) => {
     const value = e.target.value;
 
     const inputWithImageValue: ChatVisionContent = [];
@@ -71,30 +84,21 @@ const InputWithImage: React.FC<InputWithImageProps> = (props) => {
   return (
     <div className={styles.imgUploader}>
       <div>
-        <Upload
-          name="avatar"
-          listType="picture-card"
-          className="avatar-uploader"
-          showUploadList={false}
-          beforeUpload={() => {
-            return false;
-          }}
-          onChange={handleChange}
-          maxCount={1}
-        >
-          {imageUrl ? (
-            <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
-          ) : (
-            uploadButton
-          )}
+        <Upload onChange={handleFileChange}>
+          <div className="flex w-[80px] h-[80px] items-center justify-center rounded-[4px] text-[16px] border-[1px]">
+            {imageUrl ? (
+              <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
+            ) : (
+              uploadButton
+            )}
+          </div>
         </Upload>
       </div>
-      <Input.TextArea
-        bordered={false}
+      <Textarea
         placeholder="Input your prompt to generate creativity content."
-        size="large"
         {...props}
-        value={inputValue}
+        className="focus-visible:ring-white"
+        value={inputValue || ""}
         onChange={handleInputOnChange}
       />
     </div>
@@ -102,7 +106,7 @@ const InputWithImage: React.FC<InputWithImageProps> = (props) => {
 };
 
 export interface InputWithImageProps
-  extends Omit<TextAreaProps, "value" | "onChange"> {
+  extends Omit<TextareaProps, "value" | "onChange"> {
   value: ChatVisionContent;
   onChange?: (value: ChatVisionContent) => void;
 }
