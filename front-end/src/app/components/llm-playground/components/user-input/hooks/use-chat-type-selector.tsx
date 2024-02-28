@@ -1,7 +1,7 @@
 import { ChatTypeOptions } from "../constant";
 import { useState } from "react";
 import { ChatType } from "@/app/typings/llm";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const useChatTypeSelector = () => {
   const [chatType, setChatType] = useState<ChatType>(ChatType.Chat);
@@ -28,7 +28,7 @@ export const useChatTypeSelector = () => {
           {tabItems.map((tabItem) => {
             return (
               <TabsTrigger key={tabItem.key} value={tabItem.key}>
-                <div className="flex">
+                <div className="flex items-center">
                   {tabItem.icon}
                   <div className="ml-2">{tabItem.label}</div>
                 </div>

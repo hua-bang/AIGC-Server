@@ -7,10 +7,10 @@ import useAIChat from "@/app/hooks/use-ai-chat";
 import { PromptItem } from "@/app/typings/prompt";
 import { ChatType } from "@/app/typings/llm";
 import React, { useEffect } from "react";
-import { PlusCircleOutlined, ShareAltOutlined } from "@ant-design/icons";
 import { Chat } from "@/app/typings/chat";
 import { v4 as uuid } from "uuid";
 import { useToast } from "@/components/ui/use-toast";
+import { PlusCircle, Share2 } from "lucide-react";
 const LLMPlayground: React.FC<LLMPlaygroundProps> = ({
   chat,
   onChatChange,
@@ -65,9 +65,10 @@ const LLMPlayground: React.FC<LLMPlaygroundProps> = ({
           {renderSelector()}
           <div className={styles.featureBtnArea}>
             {showAddIcon && (
-              <PlusCircleOutlined onClick={handleChangeTypeChange} />
+              <PlusCircle size={16} onClick={handleChangeTypeChange} />
             )}
-            <ShareAltOutlined
+            <Share2
+              size={16}
               onClick={() => {
                 toast({
                   title: "Coming Soon!",

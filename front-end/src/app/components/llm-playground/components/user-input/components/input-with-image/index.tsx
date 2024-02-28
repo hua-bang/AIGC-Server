@@ -1,19 +1,19 @@
 import { Input, Upload, UploadProps, message } from "antd";
 import { TextAreaProps } from "antd/es/input";
 import { useEffect, useState } from "react";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { RcFile, UploadChangeParam, UploadFile } from "antd/es/upload";
 import { imgFileToBase64 } from "@/app/utils/file-2-base64";
 import { ChatVisionContent } from "@/app/typings/prompt";
 import styles from "./index.module.css";
+import { Loader, Plus } from "lucide-react";
 
 const InputWithImage: React.FC<InputWithImageProps> = (props) => {
   const [imageUrl, setImageUrl] = useState<string>();
   const [loading, setLoading] = useState(false);
 
   const uploadButton = (
-    <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+    <div className="flex flex-col items-center">
+      {loading ? <Loader /> : <Plus />}
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );

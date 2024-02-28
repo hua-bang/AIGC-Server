@@ -25,20 +25,18 @@ const useLayout = (options: useLayoutOptions) => {
           </div>
           <div className={styles.rightContent}>{rightContent}</div>
         </div>
-        {getIsMobile() && (
-          <div className="fixed right-4 bottom-4">
-            <Button
-              variant="outline"
-              size="icon"
-              className="rounded"
-              onClick={() => {
-                setCollapsed(true);
-              }}
-            >
-              <Menu className="h-4 w-4" />
-            </Button>
-          </div>
-        )}
+        <div className="fixed right-4 bottom-4">
+          <Button
+            variant="outline"
+            size="icon"
+            className="rounded"
+            onClick={() => {
+              setCollapsed((prev) => !prev);
+            }}
+          >
+            <Menu className="h-4 w-4" />
+          </Button>
+        </div>
       </>
     );
   };
