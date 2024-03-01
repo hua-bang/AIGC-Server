@@ -2,7 +2,6 @@ import React, { ReactNode, useState } from "react";
 import styles from "./index.module.scss";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
-import { getIsMobile } from "@/app/utils/mobile";
 
 const useLayout = (options: useLayoutOptions) => {
   const [collapsed, setCollapsed] = useState(
@@ -29,6 +28,7 @@ const useLayout = (options: useLayoutOptions) => {
           <Button
             variant="outline"
             size="icon"
+            style={{ background: "var(--white)" }}
             className="rounded"
             onClick={() => {
               setCollapsed((prev) => !prev);

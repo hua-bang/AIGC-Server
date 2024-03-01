@@ -8,10 +8,12 @@ import useSetting from "@/app/hooks/use-setting";
 import { useRouter } from "next/navigation";
 import { getIsMobile } from "@/app/utils/mobile";
 import { useToast } from "@/components/ui/use-toast";
-import { Clapperboard, Github, Menu, TerminalSquare } from "lucide-react";
+import { Clapperboard, Github, Menu, Sun, TerminalSquare } from "lucide-react";
+import useTheme from "@/app/hooks/use-theme";
 
 export const useChatLayout = (options: UseChatLayoutOptions) => {
   const { list = [], selectChatId, onSelectChat } = options;
+  const [theme, toggleTheme] = useTheme();
 
   const menuCollapsedInfoRef = useRef<ReturnType<typeof useLayout> | null>();
 
@@ -91,6 +93,15 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
               strokeWidth={2}
               onClick={() => {
                 window.open("https://github.com/hua-bang/AIGC-Server");
+              }}
+            />
+          </div>
+          <div className={styles.bottomIcon}>
+            <Sun
+              size={16}
+              strokeWidth={2}
+              onClick={() => {
+                toggleTheme();
               }}
             />
           </div>

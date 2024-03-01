@@ -99,6 +99,7 @@ const InputWithImage: React.FC<InputWithImageProps> = (props) => {
         {...props}
         className="focus-visible:ring-white"
         value={inputValue || ""}
+        style={{ backgroundColor: "var(--white2)" }}
         onChange={handleInputOnChange}
       />
     </div>

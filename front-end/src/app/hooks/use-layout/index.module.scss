@@ -1,9 +1,20 @@
+@media (prefers-color-scheme: dark) {
+  .leftContent {
+    background: rgb(14 9 15 / 66%);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .leftContent {
+    background: #eee8fa;
+  }
+}
+
 .layoutWrapper {
   display: flex;
   position: relative;
 
   .leftContent {
-    background: #eee8fa;
     box-shadow: inset -2px 0px 2px 0px rgba(0, 0, 0, 0.05);
     transition: width ease 0.5s;
     overflow: hidden;
