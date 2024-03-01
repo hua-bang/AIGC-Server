@@ -73,7 +73,8 @@ const UserInput: React.FC<UserInputProps> = ({
         value={(prompt ?? "") as string}
         onPressEnter={handlePressEnter}
         placeholder="Input your prompt to generate creativity content."
-        className="border-0 focus-visible:ring-white"
+        className="border-0"
+        style={{ backgroundColor: "var(--white2)" }}
         onChange={(e) => {
           setPrompt(e.target.value);
         }}
@@ -92,7 +93,12 @@ const UserInput: React.FC<UserInputProps> = ({
         <div className={styles.typeSelector}>{renderChatTypeSelector()}</div>
         <div className={styles.inputMain}>{renderInput()}</div>
         <div className={styles.submitBtn}>
-          <Button disabled={!prompt} variant="outline" onClick={handleClick}>
+          <Button
+            disabled={!prompt}
+            style={{ background: "var(--white)" }}
+            variant="outline"
+            onClick={handleClick}
+          >
             {loading ? <Loader size={16} /> : <SendHorizontal size={16} />}
           </Button>
         </div>

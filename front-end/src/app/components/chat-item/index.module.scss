@@ -15,13 +15,13 @@
   overflow-x: hidden;
 
   &:hover {
-    background-color: #f1f1f1;
+    background-color: var(--white);
   }
 }
 
 .active {
   border-color: #d07df5c9;
-  background-color: #f1f1f1;
+  background-color: var(--white);
 }
 
 .chatItemTitle {

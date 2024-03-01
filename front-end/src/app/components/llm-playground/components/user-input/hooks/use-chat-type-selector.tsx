@@ -19,12 +19,13 @@ export const useChatTypeSelector = () => {
     return (
       <Tabs
         className="py-2 bg-white w-full rounded-md"
+        style={{ backgroundColor: "var(--white2)" }}
         value={chatType}
         onValueChange={(value) => {
           setChatType(value as ChatType);
         }}
       >
-        <TabsList className="bg-white p-0">
+        <TabsList className="p-0" style={{ background: "var(--white2)" }}>
           {tabItems.map((tabItem) => {
             return (
               <TabsTrigger key={tabItem.key} value={tabItem.key}>
