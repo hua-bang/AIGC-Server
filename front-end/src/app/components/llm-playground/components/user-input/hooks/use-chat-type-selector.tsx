@@ -18,7 +18,7 @@ export const useChatTypeSelector = () => {
 
     return (
       <Tabs
-        className="py-2 bg-white w-full rounded-md"
+        className="py-2 bg-white w-full rounded-md overflow-x-scroll"
         style={{ backgroundColor: "var(--white2)" }}
         value={chatType}
         onValueChange={(value) => {
