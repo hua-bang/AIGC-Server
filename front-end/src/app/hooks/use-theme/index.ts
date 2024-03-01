@@ -1,3 +1,4 @@
+import { getWindow } from "@/app/utils/window";
 import { useEffect, useState } from "react";
 
 // 定义主题类型
@@ -7,8 +8,8 @@ type Theme = "light" | "dark";
 function useTheme(): [Theme, () => void] {
   // 获取系统主题，默认为浅色模式
   const systemTheme: Theme =
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
+    getWindow()?.matchMedia &&
+    getWindow()?.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
       : "light";
 
@@ -24,7 +25,11 @@ function useTheme(): [Theme, () => void] {
 
   // 监听系统主题变化，并更新应用主题
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const mediaQuery = getWindow()?.matchMedia("(prefers-color-scheme: dark)");
+    if (!mediaQuery) {
+      return;
+    }
+
     const handleChange = (e: MediaQueryListEvent) => {
       setTheme(e.matches ? "dark" : "light");
     };
