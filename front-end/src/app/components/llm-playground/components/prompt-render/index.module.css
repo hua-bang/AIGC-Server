@@ -50,4 +50,5 @@
 
 :global(.dark) .userMarkdownWrapper {
   background-color: rgba(0, 0, 0, 0.01);
+  color: #c9d1d9 !important;
 }
