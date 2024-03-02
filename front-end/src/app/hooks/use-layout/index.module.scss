@@ -1,13 +1,5 @@
-@media (prefers-color-scheme: dark) {
-  .leftContent {
-    background: rgb(14 9 15);
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  .leftContent {
-    background: #eee8fa;
-  }
+.leftContent {
+  background: var(--leftContentBG);
 }
 
 .layoutWrapper {

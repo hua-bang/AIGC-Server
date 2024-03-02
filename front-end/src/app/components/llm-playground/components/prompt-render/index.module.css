@@ -43,14 +43,11 @@
   align-items: center;
 }
 
-@media (prefers-color-scheme: dark) {
-  .userMarkdownWrapper {
-    background-color: rgba(0, 0, 0, 0.01);
-  }
+.userMarkdownWrapper {
+  background: #e6f6fe;
 }
 
-@media (prefers-color-scheme: light) {
-  .userMarkdownWrapper {
-    background: #e6f6fe;
-  }
+
+:global(.dark) .userMarkdownWrapper {
+  background-color: rgba(0, 0, 0, 0.01);
 }

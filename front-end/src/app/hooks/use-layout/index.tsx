@@ -2,6 +2,7 @@ import React, { ReactNode, useState } from "react";
 import styles from "./index.module.scss";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
+import classNames from "classnames";
 
 const useLayout = (options: useLayoutOptions) => {
   const [collapsed, setCollapsed] = useState(
@@ -15,7 +16,7 @@ const useLayout = (options: useLayoutOptions) => {
       <>
         <div className={styles.layoutWrapper}>
           <div
-            className={styles.leftContent}
+            className={classNames(styles.leftContent)}
             style={{
               width: collapsed ? undefined : "0px",
             }}
