@@ -5,6 +5,8 @@ import "./styles/globals.scss";
 import "./styles/markdown.scss";
 import "./styles/highlight.scss";
 import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "./components/theme-provider";
+import { useTheme } from "next-themes";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,7 +30,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body style={{ margin: 0 }} className={inter.className}>
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div>{children}</div>
+        </ThemeProvider>
         <Toaster />
       </body>
     </html>

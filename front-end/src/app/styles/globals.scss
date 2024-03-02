@@ -18,6 +18,8 @@
 
   /* stroke */
   --border-in-light: 1px solid rgb(222, 222, 222);
+
+  --leftContentBG: #eee8fa;
 }
 
 @mixin dark {
@@ -35,6 +37,8 @@
   --border-in-light: 1px solid rgba(255, 255, 255, 0.192);
 
   --theme-color: var(--gray);
+
+  --leftContentBG: #0e090f;
 
   div:not(.no-dark) > svg {
     filter: invert(0.5);
@@ -78,11 +82,10 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    @include dark;
-  }
+.dark {
+  @include dark;
 }
+
 html {
   height: var(--full-height);
 

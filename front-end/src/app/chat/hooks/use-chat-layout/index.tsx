@@ -8,12 +8,18 @@ import useSetting from "@/app/hooks/use-setting";
 import { useRouter } from "next/navigation";
 import { getIsMobile } from "@/app/utils/mobile";
 import { useToast } from "@/components/ui/use-toast";
-import { Clapperboard, Github, Menu, Sun, TerminalSquare } from "lucide-react";
-import useTheme from "@/app/hooks/use-theme";
+import {
+  Clapperboard,
+  Github,
+  Menu,
+  Moon,
+  Sun,
+  TerminalSquare,
+} from "lucide-react";
+import { useTheme } from "next-themes";
 
 export const useChatLayout = (options: UseChatLayoutOptions) => {
   const { list = [], selectChatId, onSelectChat } = options;
-  const [theme, toggleTheme] = useTheme();
 
   const menuCollapsedInfoRef = useRef<ReturnType<typeof useLayout> | null>();
 
@@ -24,6 +30,8 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
   const { renderSetting } = useSetting();
 
   const { toast } = useToast();
+
+  const { theme, setTheme } = useTheme();
 
   const leftContent = (
     <div className={styles.chatMenu}>
@@ -97,13 +105,23 @@ export const useChatLayout = (options: UseChatLayoutOptions) => {
             />
           </div>
           <div className={styles.bottomIcon}>
-            <Sun
-              size={16}
-              strokeWidth={2}
-              onClick={() => {
-                toggleTheme();
-              }}
-            />
+            {theme === "light" ? (
+              <Moon
+                size={16}
+                strokeWidth={2}
+                onClick={() => {
+                  setTheme("dark");
+                }}
+              />
+            ) : (
+              <Sun
+                size={16}
+                strokeWidth={2}
+                onClick={() => {
+                  setTheme("light");
+                }}
+              />
+            )}
           </div>
         </div>
         <div className={styles.rightContent}>
