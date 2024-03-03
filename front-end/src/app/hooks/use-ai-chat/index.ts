@@ -37,7 +37,7 @@ function useAIChat(llm: string) {
             toast({
               variant: "destructive",
               title: "Request Error",
-              description: error.message || "服务器异常",
+              description: error || "服务器异常",
             });
             return;
           }

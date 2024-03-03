@@ -32,10 +32,6 @@ const useSetting = () => {
 
   const form = useForm<SettingValue>();
 
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
   const handleFinish = (value: SettingValue) => {
     setSettingValue(value);
     setStoreAppSetting(value);
