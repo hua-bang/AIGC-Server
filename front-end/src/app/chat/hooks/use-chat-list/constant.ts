@@ -13,7 +13,7 @@ export const getStoreChatList = () => {
 
 export const setStoreChatList = (chatList: Chat[]) => {
   const nextChatList = chatList.filter(
-    (chat) => chat.chatType === ChatType.Chat
+    (chat) => chat.chatType === ChatType.Chat && chat.id
   );
   setLocalStorage(ChatListStorageKey, JSON.stringify(nextChatList));
 };

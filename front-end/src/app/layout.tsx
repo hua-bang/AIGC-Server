@@ -7,6 +7,7 @@ import "./styles/highlight.scss";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "./components/theme-provider";
 import { useTheme } from "next-themes";
+import { UserSettingProvider } from "./context/user-setting";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,7 +37,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div>{children}</div>
+          <UserSettingProvider>
+            <div>{children}</div>
+          </UserSettingProvider>
         </ThemeProvider>
         <Toaster />
       </body>

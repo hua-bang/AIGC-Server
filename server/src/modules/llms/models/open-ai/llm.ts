@@ -15,7 +15,6 @@ import { Tool } from '../../../../typings/tool';
 import { ToolsInfo, getToolsInfo } from './helper/get-tool-info';
 import { REQUEST } from '@nestjs/core';
 import { processOpenAILLMResponse } from './helper/process-data';
-import { Observable } from 'rxjs';
 
 @Injectable()
 export class OpenAILLM
@@ -82,6 +81,7 @@ export class OpenAILLM
     });
 
     for await (const chunk of stream) {
+      console.log('chunk', chunk);
       const isFinish = chunk.choices[0]?.finish_reason === 'stop';
 
       if (isFinish) {

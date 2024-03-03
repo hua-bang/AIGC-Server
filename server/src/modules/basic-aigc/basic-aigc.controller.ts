@@ -57,7 +57,7 @@ export class BasicAigcController {
         chatConfig,
       );
     } catch (err) {
-      sendMessage({ error: err.error });
+      sendMessage({ error: err });
       response.end();
     }
   }
