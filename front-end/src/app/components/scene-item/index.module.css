@@ -13,9 +13,20 @@
   transition: background-color 0.3s ease-in-out;
 }
 
+
+
 .sceneItem:hover {
   background-color: rgb(239, 233, 230);
 }
+
+:global(.dark) .sceneItem {
+  background-color: #100d11;
+} 
+
+:global(.dark) .sceneItem:hover {
+  background-color: rgb(29, 23, 29);
+} 
+
 
 
 .sceneItemImg {
