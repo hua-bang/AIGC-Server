@@ -1,11 +1,12 @@
 import { PromptItem } from "@/app/typings/prompt";
 import React, { useMemo } from "react";
-import styles from "./index.module.css";
+import styles from "./index.module.scss";
 import { LLMItem } from "@/app/typings/llm";
 import { Markdown } from "@/app/components/markdown";
 import classnames from "classnames";
 import Image from "next/image";
 import Bot from "@/app/asserts/images/bot.png";
+import { copyToClipboard } from "@/app/utils";
 
 const PromptRender: React.FC<PromptRenderProps> = (props) => {
   const { prompt, llmInstance, loading } = props;
@@ -82,6 +83,13 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
               prompt.role === "user" ? styles.userMarkdownWrapper : undefined
             )}
           >
+            <span
+              className={styles["copy-code-button"]}
+              onClick={() => {
+                const content = renderPromptContent();
+                copyToClipboard(content);
+              }}
+            ></span>
             <Markdown
               content={renderPromptContent() as string}
               loading={loading}
