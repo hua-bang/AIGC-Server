@@ -18,8 +18,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     let message = '服务器异常';
 
-    console.log('exceptionResponse', exceptionResponse);
-
     if (isObject(exceptionResponse)) {
       code = exceptionResponse.code || exceptionResponse.statusCode || code;
       message = exceptionResponse?.message ?? message;
