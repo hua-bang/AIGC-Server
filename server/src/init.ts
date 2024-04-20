@@ -3,12 +3,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BasicAigcModule } from './modules/basic-aigc/basic-aigc.module';
 import { SceneAigcModule } from './modules/scene-aigc/scene-aigc.module';
 import { getEnvConfig } from './utils/env';
+import { OpenApiModule } from './modules/open-api/open-api.module';
 
 
 export const getImportsConfig = () => {
   const ImportsConfig = [
     BasicAigcModule,
     SceneAigcModule,
+    OpenApiModule,
     // load config
     ConfigModule.forRoot(),
   ];
