@@ -4,13 +4,14 @@ import { BasicAigcModule } from './modules/basic-aigc/basic-aigc.module';
 import { SceneAigcModule } from './modules/scene-aigc/scene-aigc.module';
 import { getEnvConfig } from './utils/env';
 import { OpenApiModule } from './modules/open-api/open-api.module';
-
+import { UserModule } from './modules/user/user.module';
 
 export const getImportsConfig = () => {
   const ImportsConfig = [
     BasicAigcModule,
     SceneAigcModule,
     OpenApiModule,
+    UserModule,
     // load config
     ConfigModule.forRoot(),
   ];
