@@ -46,7 +46,13 @@ const AuthWrapper: React.FC<AuthWrapperProps> = ({ children }) => {
   }, [session]);
 
   if (!session) {
-    return <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />;
+    return (
+      <Auth
+        providers={["github"]}
+        supabaseClient={supabase}
+        appearance={{ theme: ThemeSupa }}
+      />
+    );
   }
 
   return children;
