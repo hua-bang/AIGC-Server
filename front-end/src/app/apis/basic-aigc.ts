@@ -3,6 +3,7 @@ import { ChatType } from "../typings/llm";
 import { getStoreAppSetting } from "../hooks/use-setting/helper";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { axiosInstance } from "./base";
+import { getAccessToken } from "../utils/access-token-storage";
 
 export const getAIChat = (params: ChatParams) => {
   const url =
@@ -25,11 +26,14 @@ export const getAIChatSSE = (
 ) => {
   const url = `${process.env.NEXT_PUBLIC_BACK_END_BASE_PATH}basic-aigc/chat/sse`;
 
+  const accessToken = getAccessToken();
+
   return fetchEventSource(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       OPENAI_API_KEY: getStoreAppSetting()?.OPENAI_API_KEY || "",
+      Authorization: accessToken ? `Bearer ${accessToken}` : "",
     },
     body: JSON.stringify(params),
     ...(sseOptions || {}),
