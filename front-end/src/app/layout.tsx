@@ -6,8 +6,8 @@ import "./styles/markdown.scss";
 import "./styles/highlight.scss";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "./components/theme-provider";
-import { useTheme } from "next-themes";
 import { UserSettingProvider } from "./context/user-setting";
+import AuthWrapper from "./components/auth-wrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,7 +38,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <UserSettingProvider>
-            <div>{children}</div>
+            <AuthWrapper>
+              <div>{children}</div>
+            </AuthWrapper>
           </UserSettingProvider>
         </ThemeProvider>
         <Toaster />

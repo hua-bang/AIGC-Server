@@ -1,11 +1,13 @@
-import { Body, Controller, Get, Post, Res, Sse } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
 import { BasicAigcService } from './basic-aigc.service';
 import { ChatModelName } from '../llms/typings';
 import { ChatConfig } from './typings/chat';
 import { WeatherTool } from '../../utils/get-current-weather';
 import { Response } from 'express';
+import { JwtAuthGuard } from 'src/commons/guards/jwt-auth-guard';
 
 @Controller('basic-aigc')
+@UseGuards(JwtAuthGuard)
 export class BasicAigcController {
   constructor(private readonly basicAigcService: BasicAigcService) {}
 
