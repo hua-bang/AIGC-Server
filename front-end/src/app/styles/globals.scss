@@ -286,10 +286,6 @@ pre {
     opacity: 0;
     transition: all ease 0.3s;
 
-    &:after {
-      content: "copy";
-    }
-
     &:hover {
       opacity: 1;
     }

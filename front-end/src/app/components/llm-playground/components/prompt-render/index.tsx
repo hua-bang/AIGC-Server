@@ -10,7 +10,7 @@ import { useCopy } from "@/app/hooks/use-copy";
 
 const PromptRender: React.FC<PromptRenderProps> = (props) => {
   const { prompt, llmInstance, loading } = props;
-  const { copyToClipboard } = useCopy();
+  const { stateText, copyToClipboard } = useCopy();
 
   const imgArr = useMemo(() => {
     const { content } = prompt;
@@ -90,7 +90,9 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
                 const content = renderPromptContent();
                 copyToClipboard(content);
               }}
-            ></span>
+            >
+              {stateText}
+            </span>
             <Markdown
               content={renderPromptContent() as string}
               loading={loading}

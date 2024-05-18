@@ -64,7 +64,7 @@ export function PreCode(props: { children: any }) {
   const ref = useRef<HTMLPreElement>(null);
   const refText = ref.current?.innerText;
   const [mermaidCode, setMermaidCode] = useState("");
-  const { copyToClipboard } = useCopy();
+  const { stateText, copyToClipboard } = useCopy();
 
   const renderMermaid = useDebouncedCallback(() => {
     if (!ref.current) return;
@@ -93,7 +93,9 @@ export function PreCode(props: { children: any }) {
               copyToClipboard(code);
             }
           }}
-        ></span>
+        >
+          {stateText}
+        </span>
         {props.children}
       </pre>
     </>
