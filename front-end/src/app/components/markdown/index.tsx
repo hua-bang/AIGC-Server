@@ -12,8 +12,8 @@ import mermaid from "mermaid";
 import LoadingIcon from "@/app/asserts/icons/three-dots.svg";
 import React from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { copyToClipboardWithMessage as copyToClipboard } from "@/app/utils";
 import Image from "next/image";
+import { useCopy } from "@/app/hooks/use-copy";
 
 export function Mermaid(props: { code: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -64,6 +64,7 @@ export function PreCode(props: { children: any }) {
   const ref = useRef<HTMLPreElement>(null);
   const refText = ref.current?.innerText;
   const [mermaidCode, setMermaidCode] = useState("");
+  const { copyToClipboard } = useCopy();
 
   const renderMermaid = useDebouncedCallback(() => {
     if (!ref.current) return;
