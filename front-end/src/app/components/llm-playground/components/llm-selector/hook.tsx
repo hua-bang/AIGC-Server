@@ -21,6 +21,10 @@ const LLMOptions: Array<LLMItem> = [
     key: "open-ai",
     label: "ChatGPT",
   },
+  {
+    key: "moon-shot",
+    label: "月之暗面",
+  },
 ];
 
 export const useLLMSelector = (llmSelectorOptions?: LLMSelectorOptions) => {
