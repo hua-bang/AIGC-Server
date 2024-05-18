@@ -6,10 +6,11 @@ import { Markdown } from "@/app/components/markdown";
 import classnames from "classnames";
 import Image from "next/image";
 import Bot from "@/app/asserts/images/bot.png";
-import { copyToClipboard } from "@/app/utils";
+import { useCopy } from "@/app/hooks/use-copy";
 
 const PromptRender: React.FC<PromptRenderProps> = (props) => {
   const { prompt, llmInstance, loading } = props;
+  const { stateText, copyToClipboard } = useCopy();
 
   const imgArr = useMemo(() => {
     const { content } = prompt;
@@ -89,7 +90,9 @@ const PromptRender: React.FC<PromptRenderProps> = (props) => {
                 const content = renderPromptContent();
                 copyToClipboard(content);
               }}
-            ></span>
+            >
+              {stateText}
+            </span>
             <Markdown
               content={renderPromptContent() as string}
               loading={loading}
