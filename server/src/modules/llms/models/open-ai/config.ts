@@ -10,6 +10,6 @@ export const getDefaultClientOptions = (): ClientOptions => ({
   baseURL: process.env.OPENAI_BASE_PATH,
 });
 
-export const defaultModel = getEnvConfig('OPENAI_MODEL') || 'gpt-4-1106-preview';
+export const defaultModel = getEnvConfig('OPENAI_MODEL') || 'gpt-4o';
 export const defaultVisionModel = 'gpt-4-vision-preview';
 export const defaultImageModel = 'dall-e-3';
