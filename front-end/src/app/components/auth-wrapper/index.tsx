@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactElement, ReactNode, useEffect, useState } from "react";
 import { Session, createClient } from "@supabase/supabase-js";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
@@ -55,7 +55,7 @@ const AuthWrapper: React.FC<AuthWrapperProps> = ({ children }) => {
     );
   }
 
-  return children;
+  return children as ReactElement<any, any>;
 };
 
 interface AuthWrapperProps {
