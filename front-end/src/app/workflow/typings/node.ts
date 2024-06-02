@@ -10,8 +10,8 @@ export enum WorkflowNodeType {
   Database = 9,
 }
 
-export interface WorkflowNode {
+export interface WorkflowNodeCategory {
   name: string;
   imgUrl: string;
-  type: WorkflowNodeType;
+  nodeType: WorkflowNodeType;
 }
