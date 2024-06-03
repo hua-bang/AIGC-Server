@@ -1,3 +1,5 @@
+import { OutputParameter } from ".";
+
 export enum WorkflowNodeType {
   Plugin = 1,
   LLM = 2,
@@ -14,4 +16,25 @@ export interface WorkflowNodeCategory {
   name: string;
   imgUrl: string;
   nodeType: WorkflowNodeType;
+}
+
+export interface ReactFlowNodeMeta {
+  position: {
+    x: number;
+    y: number;
+  };
+}
+
+export interface ReactFlowNode {
+  id: string;
+  type: string;
+  meta: ReactFlowNodeMeta;
+}
+
+export interface WorkflowNodeData {
+  outputs: OutputParameter[];
+}
+
+export interface WorkflowNode extends ReactFlowNode {
+  data: {};
 }
