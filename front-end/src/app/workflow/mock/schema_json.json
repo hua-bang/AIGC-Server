@@ -1,0 +1,877 @@
+{
+  "nodes": [
+    {
+      "id": "100001",
+      "type": "1",
+      "meta": {
+        "position": {
+          "x": 387.5,
+          "y": 914
+        },
+        "testRun": {}
+      },
+      "data": {
+        "outputs": [
+          {
+            "type": "string",
+            "name": "name",
+            "required": false,
+            "description": "前端周刊统计"
+          }
+        ],
+        "nodeMeta": {
+          "title": "Start",
+          "icon": "https://sf16-va.tiktokcdn.com/obj/eden-va2/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Start.png",
+          "description": "The starting node of the workflow, used to set the information needed to initiate the workflow.",
+          "subTitle": ""
+        }
+      }
+    },
+    {
+      "id": "900001",
+      "type": "2",
+      "meta": {
+        "position": {
+          "x": 4134,
+          "y": 892
+        },
+        "testRun": {}
+      },
+      "data": {
+        "nodeMeta": {
+          "title": "End",
+          "icon": "https://sf16-va.tiktokcdn.com/obj/eden-va2/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-End.png",
+          "description": "The final node of the workflow, used to return the result information after the workflow runs.",
+          "subTitle": ""
+        },
+        "inputs": {
+          "terminatePlan": "returnVariables",
+          "inputParameters": [
+            {
+              "name": "output1",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "ref",
+                  "content": {
+                    "source": "block-output",
+                    "blockID": "168300",
+                    "name": "output"
+                  }
+                }
+              }
+            }
+          ],
+          "streamingOutput": true
+        }
+      }
+    },
+    {
+      "id": "110839",
+      "type": "4",
+      "meta": {
+        "position": {
+          "x": 1117,
+          "y": 211
+        },
+        "testRun": {}
+      },
+      "data": {
+        "nodeMeta": {
+          "title": "rss_fetch",
+          "icon": "https://sf16-va.tiktokcdn.com/obj/eden-va2/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Api.png",
+          "isFromStore": true,
+          "subtitle": "RSS Plugin:rss_fetch",
+          "description": "fetch rss data"
+        },
+        "inputs": {
+          "apiParam": [
+            {
+              "name": "apiID",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "7358716429652197394"
+                }
+              }
+            },
+            {
+              "name": "apiName",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "rss_fetch"
+                }
+              }
+            },
+            {
+              "name": "pluginID",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "7358716422845153288"
+                }
+              }
+            },
+            {
+              "name": "pluginName",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "RSS Plugin"
+                }
+              }
+            },
+            {
+              "name": "pluginVersion",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": ""
+                }
+              }
+            },
+            {
+              "name": "tips",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": ""
+                }
+              }
+            },
+            {
+              "name": "outDocLink",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": ""
+                }
+              }
+            }
+          ],
+          "inputParameters": [
+            {
+              "name": "top_n",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "1"
+                }
+              }
+            },
+            {
+              "name": "url",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "https://www.ruanyifeng.com/blog/atom.xml "
+                }
+              }
+            }
+          ]
+        },
+        "outputs": [
+          {
+            "type": "list",
+            "name": "items",
+            "schema": {
+              "type": "object",
+              "schema": [
+                {
+                  "type": "string",
+                  "name": "content",
+                  "required": true,
+                  "description": "rss item content"
+                },
+                {
+                  "type": "string",
+                  "name": "link",
+                  "required": true,
+                  "description": "link url"
+                },
+                {
+                  "type": "string",
+                  "name": "pubDate",
+                  "required": true,
+                  "description": "publish date"
+                },
+                {
+                  "type": "string",
+                  "name": "title",
+                  "required": true,
+                  "description": "rss item title"
+                }
+              ]
+            },
+            "required": true,
+            "description": "rss items"
+          }
+        ]
+      }
+    },
+    {
+      "id": "111026",
+      "type": "4",
+      "meta": {
+        "position": {
+          "x": 1117,
+          "y": 1275
+        },
+        "testRun": {}
+      },
+      "data": {
+        "nodeMeta": {
+          "title": "rss_fetch_1",
+          "icon": "https://sf16-va.tiktokcdn.com/obj/eden-va2/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-Api.png",
+          "isFromStore": true,
+          "subtitle": "RSS Plugin:rss_fetch",
+          "description": "fetch rss data"
+        },
+        "inputs": {
+          "apiParam": [
+            {
+              "name": "apiID",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "7358716429652197394"
+                }
+              }
+            },
+            {
+              "name": "apiName",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "rss_fetch"
+                }
+              }
+            },
+            {
+              "name": "pluginID",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "7358716422845153288"
+                }
+              }
+            },
+            {
+              "name": "pluginName",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "RSS Plugin"
+                }
+              }
+            },
+            {
+              "name": "pluginVersion",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": ""
+                }
+              }
+            },
+            {
+              "name": "tips",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": ""
+                }
+              }
+            },
+            {
+              "name": "outDocLink",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": ""
+                }
+              }
+            }
+          ],
+          "inputParameters": [
+            {
+              "name": "top_n",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "1"
+                }
+              }
+            },
+            {
+              "name": "url",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "https://cprss.s3.amazonaws.com/javascriptweekly.com.xml"
+                }
+              }
+            }
+          ]
+        },
+        "outputs": [
+          {
+            "type": "list",
+            "name": "items",
+            "schema": {
+              "type": "object",
+              "schema": [
+                {
+                  "type": "string",
+                  "name": "content",
+                  "required": true,
+                  "description": "rss item content"
+                },
+                {
+                  "type": "string",
+                  "name": "link",
+                  "required": true,
+                  "description": "link url"
+                },
+                {
+                  "type": "string",
+                  "name": "pubDate",
+                  "required": true,
+                  "description": "publish date"
+                },
+                {
+                  "type": "string",
+                  "name": "title",
+                  "required": true,
+                  "description": "rss item title"
+                }
+              ]
+            },
+            "required": true,
+            "description": "rss items"
+          }
+        ]
+      }
+    },
+    {
+      "id": "141590",
+      "type": "3",
+      "meta": {
+        "position": {
+          "x": 1814.5,
+          "y": 0
+        },
+        "testRun": {}
+      },
+      "data": {
+        "nodeMeta": {
+          "title": "LLM",
+          "icon": "https://sf16-va.tiktokcdn.com/obj/eden-va2/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png",
+          "description": "Invoke the large language model, generate responses using variables and prompt words.",
+          "subTitle": "LLM"
+        },
+        "inputs": {
+          "inputParameters": [
+            {
+              "name": "input",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "ref",
+                  "content": {
+                    "source": "block-output",
+                    "blockID": "110839",
+                    "name": "items.content"
+                  }
+                }
+              }
+            }
+          ],
+          "llmParam": [
+            {
+              "name": "modleName",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "GPT-4o"
+                }
+              }
+            },
+            {
+              "name": "modelType",
+              "input": {
+                "type": "integer",
+                "value": {
+                  "type": "literal",
+                  "content": "1716293913"
+                }
+              }
+            },
+            {
+              "name": "prompt",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "{{input}}}这是有关前端的一个周刊，我希望你能帮他提示并分类并搞成下方的样式\n\n```\n## 文章\n[文章1](链接)：【文章1 的具体描述，60-200字】\n\n[文章2](链接)：【文章2 的具体描述，60-200字】\n.....\n\n[文章n](链接)：【文章n 的具体描述，60-200字】\n\n## 工具\n[工具1](链接)：【工具1 的具体描述，60-200字】\n\n[工具2](链接)：【工具2 的具体描述，60-200字】\n\n.....\n\n[工具n](链接)：【工具n 的具体描述，60-200字】\n\n```"
+                }
+              }
+            },
+            {
+              "name": "temperature",
+              "input": {
+                "type": "float",
+                "value": {
+                  "type": "literal",
+                  "content": "0.7"
+                }
+              }
+            },
+            {
+              "name": "enableChatHistory",
+              "input": {
+                "type": "boolean",
+                "value": {
+                  "type": "literal",
+                  "content": false
+                }
+              }
+            },
+            {
+              "name": "systemPrompt",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": ""
+                }
+              }
+            }
+          ]
+        },
+        "outputs": [
+          {
+            "type": "string",
+            "name": "output"
+          }
+        ],
+        "version": "2"
+      }
+    },
+    {
+      "id": "192303",
+      "type": "3",
+      "meta": {
+        "position": {
+          "x": 1814.5,
+          "y": 1097.6666666666667
+        },
+        "testRun": {}
+      },
+      "data": {
+        "nodeMeta": {
+          "title": "LLM_1",
+          "icon": "https://sf16-va.tiktokcdn.com/obj/eden-va2/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png",
+          "description": "Invoke the large language model, generate responses using variables and prompt words.",
+          "subTitle": "LLM"
+        },
+        "inputs": {
+          "inputParameters": [
+            {
+              "name": "input",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "ref",
+                  "content": {
+                    "source": "block-output",
+                    "blockID": "111026",
+                    "name": "items.content"
+                  }
+                }
+              }
+            }
+          ],
+          "llmParam": [
+            {
+              "name": "modleName",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "GPT-4o"
+                }
+              }
+            },
+            {
+              "name": "modelType",
+              "input": {
+                "type": "integer",
+                "value": {
+                  "type": "literal",
+                  "content": "1716293913"
+                }
+              }
+            },
+            {
+              "name": "prompt",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "{{input}}}这是有关前端的一个周刊，我希望你能帮他提示并分类并搞成下方的样式，并用中文输出\n\n```\n## 文章\n[文章1](链接)：【文章1 的具体描述，60-200字】\n\n[文章2](链接)：【文章2 的具体描述，60-200字】\n.....\n\n[文章n](链接)：【文章n 的具体描述，60-200字】\n\n## 工具\n[工具1](链接)：【工具1 的具体描述，60-200字】\n\n[工具2](链接)：【工具2 的具体描述，60-200字】\n\n.....\n\n[工具n](链接)：【工具n 的具体描述，60-200字】\n\n```"
+                }
+              }
+            },
+            {
+              "name": "temperature",
+              "input": {
+                "type": "float",
+                "value": {
+                  "type": "literal",
+                  "content": "0.7"
+                }
+              }
+            },
+            {
+              "name": "enableChatHistory",
+              "input": {
+                "type": "boolean",
+                "value": {
+                  "type": "literal",
+                  "content": false
+                }
+              }
+            },
+            {
+              "name": "systemPrompt",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": ""
+                }
+              }
+            }
+          ]
+        },
+        "outputs": [
+          {
+            "type": "string",
+            "name": "output"
+          }
+        ],
+        "version": "2"
+      }
+    },
+    {
+      "id": "168300",
+      "type": "3",
+      "meta": {
+        "position": {
+          "x": 3436.5,
+          "y": 437
+        },
+        "testRun": {}
+      },
+      "data": {
+        "nodeMeta": {
+          "title": "LLM_3",
+          "icon": "https://sf16-va.tiktokcdn.com/obj/eden-va2/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png",
+          "description": "Invoke the large language model, generate responses using variables and prompt words.",
+          "subTitle": "LLM"
+        },
+        "inputs": {
+          "inputParameters": [
+            {
+              "name": "input1",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "ref",
+                  "content": {
+                    "source": "block-output",
+                    "blockID": "141590",
+                    "name": "output"
+                  }
+                }
+              }
+            },
+            {
+              "name": "input2",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "ref",
+                  "content": {
+                    "source": "block-output",
+                    "blockID": "192303",
+                    "name": "output"
+                  }
+                }
+              }
+            },
+            {
+              "name": "title",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "ref",
+                  "content": {
+                    "source": "block-output",
+                    "blockID": "144893",
+                    "name": "output"
+                  }
+                }
+              }
+            }
+          ],
+          "llmParam": [
+            {
+              "name": "modleName",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "GPT-4o"
+                }
+              }
+            },
+            {
+              "name": "modelType",
+              "input": {
+                "type": "integer",
+                "value": {
+                  "type": "literal",
+                  "content": "1716293913"
+                }
+              }
+            },
+            {
+              "name": "prompt",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "```\n{{input1}}}\n\n\n\n{{input2}}}\n```\n\n你需要根据上方的内容，仅可能保证里面的内容没有疏漏，按照下面的格式来编写你的文章, 工具不超过10个，文章超过10个。\n\n```\n# {{title}}\n\n记录下每周留意的科技内容，欢迎交流分享。\n\n## 文章\n[文章1](链接)：描述（60-200字）\n\n[文章2](链接)：描述（60-200字）\n\n## 工具\n[工具1](链接)：描述（60-200字）\n\n[工具2](链接)：描述（60-200字）\n\n```"
+                }
+              }
+            },
+            {
+              "name": "temperature",
+              "input": {
+                "type": "float",
+                "value": {
+                  "type": "literal",
+                  "content": "0.7"
+                }
+              }
+            },
+            {
+              "name": "enableChatHistory",
+              "input": {
+                "type": "boolean",
+                "value": {
+                  "type": "literal",
+                  "content": false
+                }
+              }
+            },
+            {
+              "name": "systemPrompt",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": ""
+                }
+              }
+            }
+          ]
+        },
+        "outputs": [
+          {
+            "type": "string",
+            "name": "output"
+          }
+        ],
+        "version": "2"
+      }
+    },
+    {
+      "id": "144893",
+      "type": "3",
+      "meta": {
+        "position": {
+          "x": 2625.5,
+          "y": 579.6666666666666
+        },
+        "testRun": {}
+      },
+      "data": {
+        "nodeMeta": {
+          "title": "LLM_2",
+          "icon": "https://sf16-va.tiktokcdn.com/obj/eden-va2/dvsmryvd_avi_dvsm/ljhwZthlaukjlkulzlp/icon/icon-LLM.png",
+          "description": "Invoke the large language model, generate responses using variables and prompt words.",
+          "subTitle": "LLM"
+        },
+        "inputs": {
+          "inputParameters": [
+            {
+              "name": "input1",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "ref",
+                  "content": {
+                    "source": "block-output",
+                    "blockID": "141590",
+                    "name": "output"
+                  }
+                }
+              }
+            },
+            {
+              "name": "input2",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "ref",
+                  "content": {
+                    "source": "block-output",
+                    "blockID": "192303",
+                    "name": "output"
+                  }
+                }
+              }
+            }
+          ],
+          "llmParam": [
+            {
+              "name": "modleName",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "GPT-4o"
+                }
+              }
+            },
+            {
+              "name": "modelType",
+              "input": {
+                "type": "integer",
+                "value": {
+                  "type": "literal",
+                  "content": "1716293913"
+                }
+              }
+            },
+            {
+              "name": "prompt",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": "```\n{{input1}}}\n\n\n\n{{input2}}}\n```\n\n目前有个去标题的任务，需要去 “Tech Weekly: 【文章1总结，文章2总结，工具3总结】” 的类似标题\n- 要求：取一个标题，可以是前几个工具/文章的简写，如“Rolldown 开源、Claude 3、如何使用 Copilot 完成 50% 的日常工作”等类似于语句，但不要超过 50 字。\n- 例子：\n  - Tech Weekly: Rolldown 开源、Claude 3、如何使用 Copilot 完成 50% 的日常工作。\n  - Tech Weekly: Interop 2024、TS 5.4 RC、2 月登陆浏览器的新功能、JSR\n- 输出：你最终只需要给我返回标题就好。你只要返回标题，其他内容无需返回。如【Tech Weekly: Rolldown 开源、Claude 3、如何使用 Copilot 完成 50% 的日常工作。】"
+                }
+              }
+            },
+            {
+              "name": "temperature",
+              "input": {
+                "type": "float",
+                "value": {
+                  "type": "literal",
+                  "content": "0.7"
+                }
+              }
+            },
+            {
+              "name": "enableChatHistory",
+              "input": {
+                "type": "boolean",
+                "value": {
+                  "type": "literal",
+                  "content": false
+                }
+              }
+            },
+            {
+              "name": "systemPrompt",
+              "input": {
+                "type": "string",
+                "value": {
+                  "type": "literal",
+                  "content": ""
+                }
+              }
+            }
+          ]
+        },
+        "outputs": [
+          {
+            "type": "string",
+            "name": "output",
+            "description": "总结的标题，不超过 50 字"
+          }
+        ],
+        "version": "2"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "sourceNodeID": "100001",
+      "targetNodeID": "111026"
+    },
+    {
+      "sourceNodeID": "168300",
+      "targetNodeID": "900001"
+    },
+    {
+      "sourceNodeID": "110839",
+      "targetNodeID": "141590"
+    },
+    {
+      "sourceNodeID": "111026",
+      "targetNodeID": "192303"
+    },
+    {
+      "sourceNodeID": "141590",
+      "targetNodeID": "144893"
+    },
+    {
+      "sourceNodeID": "144893",
+      "targetNodeID": "168300"
+    },
+    {
+      "sourceNodeID": "100001",
+      "targetNodeID": "110839"
+    },
+    {
+      "sourceNodeID": "192303",
+      "targetNodeID": "144893"
+    }
+  ]
+}
