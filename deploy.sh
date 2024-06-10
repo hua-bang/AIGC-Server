@@ -9,3 +9,5 @@ echo $SCRIPTPATH
 cd $SCRIPTPATH
 cd ./server
 npm run deploy
+
+echo begin deploy
