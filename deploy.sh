@@ -7,6 +7,9 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 echo $SCRIPTPATH
 
 cd $SCRIPTPATH
+
+git pull origin master
+
 cd ./server
 npm run deploy
 
