@@ -11,16 +11,12 @@ const CodeNode = memo(({ data, isConnectable }: NodeProps) => {
       <Handle
         type="target"
         position={Position.Left}
-        style={{ left: 5, opacity: 0 }}
-        onConnect={(params) => console.log("handle onConnect", params)}
         isConnectable={isConnectable}
       />
       <CodeNodeContent />
       <Handle
         type="source"
         position={Position.Right}
-        style={{ right: 5, opacity: 0 }}
-        onConnect={(params) => console.log("handle onConnect", params)}
         isConnectable={isConnectable}
       />
     </>

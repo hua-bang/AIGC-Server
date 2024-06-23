@@ -23,6 +23,11 @@ const initialNodes = [
     position: { x: 80, y: 400 },
   },
   {
+    id: "llmNode-4",
+    type: "llmNode",
+    position: { x: 600, y: 1400 },
+  },
+  {
     id: "llmNode-1",
     type: "llmNode",
     data: { label: "Node 2" },

@@ -49,7 +49,7 @@ const LLMNodeContent = () => {
               />
             </svg>
           </div>
-          <h2 className="font-semibold text-sm">LLM_2</h2>
+          <h2 className="font-semibold text-sm">LLM</h2>
         </div>
         <MoreHorizontal size={14} className="text-gray-500" />
       </div>

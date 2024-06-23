@@ -15,7 +15,6 @@ const EndNode = (props: NodeProps<EndNodeData>) => {
       <Handle
         type="target"
         position={Position.Left}
-        style={{ left: 5, opacity: 0 }}
         onConnect={(params) => console.log("handle onConnect", params)}
         isConnectable={isConnectable}
       />

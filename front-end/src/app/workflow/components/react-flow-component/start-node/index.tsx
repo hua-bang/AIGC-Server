@@ -77,8 +77,7 @@ const StartNode = (props: NodeProps<StartNodeData>) => {
       <Handle
         type="source"
         position={Position.Right}
-        style={{ right: 5, opacity: 0 }}
-        onConnect={(params) => console.log("handle onConnect", params)}
+        style={{ opacity: 0.7 }}
         isConnectable={isConnectable}
       />
     </>

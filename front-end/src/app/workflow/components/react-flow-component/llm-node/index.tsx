@@ -11,16 +11,12 @@ const LLMNode = memo(({ data, isConnectable }: any) => {
       <Handle
         type="target"
         position={Position.Left}
-        style={{ left: 5, opacity: 0 }}
-        onConnect={(params) => console.log("handle onConnect", params)}
         isConnectable={isConnectable}
       />
       <LLMNodeContent />
       <Handle
         type="source"
         position={Position.Right}
-        style={{ right: 5, opacity: 0 }}
-        onConnect={(params) => console.log("handle onConnect", params)}
         isConnectable={isConnectable}
       />
     </>
