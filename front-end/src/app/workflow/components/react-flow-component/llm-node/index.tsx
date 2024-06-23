@@ -1,6 +1,5 @@
 /* eslint-disable react/display-name */
 "use client";
-
 import React, { memo } from "react";
 import { Handle, Position } from "reactflow";
 import LLMNodeContent from "./content";

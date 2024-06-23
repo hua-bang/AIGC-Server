@@ -26,13 +26,19 @@ const defaultInitialNodes: Node[] = [
     id: "start",
     type: WorkflowNodeType.Start,
     data: { label: "Node 1" },
-    position: { x: 80, y: 400 },
+    position: { x: 100, y: 400 },
   },
   {
-    id: "end-4",
+    id: "llm",
+    type: WorkflowNodeType.LLM,
+    data: { label: "Node 1" },
+    position: { x: 730, y: 260 },
+  },
+  {
+    id: "end",
     type: WorkflowNodeType.End,
     data: { label: "end data" },
-    position: { x: 800, y: 400 },
+    position: { x: 1400, y: 400 },
   },
 ];
 

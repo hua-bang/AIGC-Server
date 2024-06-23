@@ -1,35 +1,17 @@
 import React, { useState } from "react";
 import {
   ChevronDown,
-  ChevronUp,
   Info,
   MoreHorizontal,
   AlignJustify,
   Users,
-  X,
 } from "lucide-react";
+import { InputParams } from "../input-params";
+import OutputParams from "../output-params";
 
 const LLMNodeContent = () => {
-  const [isInputExpanded, setIsInputExpanded] = useState(true);
-  const [isOutputExpanded, setIsOutputExpanded] = useState(true);
-  const [inputs, setInputs] = useState([
-    { name: "input1", value: "LLM - output" },
-  ]);
-  const [outputs, setOutputs] = useState([
-    { name: "output", type: "String", description: "总结的标题，不超过 50 字" },
-  ]);
-
-  const addInput = () => setInputs([...inputs, { name: "", value: "" }]);
-  const removeInput = (index: number) =>
-    setInputs(inputs.filter((_, i) => i !== index));
-
-  const addOutput = () =>
-    setOutputs([...outputs, { name: "", type: "String", description: "" }]);
-  const removeOutput = (index: number) =>
-    setOutputs(outputs.filter((_, i) => i !== index));
-
   return (
-    <div className="w-80 bg-white rounded-lg shadow-md border border-gray-200 text-xs">
+    <div className="bg-white rounded-lg shadow-md border border-gray-200 text-xs">
       <div className="flex items-center justify-between p-2 border-b border-gray-200">
         <div className="flex items-center">
           <div className="bg-gray-800 text-white p-1 rounded mr-2">
@@ -59,16 +41,6 @@ const LLMNodeContent = () => {
           Invoke the large language model, generate responses using variables
           and prompt words.
         </p>
-
-        <div className="flex mb-2">
-          <button className="flex-1 bg-blue-50 text-blue-600 py-1 px-2 rounded-l text-xs font-medium">
-            Single time
-          </button>
-          <button className="flex-1 bg-gray-100 text-gray-500 py-1 px-2 rounded-r text-xs">
-            Batch processing
-          </button>
-        </div>
-
         <div className="mb-2">
           <div className="flex items-center justify-between border rounded p-1">
             <div className="flex items-center">
@@ -99,71 +71,7 @@ const LLMNodeContent = () => {
             </div>
           </div>
         </div>
-
-        <div className="mb-2">
-          <div className="flex items-center justify-between mb-1">
-            <span className="font-medium flex items-center">
-              Input
-              <Info size={10} className="ml-1 text-gray-400" />
-            </span>
-            <div className="flex items-center">
-              <div className="flex items-center text-xs text-gray-500 mr-1">
-                <input type="checkbox" className="mr-1 w-3 h-3" />
-                <span className="text-xs">Bot Chat History</span>
-              </div>
-              <button onClick={() => setIsInputExpanded(!isInputExpanded)}>
-                {isInputExpanded ? (
-                  <ChevronUp size={14} />
-                ) : (
-                  <ChevronDown size={14} />
-                )}
-              </button>
-            </div>
-          </div>
-          {isInputExpanded && (
-            <div className="border rounded p-1">
-              {inputs.map((input, index) => (
-                <div
-                  key={index}
-                  className="flex justify-between items-center mb-1"
-                >
-                  <input
-                    className="border rounded p-1 text-xs w-1/3 mr-1"
-                    placeholder="Name"
-                    value={input.name}
-                    onChange={(e) => {
-                      const newInputs = [...inputs];
-                      newInputs[index].name = e.target.value;
-                      setInputs(newInputs);
-                    }}
-                  />
-                  <div className="flex items-center w-2/3">
-                    <select className="border rounded p-1 text-xs mr-1 w-1/3">
-                      <option>Reference</option>
-                    </select>
-                    <input
-                      className="border rounded p-1 text-xs flex-grow"
-                      placeholder="Value"
-                      value={input.value}
-                      onChange={(e) => {
-                        const newInputs = [...inputs];
-                        newInputs[index].value = e.target.value;
-                        setInputs(newInputs);
-                      }}
-                    />
-                    <button onClick={() => removeInput(index)} className="ml-1">
-                      <X size={12} className="text-gray-400" />
-                    </button>
-                  </div>
-                </div>
-              ))}
-              <button onClick={addInput} className="text-blue-600 text-xs">
-                + Add
-              </button>
-            </div>
-          )}
-        </div>
-
+        <InputParams />
         <div className="mb-2">
           <div className="flex items-center justify-between mb-1">
             <span className="font-medium flex items-center">
@@ -177,77 +85,7 @@ const LLMNodeContent = () => {
             defaultValue="..."
           />
         </div>
-
-        <div>
-          <div className="flex items-center justify-between mb-1">
-            <span className="font-medium flex items-center">
-              Output
-              <Info size={10} className="ml-1 text-gray-400" />
-            </span>
-            <div className="flex items-center">
-              <span className="text-xs text-gray-500 mr-1">Output format</span>
-              <Info size={10} className="text-gray-400" />
-              <ChevronDown size={14} className="text-gray-400 mx-1" />
-              <button onClick={() => setIsOutputExpanded(!isOutputExpanded)}>
-                {isOutputExpanded ? (
-                  <ChevronUp size={14} />
-                ) : (
-                  <ChevronDown size={14} />
-                )}
-              </button>
-            </div>
-          </div>
-          {isOutputExpanded && (
-            <div className="border rounded p-1">
-              {outputs.map((output, index) => (
-                <div
-                  key={index}
-                  className="flex justify-between items-center mb-1"
-                >
-                  <input
-                    className="border rounded p-1 text-xs w-1/4 mr-1"
-                    placeholder="Name"
-                    value={output.name}
-                    onChange={(e) => {
-                      const newOutputs = [...outputs];
-                      newOutputs[index].name = e.target.value;
-                      setOutputs(newOutputs);
-                    }}
-                  />
-                  <select
-                    className="border rounded p-1 text-xs w-1/4 mr-1"
-                    value={output.type}
-                    onChange={(e) => {
-                      const newOutputs = [...outputs];
-                      newOutputs[index].type = e.target.value;
-                      setOutputs(newOutputs);
-                    }}
-                  >
-                    <option>String</option>
-                    <option>Number</option>
-                    <option>Boolean</option>
-                  </select>
-                  <input
-                    className="border rounded p-1 text-xs flex-grow"
-                    placeholder="Description"
-                    value={output.description}
-                    onChange={(e) => {
-                      const newOutputs = [...outputs];
-                      newOutputs[index].description = e.target.value;
-                      setOutputs(newOutputs);
-                    }}
-                  />
-                  <button onClick={() => removeOutput(index)} className="ml-1">
-                    <X size={12} className="text-gray-400" />
-                  </button>
-                </div>
-              ))}
-              <button onClick={addOutput} className="text-blue-600 text-xs">
-                + Add
-              </button>
-            </div>
-          )}
-        </div>
+        <OutputParams />
       </div>
     </div>
   );

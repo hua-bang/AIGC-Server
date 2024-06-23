@@ -1,3 +1,4 @@
+import { Node } from "reactflow";
 import { OutputParameter } from ".";
 
 export enum WorkflowNodeType {
@@ -27,16 +28,19 @@ export interface ReactFlowNodeMeta {
   };
 }
 
-export interface ReactFlowNode {
-  id: string;
-  type: string;
-  meta: ReactFlowNodeMeta;
+export interface WorkflowNodeDataMeta {
+  title: string;
+  icon: string;
+  description: string;
+  subTitle: string;
 }
 
 export interface WorkflowNodeData {
   outputs: OutputParameter[];
+  nodeMeta: WorkflowNodeDataMeta;
 }
 
-export interface WorkflowNode extends ReactFlowNode {
-  data: {};
+export interface WorkflowNode extends Node {
+  data: WorkflowNodeData;
+  meta: ReactFlowNodeMeta;
 }
