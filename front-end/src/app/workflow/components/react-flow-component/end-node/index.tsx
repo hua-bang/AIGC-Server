@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Handle, NodeProps, Position } from "reactflow";
+import EndNodeContent from "./content";
 
 interface EndNodeData {
   name?: string;
@@ -18,9 +19,7 @@ const EndNode = (props: NodeProps<EndNodeData>) => {
         onConnect={(params) => console.log("handle onConnect", params)}
         isConnectable={isConnectable}
       />
-      <div className="bg-[#fff] p-[15px] border-[1px] border-black rounded-[4px]">
-        <div className="bg-[#fff] rounded-[5px]">结束</div>
-      </div>
+      <EndNodeContent />
     </>
   );
 };

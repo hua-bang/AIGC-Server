@@ -6,6 +6,7 @@ import ReactFlow, {
   addEdge,
   MiniMap,
   Controls,
+  useReactFlow,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import LLMNode from "../react-flow-component/llm-node";
@@ -18,31 +19,31 @@ const initialNodes = [
     id: "start",
     type: "startNode",
     data: { label: "Node 1" },
-    position: { x: 20, y: 250 },
+    position: { x: 20, y: 400 },
   },
   {
     id: "llmNode-1",
     type: "llmNode",
     data: { label: "Node 2" },
-    position: { x: 300, y: 175 },
+    position: { x: 600, y: 50 },
   },
   {
     id: "normal-3",
-    type: "normalNode",
+    type: "llmNode",
     data: { label: "Node 3" },
-    position: { x: 300, y: 350 },
+    position: { x: 600, y: 700 },
   },
   {
     id: "normal-4",
-    type: "normalNode",
+    type: "llmNode",
     data: { label: "Node 4" },
-    position: { x: 500, y: 250 },
+    position: { x: 1000, y: 250 },
   },
   {
     id: "end-4",
     type: "endNode",
     data: { label: "end data" },
-    position: { x: 700, y: 250 },
+    position: { x: 1400, y: 400 },
   },
 ];
 
@@ -89,6 +90,7 @@ const ReactFlowDemo = () => {
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}
       nodeTypes={nodeTypes}
+      fitView
     >
       <MiniMap />
       <Controls />

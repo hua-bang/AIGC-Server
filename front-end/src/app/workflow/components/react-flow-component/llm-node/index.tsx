@@ -3,6 +3,7 @@
 
 import React, { memo } from "react";
 import { Handle, Position } from "reactflow";
+import LLMNodeContent from "./content";
 
 const LLMNode = memo(({ data, isConnectable }: any) => {
   return (
@@ -14,10 +15,7 @@ const LLMNode = memo(({ data, isConnectable }: any) => {
         onConnect={(params) => console.log("handle onConnect", params)}
         isConnectable={isConnectable}
       />
-      <div className="bg-[#fff] p-[15px] border-[1px] border-black rounded-[4px]">
-        <div className="bg-[#fff] rounded-[5px]">这个是 LLM 节点</div>
-      </div>
-
+      <LLMNodeContent />
       <Handle
         type="source"
         position={Position.Right}
