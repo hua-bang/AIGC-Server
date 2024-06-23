@@ -13,13 +13,14 @@ import LLMNode from "../react-flow-component/llm-node";
 import StartNode from "../react-flow-component/start-node";
 import NormalNode from "../react-flow-component/normal-node";
 import EndNode from "../react-flow-component/end-node";
+import CodeNode from "../react-flow-component/code-node";
 
 const initialNodes = [
   {
     id: "start",
     type: "startNode",
     data: { label: "Node 1" },
-    position: { x: 20, y: 400 },
+    position: { x: 80, y: 400 },
   },
   {
     id: "llmNode-1",
@@ -35,7 +36,7 @@ const initialNodes = [
   },
   {
     id: "normal-4",
-    type: "llmNode",
+    type: "codeNode",
     data: { label: "Node 4" },
     position: { x: 1000, y: 250 },
   },
@@ -43,7 +44,7 @@ const initialNodes = [
     id: "end-4",
     type: "endNode",
     data: { label: "end data" },
-    position: { x: 1400, y: 400 },
+    position: { x: 1600, y: 400 },
   },
 ];
 
@@ -65,6 +66,7 @@ const nodeTypes = {
   startNode: StartNode,
   normalNode: NormalNode,
   endNode: EndNode,
+  codeNode: CodeNode,
 };
 
 const ReactFlowDemo = () => {
