@@ -1,10 +1,11 @@
 /* eslint-disable react/display-name */
 "use client";
-import React, { memo } from "react";
-import { Handle, Position } from "reactflow";
-import LLMNodeContent from "./content";
 
-export const LLMNode = memo(({ data, isConnectable }: any) => {
+import React, { memo } from "react";
+import { Handle, NodeProps, Position } from "reactflow";
+import CodeNodeContent from "./content";
+
+export const CodeNode = memo(({ data, isConnectable }: NodeProps) => {
   return (
     <>
       <Handle
@@ -12,7 +13,7 @@ export const LLMNode = memo(({ data, isConnectable }: any) => {
         position={Position.Left}
         isConnectable={isConnectable}
       />
-      <LLMNodeContent />
+      <CodeNodeContent />
       <Handle
         type="source"
         position={Position.Right}
@@ -22,4 +23,4 @@ export const LLMNode = memo(({ data, isConnectable }: any) => {
   );
 });
 
-export default LLMNode;
+export default CodeNode;

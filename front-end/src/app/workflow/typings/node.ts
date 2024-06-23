@@ -1,15 +1,18 @@
+import { Node } from "reactflow";
 import { OutputParameter } from ".";
 
 export enum WorkflowNodeType {
-  Plugin = 1,
-  LLM = 2,
-  Code = 3,
-  KnowLedge = 4,
-  Workflow = 5,
-  Condition = 6,
-  Message = 7,
-  Variable = 8,
-  Database = 9,
+  Start = "start",
+  End = "end",
+  Plugin = "plugin",
+  LLM = "llm",
+  Code = "code",
+  KnowLedge = "knowledge",
+  Workflow = "workflow",
+  Condition = "condition",
+  Message = "message",
+  Variable = "variable",
+  Database = "database",
 }
 
 export interface WorkflowNodeCategory {
@@ -25,16 +28,19 @@ export interface ReactFlowNodeMeta {
   };
 }
 
-export interface ReactFlowNode {
-  id: string;
-  type: string;
-  meta: ReactFlowNodeMeta;
+export interface WorkflowNodeDataMeta {
+  title: string;
+  icon: string;
+  description: string;
+  subTitle: string;
 }
 
 export interface WorkflowNodeData {
   outputs: OutputParameter[];
+  nodeMeta: WorkflowNodeDataMeta;
 }
 
-export interface WorkflowNode extends ReactFlowNode {
-  data: {};
+export interface WorkflowNode extends Node {
+  data: WorkflowNodeData;
+  meta: ReactFlowNodeMeta;
 }
