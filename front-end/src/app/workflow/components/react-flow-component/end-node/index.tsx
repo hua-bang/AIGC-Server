@@ -14,21 +14,13 @@ const EndNode = (props: NodeProps<EndNodeData>) => {
       <Handle
         type="target"
         position={Position.Left}
-        style={{ background: "#555" }}
+        style={{ left: 5, opacity: 0 }}
         onConnect={(params) => console.log("handle onConnect", params)}
         isConnectable={isConnectable}
       />
       <div className="bg-[#fff] p-[15px] border-[1px] border-black rounded-[4px]">
         <div className="bg-[#fff] rounded-[5px]">结束</div>
       </div>
-
-      <Handle
-        type="source"
-        position={Position.Right}
-        style={{ background: "#555" }}
-        onConnect={(params) => console.log("handle onConnect", params)}
-        isConnectable={isConnectable}
-      />
     </>
   );
 };

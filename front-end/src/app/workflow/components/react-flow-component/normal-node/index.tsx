@@ -10,7 +10,7 @@ const NormalNode = memo(({ data, isConnectable }: any) => {
       <Handle
         type="target"
         position={Position.Left}
-        style={{ background: "#555" }}
+        style={{ left: 5, opacity: 0 }}
         onConnect={(params) => console.log("handle onConnect", params)}
         isConnectable={isConnectable}
       />
@@ -21,7 +21,7 @@ const NormalNode = memo(({ data, isConnectable }: any) => {
       <Handle
         type="source"
         position={Position.Right}
-        style={{ background: "#555" }}
+        style={{ right: 5, opacity: 0 }}
         onConnect={(params) => console.log("handle onConnect", params)}
         isConnectable={isConnectable}
       />
