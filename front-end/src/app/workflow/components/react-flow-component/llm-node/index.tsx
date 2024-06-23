@@ -5,7 +5,7 @@ import React, { memo } from "react";
 import { Handle, Position } from "reactflow";
 import LLMNodeContent from "./content";
 
-const LLMNode = memo(({ data, isConnectable }: any) => {
+export const LLMNode = memo(({ data, isConnectable }: any) => {
   return (
     <>
       <Handle

@@ -5,7 +5,7 @@ import React, { memo } from "react";
 import { Handle, NodeProps, Position } from "reactflow";
 import CodeNodeContent from "./content";
 
-const CodeNode = memo(({ data, isConnectable }: NodeProps) => {
+export const CodeNode = memo(({ data, isConnectable }: NodeProps) => {
   return (
     <>
       <Handle

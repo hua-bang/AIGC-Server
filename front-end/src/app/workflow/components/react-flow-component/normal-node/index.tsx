@@ -4,7 +4,7 @@
 import React, { memo } from "react";
 import { Handle, Position } from "reactflow";
 
-const NormalNode = memo(({ data, isConnectable }: any) => {
+export const NormalNode = memo(({ data, isConnectable }: any) => {
   return (
     <>
       <Handle

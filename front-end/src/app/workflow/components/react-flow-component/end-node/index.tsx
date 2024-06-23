@@ -8,7 +8,7 @@ interface EndNodeData {
   name?: string;
 }
 
-const EndNode = (props: NodeProps<EndNodeData>) => {
+export const EndNode = (props: NodeProps<EndNodeData>) => {
   const { isConnectable } = props;
   return (
     <>

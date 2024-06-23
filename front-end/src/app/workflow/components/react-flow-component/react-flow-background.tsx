@@ -1,11 +1,15 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import ReactFlow, {
   useNodesState,
   useEdgesState,
   addEdge,
   MiniMap,
   Controls,
+  OnNodesChange,
+  Edge,
+  Node,
+  OnEdgesChange,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { WorkflowNodeType } from "../../typings";
@@ -52,15 +56,15 @@ const initialEdges = [
   { id: "e4-end", source: "normal-4", target: "end-4" },
 ];
 
-const hide = (hidden: any) => (nodeOrEdge: any) => {
-  nodeOrEdge.hidden = hidden;
-  return nodeOrEdge;
-};
+const ReactFlowContentBackGround: React.FC<ReactFlowContentBackGroundProps> = ({
+  nodes,
+  setNodes,
+  onNodesChange,
 
-const ReactFlowDemo = () => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-
+  edges,
+  setEdges,
+  onEdgesChange,
+}) => {
   const onConnect = useCallback(
     (params: any) => setEdges((els) => addEdge(params, els)),
     []
@@ -83,4 +87,14 @@ const ReactFlowDemo = () => {
   );
 };
 
-export default ReactFlowDemo;
+interface ReactFlowContentBackGroundProps {
+  nodes: Node[];
+  setNodes: React.Dispatch<React.SetStateAction<Node[]>>;
+  onNodesChange: OnNodesChange;
+
+  edges: Edge[];
+  setEdges: React.Dispatch<React.SetStateAction<Edge[]>>;
+  onEdgesChange: OnEdgesChange;
+}
+
+export default ReactFlowContentBackGround;

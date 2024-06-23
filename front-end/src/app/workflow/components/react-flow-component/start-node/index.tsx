@@ -8,7 +8,7 @@ interface StartNodeData {
   name?: string;
 }
 
-const StartNode = (props: NodeProps<StartNodeData>) => {
+export const StartNode = (props: NodeProps<StartNodeData>) => {
   const { isConnectable } = props;
   return (
     <>

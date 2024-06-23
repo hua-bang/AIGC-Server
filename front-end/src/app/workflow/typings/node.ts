@@ -1,15 +1,17 @@
 import { OutputParameter } from ".";
 
 export enum WorkflowNodeType {
-  Plugin = 1,
-  LLM = 2,
-  Code = 3,
-  KnowLedge = 4,
-  Workflow = 5,
-  Condition = 6,
-  Message = 7,
-  Variable = 8,
-  Database = 9,
+  Start = "start",
+  End = "end",
+  Plugin = "plugin",
+  LLM = "llm",
+  Code = "code",
+  KnowLedge = "knowledge",
+  Workflow = "workflow",
+  Condition = "condition",
+  Message = "message",
+  Variable = "variable",
+  Database = "database",
 }
 
 export interface WorkflowNodeCategory {
