@@ -4,7 +4,7 @@
 import React, { memo } from "react";
 import { Handle, Position } from "reactflow";
 
-const LLMNode = memo(({ data, isConnectable }: any) => {
+const NormalNode = memo(({ data, isConnectable }: any) => {
   return (
     <>
       <Handle
@@ -29,4 +29,4 @@ const LLMNode = memo(({ data, isConnectable }: any) => {
   );
 });
 
-export default LLMNode;
+export default NormalNode;

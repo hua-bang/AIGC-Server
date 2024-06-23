@@ -9,28 +9,49 @@ import ReactFlow, {
 } from "reactflow";
 import "reactflow/dist/style.css";
 import LLMNode from "../react-flow-component/llm-node";
+import StartNode from "../react-flow-component/start-node";
+import NormalNode from "../react-flow-component/normal-node";
+import EndNode from "../react-flow-component/end-node";
 
 const initialNodes = [
   {
-    id: "hidden-1",
-    type: "input",
+    id: "start",
+    type: "startNode",
     data: { label: "Node 1" },
-    position: { x: 250, y: 5 },
+    position: { x: 20, y: 250 },
   },
   {
-    id: "hidden-2",
+    id: "llmNode-1",
     type: "llmNode",
     data: { label: "Node 2" },
-    position: { x: 100, y: 100 },
+    position: { x: 300, y: 175 },
   },
-  { id: "hidden-3", data: { label: "Node 3" }, position: { x: 400, y: 100 } },
-  { id: "hidden-4", data: { label: "Node 4" }, position: { x: 400, y: 200 } },
+  {
+    id: "normal-3",
+    type: "normalNode",
+    data: { label: "Node 3" },
+    position: { x: 300, y: 350 },
+  },
+  {
+    id: "normal-4",
+    type: "normalNode",
+    data: { label: "Node 4" },
+    position: { x: 500, y: 250 },
+  },
+  {
+    id: "end-4",
+    type: "endNode",
+    data: { label: "end data" },
+    position: { x: 700, y: 250 },
+  },
 ];
 
 const initialEdges = [
-  { id: "hidden-e1-2", source: "hidden-1", target: "hidden-2" },
-  { id: "hidden-e1-3", source: "hidden-1", target: "hidden-3" },
-  { id: "hidden-e3-4", source: "hidden-3", target: "hidden-4" },
+  { id: "e1-2", source: "start", target: "llmNode-1" },
+  { id: "e1-3", source: "start", target: "normal-3" },
+  { id: "e3-4", source: "normal-3", target: "normal-4" },
+  { id: "e3-43", source: "llmNode-1", target: "normal-4" },
+  { id: "e4-end", source: "normal-4", target: "end-4" },
 ];
 
 const hide = (hidden: any) => (nodeOrEdge: any) => {
@@ -40,6 +61,9 @@ const hide = (hidden: any) => (nodeOrEdge: any) => {
 
 const nodeTypes = {
   llmNode: LLMNode,
+  startNode: StartNode,
+  normalNode: NormalNode,
+  endNode: EndNode,
 };
 
 const ReactFlowDemo = () => {

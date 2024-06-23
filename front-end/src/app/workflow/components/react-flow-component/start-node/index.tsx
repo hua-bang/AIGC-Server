@@ -1,10 +1,14 @@
-/* eslint-disable react/display-name */
 "use client";
 
-import React, { memo } from "react";
-import { Handle, Position } from "reactflow";
+import React from "react";
+import { Handle, NodeProps, Position } from "reactflow";
 
-const LLMNode = memo(({ data, isConnectable }: any) => {
+interface StartNodeData {
+  name?: string;
+}
+
+const StartNode = (props: NodeProps<StartNodeData>) => {
+  const { isConnectable } = props;
   return (
     <>
       <Handle
@@ -15,7 +19,7 @@ const LLMNode = memo(({ data, isConnectable }: any) => {
         isConnectable={isConnectable}
       />
       <div className="bg-[#fff] p-[15px] border-[1px] border-black rounded-[4px]">
-        <div className="bg-[#fff] rounded-[5px]">这个是 LLM 节点</div>
+        <div className="bg-[#fff] rounded-[5px]">开始</div>
       </div>
 
       <Handle
@@ -27,6 +31,6 @@ const LLMNode = memo(({ data, isConnectable }: any) => {
       />
     </>
   );
-});
+};
 
-export default LLMNode;
+export default StartNode;
