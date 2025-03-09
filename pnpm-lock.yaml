@@ -174,6 +174,21 @@ importers:
         specifier: ^0.1.4
         version: 0.1.4(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3)))
 
+  playground/rag-demo:
+    dependencies:
+      '@langchain/openai':
+        specifier: ^0.4.4
+        version: 0.4.4(@langchain/core@0.1.63(langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(openai@4.86.2(zod@3.22.4)))
+      '@pinecone-database/pinecone':
+        specifier: ^5.1.1
+        version: 5.1.1
+      dotenv:
+        specifier: ^16.3.1
+        version: 16.3.1
+      langchain:
+        specifier: ^0.1.4
+        version: 0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3)))
+
   server:
     dependencies:
       '@nestjs/common':
@@ -1168,6 +1183,10 @@ packages:
     resolution: {integrity: sha512-um0xL3fO7Mf4fDxcqx9KryrB7zgRM5JSlvGN5AGkP6JLM5XEKyjeAiPbNxdXVXQ16isuAhYpvP88NgL2BGd6aA==}
     engines: {node: '>=8.0.0', npm: '>=5.0.0'}
     hasBin: true
+
+  '@pinecone-database/pinecone@5.1.1':
+    resolution: {integrity: sha512-2JwnY28qb2AQi3fLlBfiXhV6e4ZEF0/0HNLdoFWoSPcty6Eu7+354M8mo/Hj0Hi7y3TCDkSCXq2dgmbcDSmCFQ==}
+    engines: {node: '>=18.0.0'}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -6758,6 +6777,30 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
 
+  '@langchain/community@0.0.57(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(jsonwebtoken@9.0.2)(langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3)))':
+    dependencies:
+      '@langchain/core': 0.1.63(langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(openai@4.86.2(zod@3.22.4))
+      '@langchain/openai': 0.0.34(langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))
+      expr-eval: 2.0.2
+      flat: 5.0.2
+      langsmith: 0.1.30(@langchain/core@0.1.63(langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(openai@4.86.2(zod@3.22.4)))(langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(openai@4.86.2(zod@3.22.4))
+      uuid: 9.0.1
+      zod: 3.22.4
+      zod-to-json-schema: 3.23.0(zod@3.22.4)
+    optionalDependencies:
+      '@pinecone-database/pinecone': 5.1.1
+      '@supabase/postgrest-js': 1.15.2
+      '@supabase/supabase-js': 2.42.5
+      jsonwebtoken: 9.0.2
+      lodash: 4.17.21
+      mysql2: 3.6.5
+      pg: 8.11.3
+      typeorm: 0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))
+    transitivePeerDependencies:
+      - encoding
+      - langchain
+      - openai
+
   '@langchain/community@0.0.57(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(jsonwebtoken@9.0.2)(langchain@0.1.4(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3)))':
     dependencies:
       '@langchain/core': 0.1.63(langchain@0.1.4(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(openai@4.86.2(zod@3.22.4))
@@ -6798,6 +6841,24 @@ snapshots:
       zod-to-json-schema: 3.23.0(zod@3.22.4)
     transitivePeerDependencies:
       - encoding
+      - langchain
+      - openai
+
+  '@langchain/core@0.1.63(langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(openai@4.86.2(zod@3.22.4))':
+    dependencies:
+      ansi-styles: 5.2.0
+      camelcase: 6.3.0
+      decamelize: 1.2.0
+      js-tiktoken: 1.0.12
+      langsmith: 0.1.30(@langchain/core@0.1.63(langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(openai@4.86.2(zod@3.22.4)))(langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(openai@4.86.2(zod@3.22.4))
+      ml-distance: 4.0.1
+      mustache: 4.2.0
+      p-queue: 6.6.2
+      p-retry: 4.6.2
+      uuid: 9.0.1
+      zod: 3.22.4
+      zod-to-json-schema: 3.23.0(zod@3.22.4)
+    transitivePeerDependencies:
       - langchain
       - openai
 
@@ -6873,6 +6934,18 @@ snapshots:
       - langchain
       - openai
 
+  '@langchain/openai@0.0.34(langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))':
+    dependencies:
+      '@langchain/core': 0.1.63(langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(openai@4.86.2(zod@3.22.4))
+      js-tiktoken: 1.0.12
+      openai: 4.86.2(zod@3.22.4)
+      zod: 3.22.4
+      zod-to-json-schema: 3.23.0(zod@3.22.4)
+    transitivePeerDependencies:
+      - encoding
+      - langchain
+      - ws
+
   '@langchain/openai@0.0.34(langchain@0.1.4(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))':
     dependencies:
       '@langchain/core': 0.1.63(langchain@0.1.4(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(openai@4.47.3)
@@ -6894,6 +6967,17 @@ snapshots:
     transitivePeerDependencies:
       - encoding
       - langchain
+
+  '@langchain/openai@0.4.4(@langchain/core@0.1.63(langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(openai@4.86.2(zod@3.22.4)))':
+    dependencies:
+      '@langchain/core': 0.1.63(langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(openai@4.86.2(zod@3.22.4))
+      js-tiktoken: 1.0.12
+      openai: 4.86.2(zod@3.22.4)
+      zod: 3.22.4
+      zod-to-json-schema: 3.23.0(zod@3.22.4)
+    transitivePeerDependencies:
+      - encoding
+      - ws
 
   '@langchain/openai@0.4.4(@langchain/core@0.1.63(langchain@0.1.4(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(openai@4.86.2(zod@3.22.4)))':
     dependencies:
@@ -7078,6 +7162,8 @@ snapshots:
       node-fetch: 2.7.0
     transitivePeerDependencies:
       - encoding
+
+  '@pinecone-database/pinecone@5.1.1': {}
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
@@ -10530,6 +10616,103 @@ snapshots:
 
   kleur@4.1.5: {}
 
+  langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))):
+    dependencies:
+      '@anthropic-ai/sdk': 0.9.1
+      '@langchain/community': 0.0.57(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(jsonwebtoken@9.0.2)(langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3)))
+      '@langchain/core': 0.1.63(langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(openai@4.86.2(zod@3.22.4))
+      '@langchain/openai': 0.0.34(langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))
+      binary-extensions: 2.2.0
+      expr-eval: 2.0.2
+      js-tiktoken: 1.0.12
+      js-yaml: 4.1.0
+      jsonpointer: 5.0.1
+      langchainhub: 0.0.6
+      langsmith: 0.0.48
+      ml-distance: 4.0.1
+      openapi-types: 12.1.3
+      p-retry: 4.6.2
+      uuid: 9.0.1
+      yaml: 2.3.4
+      zod: 3.22.4
+      zod-to-json-schema: 3.23.0(zod@3.22.4)
+    optionalDependencies:
+      '@pinecone-database/pinecone': 5.1.1
+      '@supabase/supabase-js': 2.42.5
+      axios: 1.6.2
+      ignore: 5.3.1
+      typeorm: 0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))
+    transitivePeerDependencies:
+      - '@aws-crypto/sha256-js'
+      - '@aws-sdk/client-bedrock-agent-runtime'
+      - '@aws-sdk/client-bedrock-runtime'
+      - '@aws-sdk/client-dynamodb'
+      - '@aws-sdk/client-kendra'
+      - '@aws-sdk/client-lambda'
+      - '@azure/search-documents'
+      - '@clickhouse/client'
+      - '@cloudflare/ai'
+      - '@datastax/astra-db-ts'
+      - '@elastic/elasticsearch'
+      - '@getmetal/metal-sdk'
+      - '@getzep/zep-js'
+      - '@gradientai/nodejs-sdk'
+      - '@huggingface/inference'
+      - '@mlc-ai/web-llm'
+      - '@mozilla/readability'
+      - '@neondatabase/serverless'
+      - '@opensearch-project/opensearch'
+      - '@planetscale/database'
+      - '@premai/prem-sdk'
+      - '@qdrant/js-client-rest'
+      - '@raycast/api'
+      - '@rockset/client'
+      - '@smithy/eventstream-codec'
+      - '@smithy/protocol-http'
+      - '@smithy/signature-v4'
+      - '@smithy/util-utf8'
+      - '@supabase/postgrest-js'
+      - '@tensorflow-models/universal-sentence-encoder'
+      - '@tensorflow/tfjs-converter'
+      - '@tensorflow/tfjs-core'
+      - '@upstash/redis'
+      - '@upstash/vector'
+      - '@vercel/postgres'
+      - '@writerai/writer-sdk'
+      - '@xenova/transformers'
+      - '@zilliz/milvus2-sdk-node'
+      - better-sqlite3
+      - cassandra-driver
+      - cborg
+      - closevector-common
+      - closevector-node
+      - closevector-web
+      - cohere-ai
+      - couchbase
+      - discord.js
+      - dria
+      - duck-duck-scrape
+      - encoding
+      - firebase-admin
+      - hnswlib-node
+      - interface-datastore
+      - it-all
+      - jsonwebtoken
+      - llmonitor
+      - lodash
+      - lunary
+      - mysql2
+      - neo4j-driver
+      - openai
+      - pg
+      - pg-copy-streams
+      - pickleparser
+      - portkey-ai
+      - replicate
+      - typesense
+      - usearch
+      - voy-search
+
   langchain@0.1.4(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))):
     dependencies:
       '@anthropic-ai/sdk': 0.9.1
@@ -10729,6 +10912,18 @@ snapshots:
       p-queue: 6.6.2
       p-retry: 4.6.2
       uuid: 9.0.1
+
+  langsmith@0.1.30(@langchain/core@0.1.63(langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(openai@4.86.2(zod@3.22.4)))(langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(openai@4.86.2(zod@3.22.4)):
+    dependencies:
+      '@types/uuid': 9.0.7
+      commander: 10.0.1
+      p-queue: 6.6.2
+      p-retry: 4.6.2
+      uuid: 9.0.1
+    optionalDependencies:
+      '@langchain/core': 0.1.63(langchain@0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(openai@4.86.2(zod@3.22.4))
+      langchain: 0.1.4(@pinecone-database/pinecone@5.1.1)(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3)))
+      openai: 4.86.2(zod@3.22.4)
 
   langsmith@0.1.30(@langchain/core@0.1.63(langchain@0.1.4(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(openai@4.86.2(zod@3.22.4)))(langchain@0.1.4(@supabase/postgrest-js@1.15.2)(@supabase/supabase-js@2.42.5)(axios@1.6.2)(ignore@5.3.1)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mysql2@3.6.5)(openai@4.86.2(zod@3.22.4))(pg@8.11.3)(typeorm@0.3.17(mysql2@3.6.5)(pg@8.11.3)(ts-node@10.9.1(@types/node@20.3.1)(typescript@5.1.3))))(openai@4.47.3):
     dependencies:

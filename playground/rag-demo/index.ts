@@ -7,6 +7,9 @@ import { Document } from "langchain/document";
 import * as fs from "fs";
 import * as path from "path";
 import * as dotenv from "dotenv";
+// 改为新的导入方式
+import { Pinecone } from '@pinecone-database/pinecone';
+import { PineconeStore } from 'langchain/vectorstores/pinecone';
 
 // Load environment variables
 dotenv.config();
@@ -86,7 +89,22 @@ async function runRAGDemo() {
 
    // Create vector store from documents
   console.log("Creating vector store...");
-  const vectorStore = await MemoryVectorStore.fromDocuments(splitDocs, embeddings);
+  // 初始化 Pinecone 客户端
+  const client = new Pinecone({
+    apiKey: process.env.PINECONE_API_KEY!,
+  });
+
+  const pineconeIndex = client.Index(process.env.PINECONE_INDEX!);
+  
+  // 直接使用已存在的向量库进行检索
+  console.log("Connecting to existing vector store...");
+  const vectorStore = await PineconeStore.fromExistingIndex(
+    embeddings,
+    {
+      pineconeIndex,
+      namespace: "jasper-web-docs",
+    }
+  );
 
   // Create retrieval chain
   console.log("Creating retrieval chain...");

@@ -39,12 +39,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var openai_1 = require("langchain/llms/openai");
 var text_splitter_1 = require("langchain/text_splitter");
 var openai_2 = require("langchain/embeddings/openai");
-var memory_1 = require("langchain/vectorstores/memory");
 var chains_1 = require("langchain/chains");
 var document_1 = require("langchain/document");
 var fs = require("fs");
 var path = require("path");
 var dotenv = require("dotenv");
+// 改为新的导入方式
+var pinecone_1 = require("@pinecone-database/pinecone");
+var pinecone_2 = require("langchain/vectorstores/pinecone");
 // Load environment variables
 dotenv.config();
 // Check if API key is configured
@@ -132,7 +134,7 @@ function runRAGDemo() {
                 });
             });
         }
-        var documents, textSplitter, splitDocs, vectorStore, chain;
+        var documents, textSplitter, splitDocs, client, pineconeIndex, vectorStore, chain;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -156,7 +158,16 @@ function runRAGDemo() {
                     console.log("Created ".concat(splitDocs.length, " chunks."));
                     // Create vector store from documents
                     console.log("Creating vector store...");
-                    return [4 /*yield*/, memory_1.MemoryVectorStore.fromDocuments(splitDocs, embeddings)];
+                    client = new pinecone_1.Pinecone({
+                        apiKey: process.env.PINECONE_API_KEY,
+                    });
+                    pineconeIndex = client.Index(process.env.PINECONE_INDEX);
+                    // 直接使用已存在的向量库进行检索
+                    console.log("Connecting to existing vector store...");
+                    return [4 /*yield*/, pinecone_2.PineconeStore.fromExistingIndex(embeddings, {
+                            pineconeIndex: pineconeIndex,
+                            namespace: "jasper-web-docs",
+                        })];
                 case 3:
                     vectorStore = _a.sent();
                     // Create retrieval chain
