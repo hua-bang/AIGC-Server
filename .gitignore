@@ -39,4 +39,4 @@ lerna-debug.log*
 # local settings
 .env
 
-**/node_modules/** */
+**/node_modules/**
