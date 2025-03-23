@@ -1,0 +1,28 @@
+{
+  "name": "save-chat-to-notion-mcp",
+  "version": "1.0.0",
+  "description": "MCP Server for saving chat conversations to Notion",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "test": "jest"
+  },
+  "keywords": ["mcp", "notion", "chat"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.7.0",
+    "@notionhq/client": "^2.2.14",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.19",
+    "@types/jest": "^29.5.12",
+    "typescript": "^5.3.3",
+    "ts-node": "^10.9.2",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2"
+  }
+}
