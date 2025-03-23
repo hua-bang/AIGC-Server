@@ -100,7 +100,7 @@ npm start
 ## 目录结构
 
 ```
-save-chat-to-notion-mcp/
+save-to-notion-mcp/
 ├── src/
 │   ├── index.ts          # 主入口文件
 │   └── services/

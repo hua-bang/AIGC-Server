@@ -1,5 +1,5 @@
 {
-  "name": "save-chat-to-notion-mcp",
+  "name": "save-to-notion-mcp",
   "version": "1.0.0",
   "description": "MCP Server for saving chat conversations to Notion",
   "main": "dist/index.js",
