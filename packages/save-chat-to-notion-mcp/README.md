@@ -22,21 +22,21 @@
 
 无需安装，直接运行：
 ```bash
-npx save-chat-to-notion-mcp
+npx save-to-notion-mcp
 ```
 
 ### 全局安装
 
 ```bash
-npm install -g save-chat-to-notion-mcp
-save-chat-to-notion-mcp
+npm install -g save-to-notion-mcp
+save-to-notion-mcp
 ```
 
 ### 本地开发
 
 ```bash
 git clone <repository-url>
-cd save-chat-to-notion-mcp
+cd save-to-notion-mcp
 npm install
 npm run dev
 ```
@@ -51,7 +51,7 @@ npm run dev
   "servers": [
     {
       "name": "save-chat-to-notion",
-      "command": "npx save-chat-to-notion-mcp",
+      "command": "npx save-to-notion-mcp",
       "cwd": "."
     }
   ]
@@ -64,7 +64,7 @@ npm run dev
 ```json
 {
   "save-chat-to-notion": {
-    "command": "npx save-chat-to-notion-mcp",
+    "command": "npx save-to-notion-mcp",
     "cwd": "."
   }
 }
@@ -72,7 +72,7 @@ npm run dev
 
 ### 其他 MCP Host
 对于其他支持 MCP 的应用，确保：
-1. 指定正确的启动命令：`npx save-chat-to-notion-mcp`
+1. 指定正确的启动命令：`npx save-to-notion-mcp`
 2. 设置工作目录（通常为 "."）
 3. 配置服务器名称为 `save-chat-to-notion`
 
@@ -165,7 +165,7 @@ npm publish
 ## 目录结构
 
 ```
-save-chat-to-notion-mcp/
+save-to-notion-mcp/
 ├── src/
 │   ├── index.ts          # 主入口文件
 │   └── services/
