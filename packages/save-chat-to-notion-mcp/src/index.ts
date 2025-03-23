@@ -46,7 +46,7 @@ server.tool(
         content: [
           {
             type: "text",
-            text: `Successfully saved chat to Notion. Page ID: ${pageId}`,
+            text: `Successfully saved chat to Notion. Page ID: ${pageId}, Link: ${`https://www.notion.so/${pageId.replace(/-/g, "")}`}`,
           },
         ],
       };
@@ -64,8 +64,49 @@ server.tool(
   }
 );
 
-// 启动服务器
+// 定义保存URL总结工具
+server.tool(
+  "save_url_summary",
+  "Save a URL and its summary to Notion",
+  {
+    title: z.string().describe("The title of the article"),
+    link: z.string().url().describe("The URL of the article"),
+    summary: z.array(z.string()).describe("Array of summary points for the article"),
+  } as any,
+  // @ts-ignore
+  async ({ title, link, summary }: any) => {
+    try {
+      // 保存到 Notion
+      const pageId = await notionService.saveUrlSummary({
+        title,
+        link,
+        summary,
+        databaseId: process.env.NOTION_URL_DATABASE_ID || '',
+      });
 
+      return {
+        content: [
+          {
+            type: "text",
+            text: `Successfully saved URL summary to Notion. Page ID: ${pageId}, Link: ${`https://www.notion.so/${pageId.replace(/-/g, "")}`}`,
+          },
+        ],
+      };
+    } catch (error) {
+      console.error("Error saving URL summary:", error);
+      return {
+        content: [
+          {
+            type: "text",
+            text: `Error saving URL summary: ${error instanceof Error ? error.message : "Unknown error"}`,
+          },
+        ],
+      };
+    }
+  }
+);
+
+// 启动服务器
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
