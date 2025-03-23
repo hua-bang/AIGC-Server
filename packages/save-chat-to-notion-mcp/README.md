@@ -16,24 +16,73 @@
 - 支持结构化的总结要点
 - 自动生成 Notion 页面链接
 
-## 安装
+## 快速开始
+
+### 使用 npx（推荐）
+
+无需安装，直接运行：
+```bash
+npx save-chat-to-notion-mcp
+```
+
+### 全局安装
 
 ```bash
+npm install -g save-chat-to-notion-mcp
+save-chat-to-notion-mcp
+```
+
+### 本地开发
+
+```bash
+git clone <repository-url>
+cd save-chat-to-notion-mcp
 npm install
+npm run dev
 ```
 
-## 配置
+## MCP Host 配置
 
-1. 复制环境变量模板：
-```bash
-cp .env.example .env
+### Cursor 配置
+1. 在 Cursor 的设置中找到 MCP 配置部分
+2. 添加新的 MCP Server：
+```json
+{
+  "servers": [
+    {
+      "name": "save-chat-to-notion",
+      "command": "npx save-chat-to-notion-mcp",
+      "cwd": "."
+    }
+  ]
+}
 ```
 
-2. 在 `.env` 文件中设置以下变量：
+### Claude Desktop 配置
+1. 打开 Claude Desktop 的设置
+2. 在 MCP Servers 部分添加：
+```json
+{
+  "save-chat-to-notion": {
+    "command": "npx save-chat-to-notion-mcp",
+    "cwd": "."
+  }
+}
+```
+
+### 其他 MCP Host
+对于其他支持 MCP 的应用，确保：
+1. 指定正确的启动命令：`npx save-chat-to-notion-mcp`
+2. 设置工作目录（通常为 "."）
+3. 配置服务器名称为 `save-chat-to-notion`
+
+## 环境配置
+
+在运行目录下创建 `.env` 文件：
+
 ```env
 NOTION_API_KEY=your_notion_api_key
 NOTION_DATABASE_ID=your_notion_database_id
-NOTION_URL_DATABASE_ID=your_notion_url_database_id  # 用于保存URL总结的数据库
 ```
 
 ## Notion 数据库设置
@@ -49,16 +98,17 @@ NOTION_URL_DATABASE_ID=your_notion_url_database_id  # 用于保存URL总结的�
 - `link`：链接 (URL 类型)
 - `summary`：总结 (Rich Text 类型)
 
-## 使用方法
+## 可用工具
 
-### 启动服务器
-```bash
-npm run dev
-```
+### 1. save_chat
+将聊天对话保存到 Notion。
 
-### 工具调用示例
+**参数：**
+- `title`: string - 对话标题
+- `summary`: string[] - 对话要点数组
+- `conversation`: Array<{role: "user" | "assistant", content: string}> - 对话内容
 
-1. 保存聊天对话：
+**示例：**
 ```typescript
 const result = await client.invokeTool("save_chat", {
   title: "对话标题",
@@ -73,7 +123,16 @@ const result = await client.invokeTool("save_chat", {
 });
 ```
 
-2. 保存网页总结：
+### 2. save_url_summary
+保存网页链接和总结到 Notion。
+
+**参数：**
+- `title`: string - 文章标题
+- `link`: string - 文章链接 (必须是有效的 URL)
+- `summary`: string[] - 总结要点数组
+- `databaseId`: string (可选) - 自定义数据库 ID
+
+**示例：**
 ```typescript
 const result = await client.invokeTool("save_url_summary", {
   title: "文章标题",
@@ -92,15 +151,21 @@ const result = await client.invokeTool("save_url_summary", {
 npm run build
 ```
 
-### 启动生产环境
+### 启动开发环境
 ```bash
-npm start
+npm run dev
+```
+
+### 发布新版本
+```bash
+npm version patch # 或 minor 或 major
+npm publish
 ```
 
 ## 目录结构
 
 ```
-save-to-notion-mcp/
+save-chat-to-notion-mcp/
 ├── src/
 │   ├── index.ts          # 主入口文件
 │   └── services/
@@ -117,12 +182,14 @@ save-to-notion-mcp/
 2. 数据库必须包含所需的属性字段
 3. 环境变量必须正确设置
 4. 网页链接必须是有效的 URL 格式
+5. MCP Host 必须正确配置工作目录和启动命令
 
 ## 错误处理
 
 - 如果保存失败，会返回详细的错误信息
 - 检查 Notion API Key 和数据库 ID 是否正确
 - 确保数据库结构符合要求
+- 验证 MCP Host 配置是否正确
 
 ## 许可证
 

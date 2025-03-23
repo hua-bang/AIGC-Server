@@ -1,31 +1,40 @@
 {
-  "name": "save-to-notion-mcp",
-  "version": "1.0.1",
+  "name": "save-chat-to-notion-mcp",
+  "version": "1.0.0",
   "description": "MCP Server for saving chat conversations to Notion",
   "main": "dist/index.js",
+  "bin": {
+    "save-chat-to-notion-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
-    "test": "jest"
+    "prepublishOnly": "npm run build"
   },
-  "files": [
-    "dist"
+  "keywords": [
+    "mcp",
+    "notion",
+    "chat",
+    "cli"
   ],
-  "keywords": ["mcp", "notion", "chat"],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.7.0",
+    "@modelcontextprotocol/sdk": "^0.3.0",
     "@notionhq/client": "^2.2.14",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20.11.19",
-    "@types/jest": "^29.5.12",
     "typescript": "^5.3.3",
-    "ts-node": "^10.9.2",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.1.2"
+    "ts-node": "^10.9.2"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
