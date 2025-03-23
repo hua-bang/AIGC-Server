@@ -25,7 +25,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^0.3.0",
+    "@modelcontextprotocol/sdk": "^1.7.0",
     "@notionhq/client": "^2.2.14",
     "zod": "^3.22.4"
   },
