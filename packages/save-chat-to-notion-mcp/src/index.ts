@@ -1,8 +1,10 @@
+#!/usr/bin/env node
+
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { Client } from "@notionhq/client";
-import { NotionService } from "./services/notion";
+import { NotionService } from "./services/notion.js";
 
 // 创建 MCP server 实例
 const server = new McpServer({
