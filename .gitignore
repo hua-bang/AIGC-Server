@@ -41,3 +41,5 @@ lerna-debug.log*
 
 **/node_modules/**
 **/dist/**
+
+**/mcp-config.json
