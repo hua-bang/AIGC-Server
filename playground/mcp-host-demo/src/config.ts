@@ -2,7 +2,8 @@
 
 import { readFileSync } from 'fs';
 import { join } from 'path';
-import { MCPHostConfig } from './mcp-host.js';
+import { MCPHostConfig } from './mcp-host';
+import { TransportType } from './mcp-client';
 
 export function loadConfig(): MCPHostConfig {
   // 从环境变量获取 API Key
@@ -36,6 +37,7 @@ export function loadConfig(): MCPHostConfig {
     config.servers = {
       "save-to-notion-mcp": {
         "name": "save-to-notion-mcp",
+        "transportType": TransportType.STDIO,
         "command": "npx",
         "args": ["save-to-notion-mcp"]
       }
@@ -65,8 +67,31 @@ function validateConfig(config: MCPHostConfig): void {
 
   // 验证服务器配置
   for (const [name, serverConfig] of Object.entries(config.servers)) {
-    if (!serverConfig.name || !serverConfig.command) {
-      throw new Error(`服务器 ${name} 配置不完整，需要 name 和 command 字段`);
+    if (!serverConfig.name) {
+      throw new Error(`服务器 ${name} 配置不完整，需要 name 字段`);
+    }
+
+    // 验证传输类型
+    if (!serverConfig.transportType) {
+      throw new Error(`服务器 ${name} 缺少 transportType 字段`);
+    }
+
+    if (!Object.values(TransportType).includes(serverConfig.transportType as TransportType)) {
+      throw new Error(`服务器 ${name} 的 transportType 无效: ${serverConfig.transportType}. 可用类型: ${Object.values(TransportType).join(', ')}`);
+    }
+
+    // 根据传输类型验证特定字段
+    switch (serverConfig.transportType) {
+      case TransportType.STDIO:
+        if (!('command' in serverConfig)) {
+          throw new Error(`stdio 传输的服务器 ${name} 需要 command 字段`);
+        }
+        break;
+      case TransportType.HTTP:
+        if (!('url' in serverConfig)) {
+          throw new Error(`HTTP 传输的服务器 ${name} 需要 url 字段`);
+        }
+        break;
     }
   }
 }
@@ -77,18 +102,28 @@ export function createExampleConfig(): string {
     "model": "gpt-4o",
     "strategy": "function_calling",
     "servers": {
+      // stdio 传输示例
       "save-to-notion-mcp": {
         "name": "save-to-notion-mcp",
+        "transportType": "stdio",
         "command": "npx",
         "args": ["save-to-notion-mcp"]
       },
+      // 另一个 stdio 传输示例
       "filesystem": {
         "name": "filesystem-server",
+        "transportType": "stdio",
         "command": "node",
         "args": ["./servers/filesystem/index.js"],
         "env": {
           "ROOT_PATH": "/Users/username/documents"
         }
+      },
+      // HTTP 传输示例
+      "remote-weather": {
+        "name": "remote-weather",
+        "transportType": "http",
+        "url": "http://localhost:3000/mcp"
       }
     }
   };
@@ -105,6 +140,7 @@ export class ConfigManager {
       servers: {
         "save-to-notion-mcp": {
           "name": "save-to-notion-mcp",
+          "transportType": TransportType.STDIO,
           "command": "npx",
           "args": ["save-to-notion-mcp"]
         }
@@ -113,7 +149,18 @@ export class ConfigManager {
   }
 
   static validateServerConfig(config: any): boolean {
-    return !!(config.name && config.command);
+    if (!config.name || !config.transportType) {
+      return false;
+    }
+
+    switch (config.transportType) {
+      case TransportType.STDIO:
+        return !!(config.command);
+      case TransportType.HTTP:
+        return !!(config.url);
+      default:
+        return false;
+    }
   }
 
   static mergeConfigs(base: Partial<MCPHostConfig>, override: Partial<MCPHostConfig>): MCPHostConfig {

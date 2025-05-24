@@ -1,5 +1,7 @@
+import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
+import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
@@ -7,12 +9,34 @@ import {
   ReadResourceRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 
-export interface MCPServerConfig {
+// 传输类型枚举
+export enum TransportType {
+  STDIO = 'stdio',
+  HTTP = 'http'
+}
+
+// 基础配置接口
+export interface BaseMCPServerConfig {
   name: string;
+  transportType: TransportType;
+}
+
+// stdio 传输配置
+export interface StdioMCPServerConfig extends BaseMCPServerConfig {
+  transportType: TransportType.STDIO;
   command: string;
   args?: string[];
   env?: Record<string, string>;
 }
+
+// HTTP 传输配置
+export interface HTTPMCPServerConfig extends BaseMCPServerConfig {
+  transportType: TransportType.HTTP;
+  url: string;
+}
+
+// 联合类型
+export type MCPServerConfig = StdioMCPServerConfig | HTTPMCPServerConfig;
 
 export interface MCPTool {
   name: string;
@@ -30,24 +54,15 @@ export interface MCPResource {
 
 export class MCPClient {
   private client: Client;
-  private transport: StdioClientTransport;
+  private transport: StdioClientTransport | StreamableHTTPClientTransport;
   private config: MCPServerConfig;
   private connected: boolean = false;
 
   constructor(config: MCPServerConfig) {
     this.config = config;
 
-    // 继承当前进程的环境变量，然后合并配置的环境变量
-    const inheritedEnv = {
-      ...process.env,  // 继承系统环境变量
-      ...config.env    // 配置的环境变量优先
-    };
-
-    this.transport = new StdioClientTransport({
-      command: config.command,
-      args: config.args,
-      env: inheritedEnv,
-    });
+    // 根据传输类型创建不同的传输实例
+    this.transport = this.createTransport(config);
 
     this.client = new Client(
       {
@@ -63,6 +78,34 @@ export class MCPClient {
     );
   }
 
+  private createTransport(config: MCPServerConfig): StdioClientTransport | StreamableHTTPClientTransport {
+    const transportType = config.transportType || TransportType.STDIO;
+    switch (transportType) {
+      case TransportType.STDIO:
+        const stdioConfig = config as StdioMCPServerConfig;
+        // 继承当前进程的环境变量，然后合并配置的环境变量
+        const inheritedEnv = {
+          ...process.env,  // 继承系统环境变量
+          ...stdioConfig.env    // 配置的环境变量优先
+        };
+
+        return new StdioClientTransport({
+          command: stdioConfig.command,
+          args: stdioConfig.args,
+          env: inheritedEnv,
+        });
+
+      case TransportType.HTTP:
+        const httpConfig = config as HTTPMCPServerConfig;
+        return new StreamableHTTPClientTransport(
+          new URL(httpConfig.url)
+        );
+
+      default:
+        throw new Error(`Unsupported transport type: ${(config as any).transportType}`);
+    }
+  }
+
   async connect() {
     if (this.connected) {
       console.warn("Already connected to MCP server");
@@ -72,7 +115,7 @@ export class MCPClient {
     try {
       await this.client.connect(this.transport);
       this.connected = true;
-      console.log(`Connected to MCP server: ${this.config.name}`);
+      console.log(`🔗 Connected to MCP server: ${this.config.name} (${this.config.transportType})`);
     } catch (error) {
       console.error("Failed to connect to MCP server:", error);
       throw error;

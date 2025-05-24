@@ -1,5 +1,5 @@
 import OpenAI from 'openai';
-import { MCPClientManager, MCPTool, MCPServerConfig } from './mcp-client';
+import { MCPClientManager, MCPTool, MCPServerConfig, TransportType } from './mcp-client';
 
 export interface MCPHostConfig {
   openaiApiKey: string;
