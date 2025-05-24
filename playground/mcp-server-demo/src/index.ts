@@ -211,7 +211,30 @@ const handleSessionRequest = async (req: express.Request, res: express.Response)
 
   const transport = transports[sessionId];
   try {
-    await transport.handleRequest(req, res);
+    // 对于 GET 请求，可以尝试建立 SSE 连接
+    if (req.method === 'GET') {
+      console.log(`🌊 尝试建立 SSE 连接 for session ${sessionId}`);
+
+      // 检查是否支持 SSE（StreamableHTTPServerTransport 内置支持）
+      try {
+        await transport.handleRequest(req, res);
+        console.log(`✅ SSE 连接已建立 for session ${sessionId}`);
+      } catch (error) {
+        console.log(`❌ SSE 不支持，返回 405:`, error);
+        // 如果不支持 SSE，返回 405
+        res.status(405).set('Allow', 'POST, DELETE').json({
+          jsonrpc: '2.0',
+          error: {
+            code: -32000,
+            message: 'Method Not Allowed: SSE not supported',
+          },
+          id: null,
+        });
+      }
+    } else {
+      // 对于其他请求（DELETE 等）
+      await transport.handleRequest(req, res);
+    }
   } catch (error) {
     console.error(`❌ 处理会话请求失败 (${sessionId}):`, error);
     if (!res.headersSent) {
