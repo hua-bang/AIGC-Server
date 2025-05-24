@@ -10,20 +10,21 @@ export interface MCPHostConfig {
 
 // 工具调用策略接口
 interface ToolCallStrategy {
-  handleChat(message: string, tools: MCPTool[]): Promise<string>;
+  handleChat(message: string, tools: MCPTool[], prevMessages: OpenAI.Chat.ChatCompletionMessageParam[]): Promise<string>;
 }
 
 
 class FunctionCallingStrategy implements ToolCallStrategy {
   constructor(private openai: OpenAI, private clientManager: MCPClientManager, private model: string) { }
 
-  async handleChat(message: string, tools: MCPTool[]): Promise<string> {
+  async handleChat(message: string, tools: MCPTool[], prevMessages: OpenAI.Chat.ChatCompletionMessageParam[]): Promise<string> {
     const openaiTools = this.formatToolsForOpenAI(tools);
 
     console.log(`💬 [Function Calling] 用户消息: ${message}`);
 
     // 初始对话
     let messages: OpenAI.Chat.ChatCompletionMessageParam[] = [
+      ...(prevMessages || []),
       { role: "user", content: message }
     ];
 
@@ -94,7 +95,7 @@ class FunctionCallingStrategy implements ToolCallStrategy {
 class PromptDrivenStrategy implements ToolCallStrategy {
   constructor(private openai: OpenAI, private clientManager: MCPClientManager, private model: string) { }
 
-  async handleChat(message: string, tools: MCPTool[]): Promise<string> {
+  async handleChat(message: string, tools: MCPTool[], prevMessages: OpenAI.Chat.ChatCompletionMessageParam[]): Promise<string> {
     const systemPrompt = this.generateSystemPrompt(tools);
 
     console.log(`💬 [Prompt Driven] 用户消息: ${message}`);
@@ -104,6 +105,7 @@ class PromptDrivenStrategy implements ToolCallStrategy {
       model: this.model,
       messages: [
         { role: "system", content: systemPrompt },
+        ...(prevMessages || []),
         { role: "user", content: message }
       ],
       max_tokens: 4000,
@@ -187,6 +189,7 @@ export class MCPHost {
   private strategy: ToolCallStrategy;
   private config: MCPHostConfig;
   private availableTools: MCPTool[] = [];
+  private prevMessages: OpenAI.Chat.ChatCompletionMessageParam[] = [];
 
   constructor(config: MCPHostConfig) {
     this.config = config;
@@ -233,7 +236,9 @@ export class MCPHost {
 
   async chat(message: string): Promise<string> {
     try {
-      return await this.strategy.handleChat(message, this.availableTools);
+      const response = await this.strategy.handleChat(message, this.availableTools, this.prevMessages);
+      this.prevMessages.push({ role: "user", content: message }, { role: "assistant", content: response });
+      return response;
     } catch (error) {
       console.error('❌ 对话处理失败:', error);
       throw error;

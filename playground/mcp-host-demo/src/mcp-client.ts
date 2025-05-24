@@ -37,10 +37,16 @@ export class MCPClient {
   constructor(config: MCPServerConfig) {
     this.config = config;
 
+    // 继承当前进程的环境变量，然后合并配置的环境变量
+    const inheritedEnv = {
+      ...process.env,  // 继承系统环境变量
+      ...config.env    // 配置的环境变量优先
+    };
+
     this.transport = new StdioClientTransport({
       command: config.command,
       args: config.args,
-      env: config.env,
+      env: inheritedEnv,
     });
 
     this.client = new Client(
