@@ -6,18 +6,27 @@
   <title>Document</title>
 </head>
 <body>
-  
+  <div>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+  </div>
+  <div id="messages"></div>
 </body>
 <script>
-  const eventSource = new EventSource('http://localhost:3050/sse');
+  const startButton = document.getElementById('start');
+  const stopButton = document.getElementById('stop');
 
-  eventSource.onopen = () => {
+  let eventSource = null;
+
+  startButton.addEventListener('click', () => {
+    eventSource = new EventSource('http://localhost:3050/sse');
+
+    eventSource.onopen = () => {
     console.log('Connected to server');
   }
 
   eventSource.onmessage = (event) => {
-    console.log(event.data);
-    document.body.innerHTML += `<p>${event.data}</p>`;
+    document.getElementById('messages').innerHTML += `<p>${event.data}</p>`;
   }
 
   eventSource.onerror = (event) => {
@@ -27,6 +36,13 @@
   eventSource.onclose = () => {
     console.log('Connection closed');
   }
+  });
+
+  stopButton.addEventListener('click', () => {
+    if (eventSource) {
+      eventSource.close();
+    }
+  });
   
 </script>
 </html>
