@@ -3,47 +3,189 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>SSE Client - Complete Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .controls {
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-right: 10px;
+      font-size: 16px;
+    }
+    #messages {
+      height: 500px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      background-color: #f9f9f9;
+    }
+    .message {
+      margin-bottom: 10px;
+      padding: 8px;
+      border-radius: 4px;
+    }
+    .connection { background-color: #d4edda; }
+    .heartbeat { background-color: #d1ecf1; }
+    .data-update { background-color: #fff3cd; }
+    .milestone { background-color: #f8d7da; }
+    .default { background-color: #e2e3e5; }
+    .error { background-color: #f5c6cb; }
+    .info {
+      margin-bottom: 20px;
+      padding: 10px;
+      background-color: #e9ecef;
+      border-radius: 4px;
+    }
+  </style>
 </head>
 <body>
-  <div>
-    <button id="start">Start</button>
-    <button id="stop">Stop</button>
+  <h1>SSE Client - Complete Example</h1>
+  
+  <div class="info">
+    <h3>SSE 参数说明：</h3>
+    <ul>
+      <li><strong>id:</strong> 消息的唯一标识符，用于断线重连时的消息恢复</li>
+      <li><strong>event:</strong> 事件类型，客户端可以监听特定事件</li>
+      <li><strong>data:</strong> 实际的消息数据</li>
+      <li><strong>retry:</strong> 客户端重连间隔时间（毫秒）</li>
+    </ul>
   </div>
-  <div id="messages" style="height: 500px; overflow-y: auto;"></div>
+
+  <div class="controls">
+    <button id="start">Start SSE Connection</button>
+    <button id="stop">Stop SSE Connection</button>
+    <button id="clear">Clear Messages</button>
+  </div>
+  
+  <div>
+    <strong>Connection Status:</strong> <span id="status">Disconnected</span>
+  </div>
+  
+  <div id="messages"></div>
 </body>
 <script>
   const startButton = document.getElementById('start');
   const stopButton = document.getElementById('stop');
+  const clearButton = document.getElementById('clear');
+  const messagesDiv = document.getElementById('messages');
+  const statusSpan = document.getElementById('status');
 
   let eventSource = null;
 
+  function addMessage(content, type = 'default') {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${type}`;
+    messageDiv.innerHTML = content;
+    messagesDiv.appendChild(messageDiv);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  }
+
+  function updateStatus(status) {
+    statusSpan.textContent = status;
+  }
+
   startButton.addEventListener('click', () => {
+    if (eventSource) {
+      eventSource.close();
+    }
+
     eventSource = new EventSource('http://localhost:3050/sse');
+    updateStatus('Connecting...');
 
+    // 连接打开事件
     eventSource.onopen = () => {
-    console.log('Connected to server');
-  }
+      console.log('Connected to server');
+      updateStatus('Connected');
+      addMessage('✅ Connected to SSE server', 'connection');
+    };
 
-  eventSource.onmessage = (event) => {
-    document.getElementById('messages').innerHTML += `<p>${event.data}</p>`;
-  }
+    // 默认消息事件（没有指定 event 类型的消息）
+    eventSource.onmessage = (event) => {
+      console.log('Default message:', event);
+      addMessage(`
+        <strong>Default Message:</strong><br>
+        ID: ${event.lastEventId || 'N/A'}<br>
+        Data: ${event.data}<br>
+        Time: ${new Date().toLocaleTimeString()}
+      `, 'default');
+    };
 
-  eventSource.onerror = (event) => {
-    console.log('Error:', event);
-    document.getElementById('messages').innerHTML += `<p>Error: ${event.message}</p>`;
-  }
+    // 监听特定的事件类型
+    eventSource.addEventListener('connection', (event) => {
+      console.log('Connection event:', event);
+      const data = JSON.parse(event.data);
+      addMessage(`
+        <strong>Connection Event:</strong><br>
+        ID: ${event.lastEventId}<br>
+        Message: ${data.message}<br>
+        Timestamp: ${data.timestamp}
+      `, 'connection');
+    });
 
-  eventSource.onclose = () => {
-    console.log('Connection closed');
-  }
+    eventSource.addEventListener('heartbeat', (event) => {
+      console.log('Heartbeat event:', event);
+      const data = JSON.parse(event.data);
+      addMessage(`
+        <strong>Heartbeat:</strong><br>
+        ID: ${event.lastEventId}<br>
+        Type: ${data.type}<br>
+        Timestamp: ${data.timestamp}
+      `, 'heartbeat');
+    });
+
+    eventSource.addEventListener('data-update', (event) => {
+      console.log('Data update event:', event);
+      const data = JSON.parse(event.data);
+      addMessage(`
+        <strong>Data Update:</strong><br>
+        ID: ${event.lastEventId}<br>
+        Type: ${data.type}<br>
+        Value: ${data.value.toFixed(4)}<br>
+        Timestamp: ${data.timestamp}
+      `, 'data-update');
+    });
+
+    eventSource.addEventListener('milestone', (event) => {
+      console.log('Milestone event:', event);
+      const data = JSON.parse(event.data);
+      addMessage(`
+        <strong>🎉 Milestone Event:</strong><br>
+        ID: ${event.lastEventId}<br>
+        Message: ${data.message}<br>
+        Timestamp: ${data.timestamp}
+      `, 'milestone');
+    });
+
+    // 错误处理
+    eventSource.onerror = (event) => {
+      console.log('SSE Error:', event);
+      updateStatus('Error / Reconnecting...');
+      addMessage(`
+        <strong>❌ Connection Error:</strong><br>
+        ReadyState: ${eventSource.readyState}<br>
+        Time: ${new Date().toLocaleTimeString()}
+      `, 'error');
+    };
   });
 
   stopButton.addEventListener('click', () => {
     if (eventSource) {
       eventSource.close();
+      eventSource = null;
+      updateStatus('Disconnected');
+      addMessage('🔌 Connection closed by user', 'connection');
     }
   });
-  
+
+  clearButton.addEventListener('click', () => {
+    messagesDiv.innerHTML = '';
+  });
 </script>
 </html>
