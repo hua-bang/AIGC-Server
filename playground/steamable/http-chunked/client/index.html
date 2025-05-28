@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP/1.1 Chunked Transfer Encoding Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .demo-section {
+            margin-bottom: 40px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .demo-header {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 2px solid #e1e8ed;
+        }
+
+        .demo-header h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .demo-header p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .stop-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .stop-btn:hover {
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .output {
+            background: #1e1e1e;
+            color: #f8f8f2;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .status {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-top: 2px solid #e1e8ed;
+            font-weight: 600;
+        }
+
+        .status.active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e1e8ed;
+        }
+
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e1e8ed;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .json-viewer {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .json-key {
+            color: #63b3ed;
+        }
+
+        .json-string {
+            color: #68d391;
+        }
+
+        .json-number {
+            color: #f6ad55;
+        }
+
+        .chunk-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #4facfe;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .info-box h4 {
+            color: #1976d2;
+            margin-bottom: 8px;
+        }
+
+        .info-box p {
+            color: #424242;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌊 HTTP/1.1 Chunked Transfer Encoding</h1>
+            <p>实时数据流传输演示</p>
+        </div>
+
+        <div class="content">
+            <div class="info-box">
+                <h4>什么是 Chunked Transfer Encoding？</h4>
+                <p>Chunked Transfer Encoding 是 HTTP/1.1 协议中的一种传输编码方式，允许服务器在不知道响应体总长度的情况下，将数据分块发送给客户端。这对于实时数据流、大文件传输或动态生成的内容非常有用。</p>
+            </div>
+
+            <!-- 基础文本数据流演示 -->
+            <div class="demo-section">
+                <div class="demo-header">
+                    <h3>📝 基础文本数据流</h3>
+                    <p>演示服务器每秒发送一个文本块，总共发送 10 个块</p>
+                    <div class="controls">
+                        <button onclick="startTextStream()">开始接收</button>
+                        <button onclick="stopTextStream()" class="stop-btn">停止接收</button>
+                        <button onclick="clearTextOutput()">清空输出</button>
+                    </div>
+                </div>
+                <div class="output" id="textOutput">等待数据...</div>
+                <div class="status" id="textStatus">就绪</div>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="textChunks">0</div>
+                        <div class="stat-label">接收块数</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="textBytes">0</div>
+                        <div class="stat-label">接收字节</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="textDuration">0s</div>
+                        <div class="stat-label">传输时间</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JSON 数据流演示 -->
+            <div class="demo-section">
+                <div class="demo-header">
+                    <h3>📊 JSON 数据流</h3>
+                    <p>演示分块传输 JSON 数据，实时构建 JSON 对象</p>
+                    <div class="controls">
+                        <button onclick="startJsonStream()">开始接收</button>
+                        <button onclick="stopJsonStream()" class="stop-btn">停止接收</button>
+                        <button onclick="clearJsonOutput()">清空输出</button>
+                    </div>
+                </div>
+                <div class="json-viewer" id="jsonOutput">等待 JSON 数据...</div>
+                <div class="status" id="jsonStatus">就绪</div>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="jsonItems">0</div>
+                        <div class="stat-label">JSON 项目</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="jsonSize">0</div>
+                        <div class="stat-label">数据大小</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 大数据传输演示 -->
+            <div class="demo-section">
+                <div class="demo-header">
+                    <h3>🚀 大数据传输</h3>
+                    <p>演示大量数据的分块传输 (100KB)</p>
+                    <div class="controls">
+                        <button onclick="startLargeDataStream()">开始传输</button>
+                        <button onclick="stopLargeDataStream()" class="stop-btn">停止传输</button>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="largeDataProgress"></div>
+                </div>
+                <div class="status" id="largeDataStatus">就绪</div>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="largeDataReceived">0</div>
+                        <div class="stat-label">已接收 (KB)</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="largeDataSpeed">0</div>
+                        <div class="stat-label">速度 (KB/s)</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="largeDataProgress2">0%</div>
+                        <div class="stat-label">进度</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let textController = null;
+        let jsonController = null;
+        let largeDataController = null;
+        let textStartTime = null;
+        let largeDataStartTime = null;
+
+        // 文本流相关函数
+        async function startTextStream() {
+            if (textController) {
+                textController.abort();
+            }
+
+            textController = new AbortController();
+            textStartTime = Date.now();
+            
+            const output = document.getElementById('textOutput');
+            const status = document.getElementById('textStatus');
+            const chunksEl = document.getElementById('textChunks');
+            const bytesEl = document.getElementById('textBytes');
+            const durationEl = document.getElementById('textDuration');
+
+            output.textContent = '';
+            status.textContent = '连接中...';
+            status.className = 'status active';
+            
+            let chunks = 0;
+            let totalBytes = 0;
+
+            try {
+                const response = await fetch('/chunked-data', {
+                    signal: textController.signal
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                status.textContent = '正在接收数据...';
+                
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    
+                    if (done) {
+                        status.textContent = '传输完成';
+                        status.className = 'status';
+                        break;
+                    }
+
+                    const chunk = decoder.decode(value, { stream: true });
+                    output.textContent += chunk;
+                    output.scrollTop = output.scrollHeight;
+                    
+                    chunks++;
+                    totalBytes += value.length;
+                    const duration = Math.round((Date.now() - textStartTime) / 1000);
+                    
+                    chunksEl.textContent = chunks;
+                    bytesEl.textContent = totalBytes;
+                    durationEl.textContent = duration + 's';
+                }
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    status.textContent = `错误: ${error.message}`;
+                    status.className = 'status error';
+                    output.textContent += `\n错误: ${error.message}`;
+                }
+            }
+        }
+
+        function stopTextStream() {
+            if (textController) {
+                textController.abort();
+                textController = null;
+                document.getElementById('textStatus').textContent = '已停止';
+                document.getElementById('textStatus').className = 'status';
+            }
+        }
+
+        function clearTextOutput() {
+            document.getElementById('textOutput').textContent = '等待数据...';
+            document.getElementById('textChunks').textContent = '0';
+            document.getElementById('textBytes').textContent = '0';
+            document.getElementById('textDuration').textContent = '0s';
+        }
+
+        // JSON 流相关函数
+        async function startJsonStream() {
+            if (jsonController) {
+                jsonController.abort();
+            }
+
+            jsonController = new AbortController();
+            
+            const output = document.getElementById('jsonOutput');
+            const status = document.getElementById('jsonStatus');
+            const itemsEl = document.getElementById('jsonItems');
+            const sizeEl = document.getElementById('jsonSize');
+
+            output.textContent = '';
+            status.textContent = '连接中...';
+            status.className = 'status active';
+            
+            let items = 0;
+            let totalSize = 0;
+            let jsonData = '';
+
+            try {
+                const response = await fetch('/chunked-json', {
+                    signal: jsonController.signal
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                status.textContent = '正在接收 JSON 数据...';
+                
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    
+                    if (done) {
+                        status.textContent = 'JSON 传输完成';
+                        status.className = 'status';
+                        
+                        // 尝试解析完整的 JSON
+                        try {
+                            const parsed = JSON.parse(jsonData);
+                            output.innerHTML = syntaxHighlight(JSON.stringify(parsed, null, 2));
+                        } catch (e) {
+                            output.textContent = jsonData;
+                        }
+                        break;
+                    }
+
+                    const chunk = decoder.decode(value, { stream: true });
+                    jsonData += chunk;
+                    totalSize += value.length;
+                    
+                    // 尝试计算当前项目数
+                    const commaCount = (jsonData.match(/,/g) || []).length;
+                    items = commaCount + (jsonData.includes('{') ? 1 : 0);
+                    
+                    itemsEl.textContent = items;
+                    sizeEl.textContent = totalSize + ' bytes';
+                    
+                    // 显示当前接收到的数据
+                    output.innerHTML = `<span class="chunk-indicator"></span>接收中...\n${jsonData}`;
+                    output.scrollTop = output.scrollHeight;
+                }
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    status.textContent = `错误: ${error.message}`;
+                    status.className = 'status error';
+                    output.textContent = `错误: ${error.message}`;
+                }
+            }
+        }
+
+        function stopJsonStream() {
+            if (jsonController) {
+                jsonController.abort();
+                jsonController = null;
+                document.getElementById('jsonStatus').textContent = '已停止';
+                document.getElementById('jsonStatus').className = 'status';
+            }
+        }
+
+        function clearJsonOutput() {
+            document.getElementById('jsonOutput').textContent = '等待 JSON 数据...';
+            document.getElementById('jsonItems').textContent = '0';
+            document.getElementById('jsonSize').textContent = '0';
+        }
+
+        // 大数据传输相关函数
+        async function startLargeDataStream() {
+            if (largeDataController) {
+                largeDataController.abort();
+            }
+
+            largeDataController = new AbortController();
+            largeDataStartTime = Date.now();
+            
+            const status = document.getElementById('largeDataStatus');
+            const receivedEl = document.getElementById('largeDataReceived');
+            const speedEl = document.getElementById('largeDataSpeed');
+            const progressEl = document.getElementById('largeDataProgress');
+            const progress2El = document.getElementById('largeDataProgress2');
+
+            status.textContent = '连接中...';
+            status.className = 'status active';
+            
+            let totalReceived = 0;
+            const targetSize = 100 * 1024; // 100KB
+
+            try {
+                const response = await fetch('/chunked-large-data', {
+                    signal: largeDataController.signal
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                status.textContent = '正在传输大数据...';
+                
+                const reader = response.body.getReader();
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    
+                    if (done) {
+                        status.textContent = '大数据传输完成';
+                        status.className = 'status';
+                        progressEl.style.width = '100%';
+                        progress2El.textContent = '100%';
+                        break;
+                    }
+
+                    totalReceived += value.length;
+                    const duration = (Date.now() - largeDataStartTime) / 1000;
+                    const speed = Math.round((totalReceived / 1024) / duration);
+                    const progress = Math.min((totalReceived / targetSize) * 100, 100);
+                    
+                    receivedEl.textContent = Math.round(totalReceived / 1024);
+                    speedEl.textContent = speed;
+                    progressEl.style.width = progress + '%';
+                    progress2El.textContent = Math.round(progress) + '%';
+                }
+            } catch (error) {
+                if (error.name !== 'AbortError') {
+                    status.textContent = `错误: ${error.message}`;
+                    status.className = 'status error';
+                }
+            }
+        }
+
+        function stopLargeDataStream() {
+            if (largeDataController) {
+                largeDataController.abort();
+                largeDataController = null;
+                document.getElementById('largeDataStatus').textContent = '已停止';
+                document.getElementById('largeDataStatus').className = 'status';
+            }
+        }
+
+        // JSON 语法高亮
+        function syntaxHighlight(json) {
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                var cls = 'json-number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'json-key';
+                    } else {
+                        cls = 'json-string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'json-boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'json-null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
+
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🌊 HTTP Chunked Transfer Encoding Demo 已加载');
+            console.log('📡 服务器地址: http://localhost:3000');
+        });
+
+        // 页面卸载时清理资源
+        window.addEventListener('beforeunload', function() {
+            if (textController) textController.abort();
+            if (jsonController) jsonController.abort();
+            if (largeDataController) largeDataController.abort();
+        });
+    </script>
+</body>
+</html>

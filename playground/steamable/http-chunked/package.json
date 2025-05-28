@@ -1,0 +1,31 @@
+{
+  "name": "http-chunked-transfer-demo",
+  "version": "1.0.0",
+  "description": "HTTP/1.1 Chunked Transfer Encoding 演示项目",
+  "main": "server/index.ts",
+  "scripts": {
+    "start": "node ./server/index.js",
+    "dev": "nodemon ./server/index.js",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "http",
+    "chunked",
+    "transfer-encoding",
+    "streaming",
+    "nodejs",
+    "demo"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "nodemon": "^3.0.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+} 
