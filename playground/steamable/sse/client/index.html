@@ -10,7 +10,7 @@
     <button id="start">Start</button>
     <button id="stop">Stop</button>
   </div>
-  <div id="messages"></div>
+  <div id="messages" style="height: 500px; overflow-y: auto;"></div>
 </body>
 <script>
   const startButton = document.getElementById('start');
@@ -31,6 +31,7 @@
 
   eventSource.onerror = (event) => {
     console.log('Error:', event);
+    document.getElementById('messages').innerHTML += `<p>Error: ${event.message}</p>`;
   }
 
   eventSource.onclose = () => {
